@@ -10,6 +10,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ScriptConverter\ScriptConverter.csproj" />
+    <ProjectReference Include="..\ScriptConverter.NaturalDictionary\ScriptConverter.NaturalDictionary.csproj" />
   </ItemGroup>
 
 </Project>

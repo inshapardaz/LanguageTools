@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="ScriptConverter.Cli/ScriptConverter.Cli.csproj" />
+  <Project Path="ScriptConverter.NaturalDictionary/ScriptConverter.NaturalDictionary.csproj" />
   <Project Path="ScriptConverter.Tests/ScriptConverter.Tests.csproj" />
   <Project Path="ScriptConverter.Web/ScriptConverter.Web.csproj" />
   <Project Path="ScriptConverter/ScriptConverter.csproj" />

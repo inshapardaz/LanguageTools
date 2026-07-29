@@ -1,6 +1,9 @@
 using ScriptConverter;
 using ScriptConverter.Dictionary;
 using ScriptConverter.Mappings;
+using ScriptConverter.NaturalDictionary;
+using ScriptConverter.NaturalDictionary.Services;
+using ScriptConverter.NaturalDictionary.Storage;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +38,18 @@ if (dictionaryOptions.Provider == DictionaryStoreProvider.Json &&
 
 builder.Services.AddDictionaryStore(dictionaryOptions);
 builder.Services.AddSingleton(ScriptTransliterator.Instance);
+
+// Configure natural dictionary (GoldenDict-compatible) support
+var naturalDictDataDir = Path.Combine(builder.Environment.ContentRootPath, "Data");
+Directory.CreateDirectory(naturalDictDataDir);
+builder.Services.AddNaturalDictionary(options =>
+{
+    var natDictConnStr = builder.Configuration.GetSection("NaturalDictionary")?["ConnectionString"];
+    options.ConnectionString = !string.IsNullOrWhiteSpace(natDictConnStr)
+        ? natDictConnStr
+        : $"Data Source={Path.Combine(naturalDictDataDir, "natural_dictionaries.db")}";
+});
+
 builder.Services.AddCors(options =>
 {
     options.AddDefaultPolicy(policy =>
@@ -173,6 +188,209 @@ app.MapPost("/api/dictionary/bulk", (List<DictionaryEntryRequest> entries, IDict
 
     var count = store.AddBulk(items);
     return Results.Ok(new { added = count, total = store.Count });
+});
+
+// ===== Natural Dictionary API (GoldenDict-compatible) =====
+
+app.MapPost("/api/natural-dictionary/upload", async (
+    HttpRequest request,
+    DictionaryImportService importService,
+    CancellationToken ct) =>
+{
+    if (!request.HasFormContentType)
+        return Results.BadRequest(new { error = "Multipart form data required." });
+
+    var form = await request.ReadFormAsync(ct);
+    var file = form.Files.GetFile("file");
+
+    if (file == null || file.Length == 0)
+        return Results.BadRequest(new { error = "A dictionary file is required. Upload a zip, tar.gz, or raw dictionary file." });
+
+    // Validate file size (max 500MB)
+    if (file.Length > 500 * 1024 * 1024)
+        return Results.BadRequest(new { error = "File too large. Maximum size is 500MB." });
+
+    try
+    {
+        await using var stream = file.OpenReadStream();
+        var info = await importService.ImportAsync(stream, file.FileName, ct);
+
+        return Results.Ok(new
+        {
+            message = "Dictionary imported successfully.",
+            dictionary = new
+            {
+                info.Id,
+                info.Name,
+                format = info.Format.ToString(),
+                info.EntryCount,
+                info.SourceLanguage,
+                info.TargetLanguage,
+                info.Description,
+                info.ImportedAt,
+            }
+        });
+    }
+    catch (InvalidOperationException ex)
+    {
+        return Results.BadRequest(new { error = ex.Message });
+    }
+})
+.DisableAntiforgery();
+
+app.MapGet("/api/natural-dictionary", async (INaturalDictionaryStore natStore, CancellationToken ct) =>
+{
+    var dictionaries = await natStore.GetAllDictionariesAsync(ct);
+    return Results.Ok(new
+    {
+        total = dictionaries.Count,
+        dictionaries = dictionaries.Select(d => new
+        {
+            d.Id,
+            d.Name,
+            format = d.Format.ToString(),
+            d.EntryCount,
+            d.SourceLanguage,
+            d.TargetLanguage,
+            d.Description,
+            d.OriginalFileName,
+            d.ImportedAt,
+        })
+    });
+});
+
+app.MapGet("/api/natural-dictionary/{id}", async (
+    string id,
+    INaturalDictionaryStore natStore,
+    CancellationToken ct) =>
+{
+    var dict = await natStore.GetDictionaryAsync(id, ct);
+    if (dict == null)
+        return Results.NotFound(new { error = "Dictionary not found." });
+
+    return Results.Ok(new
+    {
+        dict.Id,
+        dict.Name,
+        format = dict.Format.ToString(),
+        dict.EntryCount,
+        dict.SourceLanguage,
+        dict.TargetLanguage,
+        dict.Description,
+        dict.OriginalFileName,
+        dict.ImportedAt,
+    });
+});
+
+app.MapDelete("/api/natural-dictionary/{id}", async (
+    string id,
+    INaturalDictionaryStore natStore,
+    CancellationToken ct) =>
+{
+    var deleted = await natStore.DeleteDictionaryAsync(id, ct);
+    return deleted
+        ? Results.NoContent()
+        : Results.NotFound(new { error = "Dictionary not found." });
+});
+
+app.MapGet("/api/natural-dictionary/lookup", async (
+    string word,
+    string? dicts,
+    INaturalDictionaryStore natStore,
+    CancellationToken ct) =>
+{
+    if (string.IsNullOrWhiteSpace(word))
+        return Results.BadRequest(new { error = "Query parameter 'word' is required." });
+
+    var dictIds = string.IsNullOrWhiteSpace(dicts)
+        ? null
+        : dicts.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+    var result = await natStore.LookupAsync(word, dictIds, ct);
+    return Results.Ok(result);
+});
+
+app.MapGet("/api/natural-dictionary/suggest", async (
+    string prefix,
+    int? limit,
+    string? dicts,
+    INaturalDictionaryStore natStore,
+    CancellationToken ct) =>
+{
+    if (string.IsNullOrWhiteSpace(prefix))
+        return Results.BadRequest(new { error = "Query parameter 'prefix' is required." });
+
+    var dictIds = string.IsNullOrWhiteSpace(dicts)
+        ? null
+        : dicts.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
+
+    var suggestions = await natStore.SuggestAsync(prefix, limit ?? 20, dictIds, ct);
+    return Results.Ok(new { suggestions });
+});
+
+app.MapGet("/api/natural-dictionary/{id}/browse", async (
+    string id,
+    int? page,
+    int? pageSize,
+    INaturalDictionaryStore natStore,
+    CancellationToken ct) =>
+{
+    var dict = await natStore.GetDictionaryAsync(id, ct);
+    if (dict == null)
+        return Results.NotFound(new { error = "Dictionary not found." });
+
+    var result = await natStore.BrowseAsync(id, page ?? 1, pageSize ?? 50, ct);
+    return Results.Ok(new
+    {
+        dictionaryId = id,
+        dictionaryName = dict.Name,
+        result.TotalCount,
+        result.Page,
+        result.PageSize,
+        result.TotalPages,
+        articles = result.Articles.Select(a => new
+        {
+            a.Id,
+            a.Headword,
+            a.Definition,
+            a.Alternates,
+        })
+    });
+});
+
+app.MapGet("/api/natural-dictionary/{id}/search", async (
+    string id,
+    string q,
+    int? page,
+    int? pageSize,
+    INaturalDictionaryStore natStore,
+    CancellationToken ct) =>
+{
+    if (string.IsNullOrWhiteSpace(q))
+        return Results.BadRequest(new { error = "Query parameter 'q' is required." });
+
+    var dict = await natStore.GetDictionaryAsync(id, ct);
+    if (dict == null)
+        return Results.NotFound(new { error = "Dictionary not found." });
+
+    var result = await natStore.SearchAsync(id, q, page ?? 1, pageSize ?? 50, ct);
+    return Results.Ok(new
+    {
+        dictionaryId = id,
+        dictionaryName = dict.Name,
+        query = q,
+        result.TotalCount,
+        result.Page,
+        result.PageSize,
+        result.TotalPages,
+        articles = result.Articles.Select(a => new
+        {
+            a.Id,
+            a.Headword,
+            a.Definition,
+            a.Alternates,
+        })
+    });
 });
 
 // Fallback to index.html for SPA routing (only for non-API paths)

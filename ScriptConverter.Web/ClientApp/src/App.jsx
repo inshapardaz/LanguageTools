@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Converter from './Converter';
 import DictionaryManager from './DictionaryManager';
+import NaturalDictionary from './NaturalDictionary';
 import './styles.css';
 
 export default function App() {
@@ -24,11 +25,18 @@ export default function App() {
           >
             Dictionary
           </button>
+          <button
+            className={`nav-tab ${page === 'natural-dictionary' ? 'active' : ''}`}
+            onClick={() => setPage('natural-dictionary')}
+          >
+            Natural Dictionary
+          </button>
         </nav>
       </header>
 
       {page === 'converter' && <Converter />}
       {page === 'dictionary' && <DictionaryManager />}
+      {page === 'natural-dictionary' && <NaturalDictionary />}
     </div>
   );
 }
