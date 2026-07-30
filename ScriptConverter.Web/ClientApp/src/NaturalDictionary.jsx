@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import DictionaryBrowser from './DictionaryBrowser';
 import ArticleView from './ArticleView';
 
-export default function NaturalDictionary() {
+export default function NaturalDictionary({ activeDictionaryId, urlParams, onBrowse, onBackToList, onUpdateParams }) {
   const [dictionaries, setDictionaries] = useState([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
@@ -14,7 +14,6 @@ export default function NaturalDictionary() {
   const [suggestions, setSuggestions] = useState([]);
   const [showUpload, setShowUpload] = useState(false);
   const [dragOver, setDragOver] = useState(false);
-  const [browsing, setBrowsing] = useState(null); // { id, name } when browsing a dictionary
 
   const fetchDictionaries = useCallback(async () => {
     try {
@@ -141,13 +140,17 @@ export default function NaturalDictionary() {
 
   if (loading) return <div className="loading">Loading dictionaries...</div>;
 
-  // Show dictionary browser if a dictionary is selected
-  if (browsing) {
+  // Show dictionary browser if a dictionary is selected via URL
+  if (activeDictionaryId) {
+    const dict = dictionaries.find(d => d.id === activeDictionaryId);
+    const dictName = dict?.name || 'Dictionary';
     return (
       <DictionaryBrowser
-        dictionaryId={browsing.id}
-        dictionaryName={browsing.name}
-        onBack={() => setBrowsing(null)}
+        dictionaryId={activeDictionaryId}
+        dictionaryName={dictName}
+        urlParams={urlParams}
+        onUpdateParams={onUpdateParams}
+        onBack={onBackToList}
       />
     );
   }
@@ -231,7 +234,7 @@ export default function NaturalDictionary() {
                 <td>{[d.sourceLanguage, d.targetLanguage].filter(Boolean).join(' → ') || '—'}</td>
                 <td>{new Date(d.importedAt).toLocaleDateString()}</td>
                 <td className="actions-cell">
-                  <button className="edit-btn" onClick={() => setBrowsing({ id: d.id, name: d.name })}>Browse</button>
+                  <button className="edit-btn" onClick={() => onBrowse(d.id)}>Browse</button>
                   <button className="delete-btn" onClick={() => handleDelete(d.id, d.name)}>Delete</button>
                 </td>
               </tr>

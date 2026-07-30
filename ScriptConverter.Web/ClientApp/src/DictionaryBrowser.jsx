@@ -1,26 +1,45 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import ArticleView from './ArticleView';
 import ArticleEditor from './ArticleEditor';
 import MergeDuplicates from './MergeDuplicates';
 
 /**
  * Component for browsing and searching within a specific natural dictionary.
- * Shows paginated headword list with structured definitions, and supports
- * adding, editing, and deleting articles.
+ * Syncs page, search query, and expanded word to URL query params so that
+ * refreshing the page preserves full state.
+ *
+ * URL params: ?page=N&q=search&word=articleId
  */
-export default function DictionaryBrowser({ dictionaryId, dictionaryName, onBack }) {
+export default function DictionaryBrowser({ dictionaryId, dictionaryName, urlParams, onUpdateParams, onBack }) {
+  // Initialize state from URL params
+  const initialPage = parseInt(urlParams?.page) || 1;
+  const initialQuery = urlParams?.q || '';
+  const initialWord = urlParams?.word ? parseInt(urlParams.word) : null;
+
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState('');
-  const [activeSearch, setActiveSearch] = useState('');
-  const [page, setPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState(initialQuery);
+  const [activeSearch, setActiveSearch] = useState(initialQuery);
+  const [page, setPage] = useState(initialPage);
   const [totalCount, setTotalCount] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
-  const [expandedId, setExpandedId] = useState(null);
-  const [editing, setEditing] = useState(null); // null | 'new' | article object
+  const [expandedId, setExpandedId] = useState(initialWord);
+  const [editing, setEditing] = useState(null);
   const [showMerge, setShowMerge] = useState(false);
   const [message, setMessage] = useState('');
   const pageSize = 50;
+
+  // Track whether this is the initial mount to avoid double-fetching
+  const isInitialMount = useRef(true);
+
+  // Sync state to URL whenever page, activeSearch, or expandedId changes
+  const syncUrl = useCallback((p, q, wordId) => {
+    const params = {};
+    if (p > 1) params.page = String(p);
+    if (q) params.q = q;
+    if (wordId) params.word = String(wordId);
+    onUpdateParams?.(params);
+  }, [onUpdateParams]);
 
   const fetchArticles = useCallback(async (p, query) => {
     setLoading(true);
@@ -43,33 +62,44 @@ export default function DictionaryBrowser({ dictionaryId, dictionaryName, onBack
     }
   }, [dictionaryId]);
 
+  // Initial fetch using URL params
   useEffect(() => {
-    fetchArticles(1, '');
-  }, [fetchArticles]);
+    fetchArticles(initialPage, initialQuery);
+    isInitialMount.current = false;
+  }, [fetchArticles]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setActiveSearch(searchQuery);
+    const q = searchQuery.trim();
+    setActiveSearch(q);
     setPage(1);
-    fetchArticles(1, searchQuery);
+    setExpandedId(null);
+    fetchArticles(1, q);
+    syncUrl(1, q, null);
   };
 
   const handleClearSearch = () => {
     setSearchQuery('');
     setActiveSearch('');
     setPage(1);
+    setExpandedId(null);
     fetchArticles(1, '');
+    syncUrl(1, '', null);
   };
 
   const goToPage = (p) => {
     if (p < 1 || p > totalPages) return;
     setPage(p);
+    setExpandedId(null);
     fetchArticles(p, activeSearch);
+    syncUrl(p, activeSearch, null);
     document.querySelector('.browser-articles')?.scrollTo(0, 0);
   };
 
   const toggleExpand = (id) => {
-    setExpandedId(expandedId === id ? null : id);
+    const newId = expandedId === id ? null : id;
+    setExpandedId(newId);
+    syncUrl(page, activeSearch, newId);
   };
 
   const handleDelete = async (articleId, headword) => {
@@ -80,7 +110,9 @@ export default function DictionaryBrowser({ dictionaryId, dictionaryName, onBack
       if (res.ok) {
         setMessage(`Deleted "${headword}".`);
         setTotalCount(c => c - 1);
+        if (expandedId === articleId) setExpandedId(null);
         fetchArticles(page, activeSearch);
+        syncUrl(page, activeSearch, null);
       }
     } catch { /* ignore */ }
   };
