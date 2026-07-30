@@ -13,7 +13,7 @@ public sealed class LookupResult
 }
 
 /// <summary>
-/// A single definition from a specific dictionary.
+/// A single article result from a specific dictionary.
 /// </summary>
 public sealed class LookupEntry
 {
@@ -23,6 +23,15 @@ public sealed class LookupEntry
     /// <summary>Display name of the dictionary.</summary>
     public required string DictionaryName { get; set; }
 
-    /// <summary>The definition text (may contain HTML).</summary>
-    public required string Definition { get; set; }
+    /// <summary>Phonetic/pronunciation guide.</summary>
+    public string? Pronunciation { get; set; }
+
+    /// <summary>Structured senses (grouped by part of speech).</summary>
+    public List<WordSense> Senses { get; set; } = [];
+
+    /// <summary>Word links (synonyms, antonyms, related words).</summary>
+    public List<WordLink> Links { get; set; } = [];
+
+    /// <summary>Raw definition (HTML fallback) when structured data isn't available.</summary>
+    public string? RawDefinition { get; set; }
 }

@@ -103,13 +103,19 @@ public sealed class StarDictParser : IDictionaryParser
                 continue; // Skip corrupted entries
 
             var rawContent = dictBytes.AsSpan((int)offset, (int)size);
-            var definition = ExtractDefinition(rawContent, typeSequence);
+            var rawDefinition = ExtractDefinition(rawContent, typeSequence);
+
+            // Attempt structured extraction from raw definition
+            var (pronunciation, senses, links) = DefinitionStructurer.Extract(rawDefinition);
 
             articles.Add(new NaturalDictionaryArticle
             {
                 DictionaryId = dictionaryId,
                 Headword = headword,
-                Definition = definition,
+                Pronunciation = pronunciation,
+                Senses = senses,
+                Links = links,
+                RawDefinition = rawDefinition,
             });
         }
 

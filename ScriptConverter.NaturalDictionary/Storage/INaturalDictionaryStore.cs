@@ -59,4 +59,16 @@ public interface INaturalDictionaryStore
         int page = 1,
         int pageSize = 50,
         CancellationToken cancellationToken = default);
+
+    /// <summary>Get a single article by ID.</summary>
+    Task<NaturalDictionaryArticle?> GetArticleAsync(long articleId, CancellationToken cancellationToken = default);
+
+    /// <summary>Add a new article to a dictionary. Returns the created article with assigned ID.</summary>
+    Task<NaturalDictionaryArticle> AddArticleAsync(NaturalDictionaryArticle article, CancellationToken cancellationToken = default);
+
+    /// <summary>Update an existing article. Returns true if found and updated.</summary>
+    Task<bool> UpdateArticleAsync(NaturalDictionaryArticle article, CancellationToken cancellationToken = default);
+
+    /// <summary>Delete an article by ID. Returns true if found and deleted.</summary>
+    Task<bool> DeleteArticleAsync(long articleId, CancellationToken cancellationToken = default);
 }

@@ -64,11 +64,17 @@ public sealed class DslParser : IDictionaryParser
                 ? System.Text.Json.JsonSerializer.Serialize(headwords.Skip(1).ToList())
                 : null;
 
+            // Extract structured data from the raw DSL source (before HTML conversion)
+            var (pronunciation, senses, links) = DefinitionStructurer.ExtractFromDsl(definition);
+
             articles.Add(new NaturalDictionaryArticle
             {
                 DictionaryId = dictionaryId,
                 Headword = primaryHeadword,
-                Definition = htmlDef,
+                Pronunciation = pronunciation,
+                Senses = senses,
+                Links = links,
+                RawDefinition = htmlDef,
                 Alternates = alternates,
             });
         }

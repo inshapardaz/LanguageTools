@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import DictionaryBrowser from './DictionaryBrowser';
+import ArticleView from './ArticleView';
 
 export default function NaturalDictionary() {
   const [dictionaries, setDictionaries] = useState([]);
@@ -198,7 +199,7 @@ export default function NaturalDictionary() {
           {lookupResults.entries.map((entry, i) => (
             <div key={i} className="lookup-entry">
               <div className="lookup-dict-name">{entry.dictionaryName}</div>
-              <div className="lookup-definition" dangerouslySetInnerHTML={{ __html: entry.definition }} />
+              <ArticleView article={entry} />
             </div>
           ))}
           <button className="close-results" onClick={() => setLookupResults(null)}>Close</button>

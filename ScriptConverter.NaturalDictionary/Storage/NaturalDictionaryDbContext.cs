@@ -46,7 +46,10 @@ public class NaturalDictionaryDbContext : DbContext
             entity.Property(e => e.DictionaryId).HasMaxLength(32).IsRequired();
             entity.Property(e => e.Headword).HasMaxLength(500).IsRequired();
             entity.Property(e => e.HeadwordNormalised).HasMaxLength(500).IsRequired();
-            entity.Property(e => e.Definition).IsRequired();
+            entity.Property(e => e.Pronunciation).HasMaxLength(500);
+            entity.Property(e => e.SensesJson).IsRequired().HasColumnName("SensesJson");
+            entity.Property(e => e.LinksJson).HasColumnName("LinksJson");
+            entity.Property(e => e.RawDefinition).HasColumnName("RawDefinition");
             entity.Property(e => e.Alternates);
 
             // Indexes for fast lookups

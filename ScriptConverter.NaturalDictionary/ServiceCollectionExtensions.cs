@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using ScriptConverter.NaturalDictionary.Export;
 using ScriptConverter.NaturalDictionary.Parsers;
 using ScriptConverter.NaturalDictionary.Services;
 using ScriptConverter.NaturalDictionary.Storage;
@@ -48,6 +49,9 @@ public static class ServiceCollectionExtensions
 
         // Register import service
         services.AddSingleton<DictionaryImportService>();
+
+        // Register export service
+        services.AddSingleton<DictionaryExportService>();
 
         return services;
     }

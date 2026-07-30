@@ -55,10 +55,11 @@ public sealed class EfNaturalDictionaryStore : INaturalDictionaryStore
     {
         await using var db = await _contextFactory.CreateDbContextAsync(cancellationToken);
 
-        return await db.Dictionaries
+        var entities = await db.Dictionaries
             .OrderByDescending(d => d.ImportedAt)
-            .Select(d => d.ToModel())
             .ToListAsync(cancellationToken);
+
+        return entities.Select(d => d.ToModel()).ToList();
     }
 
     public async Task<NaturalDictionaryInfo?> GetDictionaryAsync(
@@ -108,11 +109,18 @@ public sealed class EfNaturalDictionaryStore : INaturalDictionaryStore
 
         var matches = await query.ToListAsync(cancellationToken);
 
-        var entries = matches.Select(a => new LookupEntry
+        var entries = matches.Select(a =>
         {
-            DictionaryId = a.DictionaryId,
-            DictionaryName = a.Dictionary?.Name ?? "Unknown",
-            Definition = a.Definition,
+            var model = a.ToModel();
+            return new LookupEntry
+            {
+                DictionaryId = a.DictionaryId,
+                DictionaryName = a.Dictionary?.Name ?? "Unknown",
+                Pronunciation = model.Pronunciation,
+                Senses = model.Senses,
+                Links = model.Links,
+                RawDefinition = model.RawDefinition,
+            };
         }).ToList();
 
         return new LookupResult
@@ -161,11 +169,10 @@ public sealed class EfNaturalDictionaryStore : INaturalDictionaryStore
 
         var totalCount = await query.CountAsync(cancellationToken);
 
-        var articles = await query
+        var entities = await query
             .OrderBy(a => a.HeadwordNormalised)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
-            .Select(a => a.ToModel())
             .ToListAsync(cancellationToken);
 
         return new BrowseResult
@@ -173,7 +180,7 @@ public sealed class EfNaturalDictionaryStore : INaturalDictionaryStore
             TotalCount = totalCount,
             Page = page,
             PageSize = pageSize,
-            Articles = articles,
+            Articles = entities.Select(a => a.ToModel()).ToList(),
         };
     }
 
@@ -194,11 +201,10 @@ public sealed class EfNaturalDictionaryStore : INaturalDictionaryStore
 
         var totalCount = await dbQuery.CountAsync(cancellationToken);
 
-        var articles = await dbQuery
+        var entities = await dbQuery
             .OrderBy(a => a.HeadwordNormalised)
             .Skip((page - 1) * pageSize)
             .Take(pageSize)
-            .Select(a => a.ToModel())
             .ToListAsync(cancellationToken);
 
         return new BrowseResult
@@ -206,7 +212,7 @@ public sealed class EfNaturalDictionaryStore : INaturalDictionaryStore
             TotalCount = totalCount,
             Page = page,
             PageSize = pageSize,
-            Articles = articles,
+            Articles = entities.Select(a => a.ToModel()).ToList(),
         };
     }
 
@@ -215,4 +221,93 @@ public sealed class EfNaturalDictionaryStore : INaturalDictionaryStore
         using var db = _contextFactory.CreateDbContext();
         db.Database.EnsureCreated();
     }
+
+    public async Task<NaturalDictionaryArticle?> GetArticleAsync(long articleId, CancellationToken cancellationToken = default)
+    {
+        await using var db = await _contextFactory.CreateDbContextAsync(cancellationToken);
+        var entity = await db.Articles.FindAsync([articleId], cancellationToken);
+        return entity?.ToModel();
+    }
+
+    public async Task<NaturalDictionaryArticle> AddArticleAsync(NaturalDictionaryArticle article, CancellationToken cancellationToken = default)
+    {
+        await using var db = await _contextFactory.CreateDbContextAsync(cancellationToken);
+
+        var entity = ArticleEntity.FromModel(article);
+        db.Articles.Add(entity);
+        await db.SaveChangesAsync(cancellationToken);
+
+        // Update the dictionary entry count
+        var dict = await db.Dictionaries.FindAsync([article.DictionaryId], cancellationToken);
+        if (dict != null)
+        {
+            dict.EntryCount = await db.Articles.CountAsync(a => a.DictionaryId == article.DictionaryId, cancellationToken);
+            await db.SaveChangesAsync(cancellationToken);
+        }
+
+        return entity.ToModel();
+    }
+
+    public async Task<bool> UpdateArticleAsync(NaturalDictionaryArticle article, CancellationToken cancellationToken = default)
+    {
+        await using var db = await _contextFactory.CreateDbContextAsync(cancellationToken);
+
+        var existing = await db.Articles.FindAsync([article.Id], cancellationToken);
+        if (existing == null)
+            return false;
+
+        existing.Headword = article.Headword;
+        existing.HeadwordNormalised = article.Headword.ToLowerInvariant().Trim();
+        existing.Pronunciation = article.Pronunciation;
+        existing.SensesJson = SerializeSenses(article.Senses);
+        existing.LinksJson = SerializeLinks(article.Links);
+        existing.RawDefinition = article.RawDefinition;
+        existing.Alternates = article.Alternates;
+
+        await db.SaveChangesAsync(cancellationToken);
+        return true;
+    }
+
+    public async Task<bool> DeleteArticleAsync(long articleId, CancellationToken cancellationToken = default)
+    {
+        await using var db = await _contextFactory.CreateDbContextAsync(cancellationToken);
+
+        var entity = await db.Articles.FindAsync([articleId], cancellationToken);
+        if (entity == null)
+            return false;
+
+        var dictionaryId = entity.DictionaryId;
+        db.Articles.Remove(entity);
+        await db.SaveChangesAsync(cancellationToken);
+
+        // Update the dictionary entry count
+        var dict = await db.Dictionaries.FindAsync([dictionaryId], cancellationToken);
+        if (dict != null)
+        {
+            dict.EntryCount = await db.Articles.CountAsync(a => a.DictionaryId == dictionaryId, cancellationToken);
+            await db.SaveChangesAsync(cancellationToken);
+        }
+
+        return true;
+    }
+
+    private static string SerializeSenses(List<WordSense>? senses)
+    {
+        if (senses == null || senses.Count == 0)
+            return "[]";
+        return System.Text.Json.JsonSerializer.Serialize(senses, JsonOpts);
+    }
+
+    private static string? SerializeLinks(List<WordLink>? links)
+    {
+        if (links == null || links.Count == 0)
+            return null;
+        return System.Text.Json.JsonSerializer.Serialize(links, JsonOpts);
+    }
+
+    private static readonly System.Text.Json.JsonSerializerOptions JsonOpts = new()
+    {
+        PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase,
+        DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
+    };
 }

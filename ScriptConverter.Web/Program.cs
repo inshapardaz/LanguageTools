@@ -2,6 +2,7 @@ using ScriptConverter;
 using ScriptConverter.Dictionary;
 using ScriptConverter.Mappings;
 using ScriptConverter.NaturalDictionary;
+using ScriptConverter.NaturalDictionary.Export;
 using ScriptConverter.NaturalDictionary.Services;
 using ScriptConverter.NaturalDictionary.Storage;
 
@@ -352,7 +353,10 @@ app.MapGet("/api/natural-dictionary/{id}/browse", async (
         {
             a.Id,
             a.Headword,
-            a.Definition,
+            a.Pronunciation,
+            a.Senses,
+            a.Links,
+            a.RawDefinition,
             a.Alternates,
         })
     });
@@ -387,10 +391,262 @@ app.MapGet("/api/natural-dictionary/{id}/search", async (
         {
             a.Id,
             a.Headword,
-            a.Definition,
+            a.Pronunciation,
+            a.Senses,
+            a.Links,
+            a.RawDefinition,
             a.Alternates,
         })
     });
+});
+
+// ===== Natural Dictionary Export =====
+
+app.MapGet("/api/natural-dictionary/{id}/export", async (
+    string id,
+    string? format,
+    DictionaryExportService exportService,
+    CancellationToken ct) =>
+{
+    var exportFormat = (format?.ToLowerInvariant()) switch
+    {
+        "stardict" => ExportFormat.StarDict,
+        "dsl" => ExportFormat.Dsl,
+        "json" => ExportFormat.Json,
+        "kobo" => ExportFormat.Kobo,
+        "kindle" => ExportFormat.Kindle,
+        _ => ExportFormat.StarDict,
+    };
+
+    var result = await exportService.ExportAsync(id, exportFormat, ct);
+    if (result == null)
+        return Results.NotFound(new { error = "Dictionary not found." });
+
+    return Results.File(result.Data, result.ContentType, result.FileName);
+});
+
+// ===== Natural Dictionary Merge Duplicates =====
+
+app.MapGet("/api/natural-dictionary/{id}/merge-candidates", async (
+    string id,
+    int? limit,
+    INaturalDictionaryStore natStore,
+    CancellationToken ct) =>
+{
+    var dict = await natStore.GetDictionaryAsync(id, ct);
+    if (dict == null)
+        return Results.NotFound(new { error = "Dictionary not found." });
+
+    // Load all articles (paginate)
+    var allArticles = new List<ScriptConverter.NaturalDictionary.Models.NaturalDictionaryArticle>();
+    int p = 1;
+    while (true)
+    {
+        var batch = await natStore.BrowseAsync(id, p, 1000, ct);
+        allArticles.AddRange(batch.Articles);
+        if (p >= batch.TotalPages) break;
+        p++;
+    }
+
+    // Group by base headword (strip trailing [N], (N), or numeric suffixes)
+    var groups = allArticles
+        .GroupBy(a => NormalizeHeadwordForMerge(a.Headword), StringComparer.OrdinalIgnoreCase)
+        .Where(g => g.Count() > 1)
+        .OrderByDescending(g => g.Count())
+        .Take(limit ?? 100)
+        .Select(g => new
+        {
+            baseHeadword = g.Key,
+            count = g.Count(),
+            articles = g.Select(a => new
+            {
+                a.Id,
+                a.Headword,
+                a.Pronunciation,
+                sensesCount = a.Senses.Count,
+                meaningsCount = a.Senses.Sum(s => s.Meanings.Count),
+            }).ToList(),
+        })
+        .ToList();
+
+    return Results.Ok(new { dictionaryId = id, totalGroups = groups.Count, groups });
+});
+
+app.MapPost("/api/natural-dictionary/{id}/merge", async (
+    string id,
+    MergeRequest request,
+    INaturalDictionaryStore natStore,
+    CancellationToken ct) =>
+{
+    if (request.ArticleIds == null || request.ArticleIds.Count < 2)
+        return Results.BadRequest(new { error = "At least 2 article IDs are required to merge." });
+
+    // Load all articles to merge
+    var articles = new List<ScriptConverter.NaturalDictionary.Models.NaturalDictionaryArticle>();
+    foreach (var articleId in request.ArticleIds)
+    {
+        var article = await natStore.GetArticleAsync(articleId, ct);
+        if (article == null)
+            return Results.BadRequest(new { error = $"Article {articleId} not found." });
+        if (article.DictionaryId != id)
+            return Results.BadRequest(new { error = $"Article {articleId} does not belong to this dictionary." });
+        articles.Add(article);
+    }
+
+    // Determine merged headword (use provided or strip suffix from first)
+    var mergedHeadword = !string.IsNullOrWhiteSpace(request.Headword)
+        ? request.Headword.Trim()
+        : NormalizeHeadwordForMerge(articles[0].Headword);
+
+    // Merge: combine senses, links, pick first non-null pronunciation
+    var mergedPronunciation = articles.Select(a => a.Pronunciation).FirstOrDefault(p => !string.IsNullOrWhiteSpace(p));
+    var mergedSenses = articles.SelectMany(a => a.Senses).ToList();
+    var mergedLinks = articles.SelectMany(a => a.Links)
+        .GroupBy(l => (l.LinkType, l.TargetWord.ToLowerInvariant()))
+        .Select(g => g.First())
+        .ToList();
+    var mergedRaw = string.Join("<hr>", articles
+        .Where(a => !string.IsNullOrWhiteSpace(a.RawDefinition))
+        .Select(a => a.RawDefinition));
+
+    // Update the first article with merged content
+    var primary = articles[0];
+    primary.Headword = mergedHeadword;
+    primary.Pronunciation = mergedPronunciation;
+    primary.Senses = mergedSenses;
+    primary.Links = mergedLinks;
+    primary.RawDefinition = string.IsNullOrWhiteSpace(mergedRaw) ? null : mergedRaw;
+
+    await natStore.UpdateArticleAsync(primary, ct);
+
+    // Delete the other articles
+    foreach (var other in articles.Skip(1))
+    {
+        await natStore.DeleteArticleAsync(other.Id, ct);
+    }
+
+    return Results.Ok(new
+    {
+        message = $"Merged {articles.Count} articles into \"{mergedHeadword}\".",
+        article = new
+        {
+            primary.Id,
+            primary.Headword,
+            primary.Pronunciation,
+            primary.Senses,
+            primary.Links,
+            primary.RawDefinition,
+        }
+    });
+});
+
+// ===== Natural Dictionary Article CRUD =====
+
+app.MapGet("/api/natural-dictionary/articles/{articleId:long}", async (
+    long articleId,
+    INaturalDictionaryStore natStore,
+    CancellationToken ct) =>
+{
+    var article = await natStore.GetArticleAsync(articleId, ct);
+    if (article == null)
+        return Results.NotFound(new { error = "Article not found." });
+
+    return Results.Ok(new
+    {
+        article.Id,
+        article.DictionaryId,
+        article.Headword,
+        article.Pronunciation,
+        article.Senses,
+        article.Links,
+        article.RawDefinition,
+        article.Alternates,
+    });
+});
+
+app.MapPost("/api/natural-dictionary/{dictId}/articles", async (
+    string dictId,
+    ArticleRequest request,
+    INaturalDictionaryStore natStore,
+    CancellationToken ct) =>
+{
+    var dict = await natStore.GetDictionaryAsync(dictId, ct);
+    if (dict == null)
+        return Results.NotFound(new { error = "Dictionary not found." });
+
+    if (string.IsNullOrWhiteSpace(request.Headword))
+        return Results.BadRequest(new { error = "Headword is required." });
+
+    var article = new ScriptConverter.NaturalDictionary.Models.NaturalDictionaryArticle
+    {
+        DictionaryId = dictId,
+        Headword = request.Headword.Trim(),
+        Pronunciation = request.Pronunciation,
+        Senses = request.Senses ?? [],
+        Links = request.Links ?? [],
+        RawDefinition = request.RawDefinition,
+        Alternates = request.Alternates,
+    };
+
+    var created = await natStore.AddArticleAsync(article, ct);
+    return Results.Created($"/api/natural-dictionary/articles/{created.Id}", new
+    {
+        created.Id,
+        created.DictionaryId,
+        created.Headword,
+        created.Pronunciation,
+        created.Senses,
+        created.Links,
+        created.RawDefinition,
+        created.Alternates,
+    });
+});
+
+app.MapPut("/api/natural-dictionary/articles/{articleId:long}", async (
+    long articleId,
+    ArticleRequest request,
+    INaturalDictionaryStore natStore,
+    CancellationToken ct) =>
+{
+    if (string.IsNullOrWhiteSpace(request.Headword))
+        return Results.BadRequest(new { error = "Headword is required." });
+
+    var existing = await natStore.GetArticleAsync(articleId, ct);
+    if (existing == null)
+        return Results.NotFound(new { error = "Article not found." });
+
+    existing.Headword = request.Headword.Trim();
+    existing.Pronunciation = request.Pronunciation;
+    existing.Senses = request.Senses ?? [];
+    existing.Links = request.Links ?? [];
+    existing.RawDefinition = request.RawDefinition;
+    existing.Alternates = request.Alternates;
+
+    var updated = await natStore.UpdateArticleAsync(existing, ct);
+    return updated
+        ? Results.Ok(new
+        {
+            existing.Id,
+            existing.DictionaryId,
+            existing.Headword,
+            existing.Pronunciation,
+            existing.Senses,
+            existing.Links,
+            existing.RawDefinition,
+            existing.Alternates,
+        })
+        : Results.StatusCode(500);
+});
+
+app.MapDelete("/api/natural-dictionary/articles/{articleId:long}", async (
+    long articleId,
+    INaturalDictionaryStore natStore,
+    CancellationToken ct) =>
+{
+    var deleted = await natStore.DeleteArticleAsync(articleId, ct);
+    return deleted
+        ? Results.NoContent()
+        : Results.NotFound(new { error = "Article not found." });
 });
 
 // Fallback to index.html for SPA routing (only for non-API paths)
@@ -414,3 +670,34 @@ app.Run();
 record ConvertRequest(string Text, string From, string To);
 record ConvertResponse(string Result, string From, string To);
 record DictionaryEntryRequest(string? Roman, string? Urdu, string? Hindi, string? Meaning, string? Category);
+
+record ArticleRequest(
+    string? Headword,
+    string? Pronunciation,
+    List<ScriptConverter.NaturalDictionary.Models.WordSense>? Senses,
+    List<ScriptConverter.NaturalDictionary.Models.WordLink>? Links,
+    string? RawDefinition,
+    string? Alternates);
+
+record MergeRequest(List<long>? ArticleIds, string? Headword);
+
+partial class Program
+{
+    /// <summary>
+    /// Strips trailing [N], (N), or numbered suffixes from a headword to find the base form.
+    /// Examples: "run [1]" → "run", "bank (2)" → "bank", "set[3]" → "set"
+    /// </summary>
+    static string NormalizeHeadwordForMerge(string headword)
+    {
+        if (string.IsNullOrWhiteSpace(headword))
+            return headword;
+
+        // Strip patterns like: " [1]", "[2]", " (1)", "(3)", " 1", " 2" at end
+        var trimmed = System.Text.RegularExpressions.Regex.Replace(
+            headword.Trim(),
+            @"\s*[\[\(]?\d+[\]\)]?\s*$",
+            "");
+
+        return trimmed.Trim();
+    }
+}
