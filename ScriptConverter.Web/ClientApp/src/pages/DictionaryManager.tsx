@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Paper, Table, Group, Button, TextInput, Modal, Stack, Badge, Text, Alert } from '@mantine/core';
+import { Paper, Table, Group, Button, TextInput, Modal, Stack, Badge, Text } from '@mantine/core';
 import { IconSearch, IconPlus, IconEdit, IconTrash } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
+import { useI18n } from '../i18n';
 
 interface DictEntry {
   id: string;
@@ -13,6 +14,7 @@ interface DictEntry {
 }
 
 export default function DictionaryManager() {
+  const { t } = useI18n();
   const [entries, setEntries] = useState<DictEntry[]>([]);
   const [total, setTotal] = useState(0);
   const [search, setSearch] = useState('');
@@ -35,25 +37,13 @@ export default function DictionaryManager() {
   }, [search]);
 
   const fetchStats = async () => {
-    try {
-      const res = await fetch('/api/dictionary/stats');
-      setStats(await res.json());
-    } catch { /* ignore */ }
+    try { const res = await fetch('/api/dictionary/stats'); setStats(await res.json()); } catch { /* ignore */ }
   };
 
   useEffect(() => { fetchEntries(); fetchStats(); }, [fetchEntries]);
 
-  const openAdd = () => {
-    setEditEntry(null);
-    setFormData({ roman: '', urdu: '', hindi: '', meaning: '', category: '' });
-    setFormOpen(true);
-  };
-
-  const openEdit = (e: DictEntry) => {
-    setEditEntry(e);
-    setFormData({ roman: e.roman, urdu: e.urdu || '', hindi: e.hindi || '', meaning: e.meaning || '', category: e.category || '' });
-    setFormOpen(true);
-  };
+  const openAdd = () => { setEditEntry(null); setFormData({ roman: '', urdu: '', hindi: '', meaning: '', category: '' }); setFormOpen(true); };
+  const openEdit = (e: DictEntry) => { setEditEntry(e); setFormData({ roman: e.roman, urdu: e.urdu || '', hindi: e.hindi || '', meaning: e.meaning || '', category: e.category || '' }); setFormOpen(true); };
 
   const handleSubmit = async () => {
     if (!formData.roman.trim()) return;
@@ -61,20 +51,18 @@ export default function DictionaryManager() {
     const method = editEntry ? 'PUT' : 'POST';
     const res = await fetch(url, { method, headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(formData) });
     if (res.ok) {
-      notifications.show({ message: editEntry ? 'Entry updated.' : 'Entry added.', color: 'green' });
-      setFormOpen(false);
-      fetchEntries();
-      fetchStats();
+      notifications.show({ message: editEntry ? t('dictEntryUpdated') : t('dictEntryAdded'), color: 'green' });
+      setFormOpen(false); fetchEntries(); fetchStats();
     } else {
       const d = await res.json().catch(() => ({}));
-      notifications.show({ message: d.error || 'Failed to save.', color: 'red' });
+      notifications.show({ message: d.error || 'Failed.', color: 'red' });
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!window.confirm('Delete this entry?')) return;
+    if (!window.confirm(t('dictDeleteConfirm'))) return;
     const res = await fetch(`/api/dictionary/${id}`, { method: 'DELETE' });
-    if (res.ok) { notifications.show({ message: 'Deleted.', color: 'green' }); fetchEntries(); fetchStats(); }
+    if (res.ok) { notifications.show({ message: t('dictDeleted'), color: 'green' }); fetchEntries(); fetchStats(); }
   };
 
   return (
@@ -82,40 +70,33 @@ export default function DictionaryManager() {
       <Stack gap="md">
         {stats && (
           <Group gap="lg">
-            <Text size="sm"><strong>{stats.total}</strong> words</Text>
-            <Text size="sm" c="dimmed">{stats.withUrdu} with Urdu</Text>
-            <Text size="sm" c="dimmed">{stats.withHindi} with Hindi</Text>
+            <Text size="sm"><strong>{stats.total}</strong> {t('dictWords')}</Text>
+            <Text size="sm" c="dimmed">{stats.withUrdu} {t('dictWithUrdu')}</Text>
+            <Text size="sm" c="dimmed">{stats.withHindi} {t('dictWithHindi')}</Text>
           </Group>
         )}
 
         <Group>
-          <TextInput
-            placeholder="Search words..."
-            leftSection={<IconSearch size={14} />}
-            value={search}
-            onChange={(e) => setSearch(e.currentTarget.value)}
-            onKeyDown={(e) => { if (e.key === 'Enter') fetchEntries(); }}
-            style={{ flex: 1 }}
-          />
-          <Button leftSection={<IconPlus size={14} />} onClick={openAdd}>Add Word</Button>
+          <TextInput placeholder={t('dictSearchPlaceholder')} leftSection={<IconSearch size={14} />} value={search} onChange={(e) => setSearch(e.currentTarget.value)} onKeyDown={(e) => { if (e.key === 'Enter') fetchEntries(); }} style={{ flex: 1 }} />
+          <Button leftSection={<IconPlus size={14} />} onClick={openAdd}>{t('dictAddWord')}</Button>
         </Group>
 
         <Table striped highlightOnHover withTableBorder withColumnBorders>
           <Table.Thead>
             <Table.Tr>
-              <Table.Th>Roman</Table.Th>
-              <Table.Th>Urdu</Table.Th>
-              <Table.Th>Hindi</Table.Th>
-              <Table.Th>Meaning</Table.Th>
-              <Table.Th>Category</Table.Th>
-              <Table.Th w={100}>Actions</Table.Th>
+              <Table.Th>{t('dictRoman')}</Table.Th>
+              <Table.Th>{t('dictUrdu')}</Table.Th>
+              <Table.Th>{t('dictHindi')}</Table.Th>
+              <Table.Th>{t('dictMeaning')}</Table.Th>
+              <Table.Th>{t('dictCategory')}</Table.Th>
+              <Table.Th w={100}>{t('dictActions')}</Table.Th>
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
             {entries.map((e) => (
               <Table.Tr key={e.id}>
                 <Table.Td>{e.roman}</Table.Td>
-                <Table.Td dir="rtl" style={{ fontFamily: "'Noto Nastaliq Urdu', sans-serif" }}>{e.urdu}</Table.Td>
+                <Table.Td dir="rtl" style={{ fontFamily: "'Urdu UI', inherit" }}>{e.urdu}</Table.Td>
                 <Table.Td style={{ fontFamily: "'Noto Sans Devanagari', sans-serif" }}>{e.hindi}</Table.Td>
                 <Table.Td>{e.meaning}</Table.Td>
                 <Table.Td>{e.category && <Badge variant="light" size="sm">{e.category}</Badge>}</Table.Td>
@@ -128,24 +109,23 @@ export default function DictionaryManager() {
               </Table.Tr>
             ))}
             {entries.length === 0 && !loading && (
-              <Table.Tr><Table.Td colSpan={6}><Text ta="center" c="dimmed" py="lg">No entries found.</Text></Table.Td></Table.Tr>
+              <Table.Tr><Table.Td colSpan={6}><Text ta="center" c="dimmed" py="lg">{t('dictNoEntries')}</Text></Table.Td></Table.Tr>
             )}
           </Table.Tbody>
         </Table>
-
-        {entries.length < total && <Text size="xs" c="dimmed" ta="center">Showing {entries.length} of {total}</Text>}
+        {entries.length < total && <Text size="xs" c="dimmed" ta="center">{t('dictShowing', entries.length, total)}</Text>}
       </Stack>
 
-      <Modal opened={formOpen} onClose={() => setFormOpen(false)} title={editEntry ? 'Edit Entry' : 'Add Entry'}>
+      <Modal opened={formOpen} onClose={() => setFormOpen(false)} title={editEntry ? t('dictEditEntry') : t('dictAddEntry')}>
         <Stack gap="sm">
-          <TextInput label="Roman *" required value={formData.roman} onChange={(e) => setFormData({ ...formData, roman: e.currentTarget.value })} placeholder="e.g. salam" />
-          <TextInput label="Urdu" dir="rtl" value={formData.urdu} onChange={(e) => setFormData({ ...formData, urdu: e.currentTarget.value })} placeholder="e.g. سلام" />
-          <TextInput label="Hindi" value={formData.hindi} onChange={(e) => setFormData({ ...formData, hindi: e.currentTarget.value })} placeholder="e.g. सलाम" />
-          <TextInput label="Meaning" value={formData.meaning} onChange={(e) => setFormData({ ...formData, meaning: e.currentTarget.value })} placeholder="e.g. peace/hello" />
-          <TextInput label="Category" value={formData.category} onChange={(e) => setFormData({ ...formData, category: e.currentTarget.value })} placeholder="e.g. greeting, verb" />
+          <TextInput label={`${t('dictRoman')} *`} required value={formData.roman} onChange={(e) => setFormData({ ...formData, roman: e.currentTarget.value })} />
+          <TextInput label={t('dictUrdu')} dir="rtl" value={formData.urdu} onChange={(e) => setFormData({ ...formData, urdu: e.currentTarget.value })} />
+          <TextInput label={t('dictHindi')} value={formData.hindi} onChange={(e) => setFormData({ ...formData, hindi: e.currentTarget.value })} />
+          <TextInput label={t('dictMeaning')} value={formData.meaning} onChange={(e) => setFormData({ ...formData, meaning: e.currentTarget.value })} />
+          <TextInput label={t('dictCategory')} value={formData.category} onChange={(e) => setFormData({ ...formData, category: e.currentTarget.value })} />
           <Group justify="flex-end">
-            <Button variant="default" onClick={() => setFormOpen(false)}>Cancel</Button>
-            <Button onClick={handleSubmit}>{editEntry ? 'Update' : 'Add'}</Button>
+            <Button variant="default" onClick={() => setFormOpen(false)}>{t('cancel')}</Button>
+            <Button onClick={handleSubmit}>{editEntry ? t('editorUpdate') : t('dictAddWord')}</Button>
           </Group>
         </Stack>
       </Modal>

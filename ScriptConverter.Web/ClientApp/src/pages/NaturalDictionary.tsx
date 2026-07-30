@@ -4,6 +4,7 @@ import { Dropzone } from '@mantine/dropzone';
 import { notifications } from '@mantine/notifications';
 import { IconSearch, IconUpload, IconTrash, IconBook } from '@tabler/icons-react';
 import { updateParams } from '../router';
+import { useI18n } from '../i18n';
 import DictionaryBrowser from './DictionaryBrowser';
 import ArticleView from '../components/ArticleView';
 
@@ -26,6 +27,7 @@ interface Props {
 }
 
 export default function NaturalDictionary({ activeDictionaryId, urlParams, onBrowse, onBackToList }: Props) {
+  const { t } = useI18n();
   const [dictionaries, setDictionaries] = useState<DictInfo[]>([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
@@ -55,7 +57,7 @@ export default function NaturalDictionary({ activeDictionaryId, urlParams, onBro
       const res = await fetch('/api/natural-dictionary/upload', { method: 'POST', body: formData });
       const data = await res.json();
       if (!res.ok) { notifications.show({ message: data.error || 'Upload failed.', color: 'red' }); return; }
-      notifications.show({ message: `Imported "${data.dictionary.name}" with ${data.dictionary.entryCount.toLocaleString()} entries.`, color: 'green' });
+      notifications.show({ message: t('natDictImported_msg', data.dictionary.name, data.dictionary.entryCount.toLocaleString()), color: 'green' });
       setUploadOpen(false);
       fetchDictionaries();
     } catch { notifications.show({ message: 'Upload failed.', color: 'red' }); }
@@ -63,9 +65,9 @@ export default function NaturalDictionary({ activeDictionaryId, urlParams, onBro
   };
 
   const handleDelete = async (id: string, name: string) => {
-    if (!confirm(`Delete "${name}"?`)) return;
+    if (!confirm(t('natDictDeleteConfirm', name))) return;
     const res = await fetch(`/api/natural-dictionary/${id}`, { method: 'DELETE' });
-    if (res.ok) { notifications.show({ message: `Deleted "${name}".`, color: 'green' }); fetchDictionaries(); }
+    if (res.ok) { notifications.show({ message: t('dictDeleted'), color: 'green' }); fetchDictionaries(); }
   };
 
   const handleLookup = async (word?: string) => {
@@ -105,13 +107,13 @@ export default function NaturalDictionary({ activeDictionaryId, urlParams, onBro
     <Paper shadow="xs" p="lg" radius="md" withBorder>
       <Stack gap="md">
         <Group gap="lg">
-          <Text size="sm"><strong>{dictionaries.length}</strong> dictionaries</Text>
-          <Text size="sm" c="dimmed">{totalEntries.toLocaleString()} total entries</Text>
+          <Text size="sm"><strong>{dictionaries.length}</strong> {t('natDictDictionaries')}</Text>
+          <Text size="sm" c="dimmed">{totalEntries.toLocaleString()} {t('natDictTotalEntries')}</Text>
         </Group>
 
         <Group>
           <Autocomplete
-            placeholder="Look up a word..."
+            placeholder={t('natDictLookupPlaceholder')}
             leftSection={<IconSearch size={14} />}
             value={lookupWord}
             onChange={handleSuggest}
@@ -120,19 +122,19 @@ export default function NaturalDictionary({ activeDictionaryId, urlParams, onBro
             data={suggestions}
             style={{ flex: 1 }}
           />
-          <Button onClick={() => handleLookup()}>Lookup</Button>
+          <Button onClick={() => handleLookup()}>{t('natDictLookup')}</Button>
           <Button leftSection={<IconUpload size={14} />} variant="light" onClick={() => setUploadOpen(true)}>
-            Upload Dictionary
+            {t('natDictUpload')}
           </Button>
         </Group>
 
         {lookupResults && (
-          <Paper p="md" withBorder radius="md" bg="gray.0">
+          <Paper p="md" withBorder radius="md" bg="var(--mantine-color-body)">
             <Group justify="space-between" mb="xs">
-              <Text fw={600}>Results for "{lookupResults.headword}"</Text>
-              <Button variant="subtle" size="compact-xs" onClick={() => setLookupResults(null)}>Close</Button>
+              <Text fw={600}>{t('natDictResultsFor')} "{lookupResults.headword}"</Text>
+              <Button variant="subtle" size="compact-xs" onClick={() => setLookupResults(null)}>{t('natDictClose')}</Button>
             </Group>
-            {lookupResults.entries.length === 0 && <Text c="dimmed" size="sm">No entries found.</Text>}
+            {lookupResults.entries.length === 0 && <Text c="dimmed" size="sm">{t('natDictNoResults')}</Text>}
             {lookupResults.entries.map((entry: any, i: number) => (
               <Paper key={i} p="sm" mb="xs" withBorder radius="sm">
                 <Text size="xs" fw={600} c="blue" tt="uppercase" mb={4}>{entry.dictionaryName}</Text>
@@ -145,12 +147,12 @@ export default function NaturalDictionary({ activeDictionaryId, urlParams, onBro
         <Table striped highlightOnHover withTableBorder>
           <Table.Thead>
             <Table.Tr>
-              <Table.Th>Name</Table.Th>
-              <Table.Th>Format</Table.Th>
-              <Table.Th>Entries</Table.Th>
-              <Table.Th>Languages</Table.Th>
-              <Table.Th>Imported</Table.Th>
-              <Table.Th w={140}>Actions</Table.Th>
+              <Table.Th>{t('natDictName')}</Table.Th>
+              <Table.Th>{t('natDictFormat')}</Table.Th>
+              <Table.Th>{t('natDictEntries')}</Table.Th>
+              <Table.Th>{t('natDictLanguages')}</Table.Th>
+              <Table.Th>{t('natDictImported')}</Table.Th>
+              <Table.Th w={140}>{t('dictActions')}</Table.Th>
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
@@ -166,29 +168,27 @@ export default function NaturalDictionary({ activeDictionaryId, urlParams, onBro
                 <Table.Td>{new Date(d.importedAt).toLocaleDateString()}</Table.Td>
                 <Table.Td>
                   <Group gap={4}>
-                    <Button size="compact-xs" variant="light" leftSection={<IconBook size={12} />} onClick={() => onBrowse(d.id)}>Browse</Button>
+                    <Button size="compact-xs" variant="light" leftSection={<IconBook size={12} />} onClick={() => onBrowse(d.id)}>{t('natDictBrowse')}</Button>
                     <Button size="compact-xs" variant="light" color="red" onClick={() => handleDelete(d.id, d.name)}><IconTrash size={12} /></Button>
                   </Group>
                 </Table.Td>
               </Table.Tr>
             ))}
             {dictionaries.length === 0 && !loading && (
-              <Table.Tr><Table.Td colSpan={6}><Text ta="center" c="dimmed" py="lg">No dictionaries uploaded yet.</Text></Table.Td></Table.Tr>
+              <Table.Tr><Table.Td colSpan={6}><Text ta="center" c="dimmed" py="lg">{t('natDictNoDicts')}</Text></Table.Td></Table.Tr>
             )}
           </Table.Tbody>
         </Table>
       </Stack>
 
-      <Modal opened={uploadOpen} onClose={() => setUploadOpen(false)} title="Upload Dictionary" size="lg">
+      <Modal opened={uploadOpen} onClose={() => setUploadOpen(false)} title={t('natDictUpload')} size="lg">
         <Stack gap="md">
-          <Text size="sm" c="dimmed">
-            Upload a GoldenDict-compatible dictionary (.zip containing StarDict or DSL files).
-          </Text>
+          <Text size="sm" c="dimmed">{t('natDictUploadDesc')}</Text>
           <Dropzone onDrop={handleUpload} loading={uploading} accept={['application/zip', 'application/gzip', 'application/x-tar']}>
             <Stack align="center" gap="xs" py="xl">
               <IconUpload size={40} color="gray" />
-              <Text size="sm">Drag a dictionary archive here or click to browse</Text>
-              <Text size="xs" c="dimmed">Supports .zip, .tar.gz</Text>
+              <Text size="sm">{t('natDictDropzoneText')}</Text>
+              <Text size="xs" c="dimmed">{t('natDictDropzoneHint')}</Text>
             </Stack>
           </Dropzone>
         </Stack>

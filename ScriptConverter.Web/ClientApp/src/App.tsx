@@ -1,54 +1,107 @@
-import { Container, Tabs, Title, Text, Stack } from '@mantine/core';
-import { IconLanguage, IconBook, IconLibrary } from '@tabler/icons-react';
+import { AppShell, Group, Tabs, Title, Text, Box, SegmentedControl, ActionIcon, Tooltip, useMantineColorScheme, type MantineColorScheme } from '@mantine/core';
+import { IconLanguage, IconBook, IconLibrary, IconSun, IconMoon, IconDeviceDesktop } from '@tabler/icons-react';
 import { useRouter } from './router';
+import { useI18n } from './i18n';
 import Converter from './pages/Converter';
 import DictionaryManager from './pages/DictionaryManager';
 import NaturalDictionary from './pages/NaturalDictionary';
 
-export default function App() {
+interface AppProps {
+  colorScheme: MantineColorScheme;
+  onColorSchemeChange: (scheme: MantineColorScheme) => void;
+}
+
+export default function App({ colorScheme, onColorSchemeChange }: AppProps) {
   const { route, setPage, browseDictionary, backToList } = useRouter();
+  const { locale, setLocale, t } = useI18n();
+  const { setColorScheme } = useMantineColorScheme();
+
+  const handleColorSchemeChange = (scheme: string) => {
+    const s = scheme as MantineColorScheme;
+    onColorSchemeChange(s);
+    setColorScheme(s);
+  };
 
   const activeTab = route.page === 'natural-dictionary' ? 'natural-dictionary'
     : route.page === 'dictionary' ? 'dictionary'
     : 'converter';
 
   return (
-    <Container size="lg" py="xl">
-      <Stack align="center" mb="lg" gap={4}>
-        <Title order={1} size="h2">Script Converter</Title>
-        <Text c="dimmed" size="sm">Transliterate between Urdu, Hindi, and Roman scripts</Text>
-      </Stack>
+    <AppShell
+      header={{ height: 60 }}
+      padding="md"
+      styles={{
+        main: { display: 'flex', flexDirection: 'column', minHeight: '100vh' },
+        header: { fontFamily: 'var(--mantine-font-family)' },
+      }}
+    >
+      <AppShell.Header px="md">
+        <Group h="100%" justify="space-between">
+          <Group gap="xs">
+            <Title order={3} size="h4" ff="heading">{t('appTitle')}</Title>
+            <Text c="dimmed" size="xs" visibleFrom="sm" ff="text">{t('appSubtitle')}</Text>
+          </Group>
 
-      <Tabs value={activeTab} onChange={(v) => setPage(v || 'converter')}>
-        <Tabs.List justify="center" mb="lg">
-          <Tabs.Tab value="converter" leftSection={<IconLanguage size={16} />}>
-            Converter
-          </Tabs.Tab>
-          <Tabs.Tab value="dictionary" leftSection={<IconBook size={16} />}>
-            Dictionary
-          </Tabs.Tab>
-          <Tabs.Tab value="natural-dictionary" leftSection={<IconLibrary size={16} />}>
-            Natural Dictionary
-          </Tabs.Tab>
-        </Tabs.List>
+          <Group gap="md">
+            <Tabs
+              value={activeTab}
+              onChange={(v) => setPage(v || 'converter')}
+              variant="default"
+              styles={{ root: { alignSelf: 'stretch', display: 'flex' }, list: { borderBottom: 'none' } }}
+            >
+              <Tabs.List h="100%">
+                <Tabs.Tab value="converter" leftSection={<IconLanguage size={16} />}>
+                  {t('tabConverter')}
+                </Tabs.Tab>
+                <Tabs.Tab value="dictionary" leftSection={<IconBook size={16} />}>
+                  {t('tabDictionary')}
+                </Tabs.Tab>
+                <Tabs.Tab value="natural-dictionary" leftSection={<IconLibrary size={16} />}>
+                  {t('tabNaturalDictionary')}
+                </Tabs.Tab>
+              </Tabs.List>
+            </Tabs>
 
-        <Tabs.Panel value="converter">
-          <Converter />
-        </Tabs.Panel>
+            {/* Color scheme toggle */}
+            <SegmentedControl
+              size="xs"
+              value={colorScheme}
+              onChange={handleColorSchemeChange}
+              data={[
+                { value: 'light', label: <Tooltip label="Light"><IconSun size={14} /></Tooltip> },
+                { value: 'dark', label: <Tooltip label="Dark"><IconMoon size={14} /></Tooltip> },
+                { value: 'auto', label: <Tooltip label="System"><IconDeviceDesktop size={14} /></Tooltip> },
+              ]}
+            />
 
-        <Tabs.Panel value="dictionary">
-          <DictionaryManager />
-        </Tabs.Panel>
+            {/* Language toggle */}
+            <SegmentedControl
+              size="xs"
+              value={locale}
+              onChange={(v) => setLocale(v as 'en' | 'ur')}
+              data={[
+                { value: 'en', label: 'EN' },
+                { value: 'ur', label: 'اردو' },
+              ]}
+            />
+          </Group>
+        </Group>
+      </AppShell.Header>
 
-        <Tabs.Panel value="natural-dictionary">
-          <NaturalDictionary
-            activeDictionaryId={route.dictionaryId}
-            urlParams={route.params}
-            onBrowse={browseDictionary}
-            onBackToList={backToList}
-          />
-        </Tabs.Panel>
-      </Tabs>
-    </Container>
+      <AppShell.Main>
+        <Box style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
+          {activeTab === 'converter' && <Converter />}
+          {activeTab === 'dictionary' && <DictionaryManager />}
+          {activeTab === 'natural-dictionary' && (
+            <NaturalDictionary
+              activeDictionaryId={route.dictionaryId}
+              urlParams={route.params}
+              onBrowse={browseDictionary}
+              onBackToList={backToList}
+            />
+          )}
+        </Box>
+      </AppShell.Main>
+    </AppShell>
   );
 }

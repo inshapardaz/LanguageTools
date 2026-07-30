@@ -1,0 +1,147 @@
+import type { TranslationKeys } from './en';
+
+const ur: Record<TranslationKeys, string> = {
+  // App
+  appTitle: 'اسکرپٹ کنورٹر',
+  appSubtitle: 'اردو · ہندی · رومن',
+
+  // Tabs
+  tabConverter: 'تبدیل کنندہ',
+  tabDictionary: 'لغت',
+  tabNaturalDictionary: 'قدرتی لغت',
+
+  // Language switcher
+  language: 'زبان',
+
+  // Converter
+  converterInput: 'ان پٹ',
+  converterOutput: 'آؤٹ پٹ',
+  converterSwap: 'ادل بدل',
+  converterConvert: 'تبدیل کریں (Ctrl+Enter)',
+  converterConverting: 'تبدیل ہو رہا ہے...',
+  converterPlaceholderOutput: 'تبدیل شدہ متن یہاں ظاہر ہوگا...',
+  converterError: 'سرور سے رابطہ نہیں ہو سکا۔',
+
+  // Direction labels
+  'Roman → Urdu': 'رومن ← اردو',
+  'Roman → Hindi': 'رومن ← ہندی',
+  'Urdu → Roman': 'اردو ← رومن',
+  'Urdu → Hindi': 'اردو ← ہندی',
+  'Hindi → Roman': 'ہندی ← رومن',
+  'Hindi → Urdu': 'ہندی ← اردو',
+
+  // Dictionary Manager
+  dictWords: 'الفاظ',
+  dictWithUrdu: 'اردو کے ساتھ',
+  dictWithHindi: 'ہندی کے ساتھ',
+  dictSearchPlaceholder: 'الفاظ تلاش کریں...',
+  dictAddWord: 'لفظ شامل کریں',
+  dictEditEntry: 'اندراج میں ترمیم',
+  dictAddEntry: 'نیا اندراج',
+  dictRoman: 'رومن',
+  dictUrdu: 'اردو',
+  dictHindi: 'ہندی',
+  dictMeaning: 'معنی',
+  dictCategory: 'زمرہ',
+  dictActions: 'اعمال',
+  dictNoEntries: 'کوئی اندراج نہیں ملا۔',
+  dictShowing: '{1} میں سے {0} دکھائے جا رہے ہیں',
+  dictEntryUpdated: 'اندراج اپ ڈیٹ ہو گیا۔',
+  dictEntryAdded: 'اندراج شامل ہو گیا۔',
+  dictDeleted: 'حذف ہو گیا۔',
+  dictDeleteConfirm: 'کیا آپ یہ اندراج حذف کرنا چاہتے ہیں؟',
+
+  // Natural Dictionary
+  natDictDictionaries: 'لغات',
+  natDictTotalEntries: 'کل اندراجات',
+  natDictLookupPlaceholder: 'لفظ تلاش کریں...',
+  natDictLookup: 'تلاش',
+  natDictUpload: 'لغت اپ لوڈ کریں',
+  natDictUploadDesc: 'GoldenDict ہم آہنگ لغت اپ لوڈ کریں (.zip میں StarDict یا DSL فائلیں)۔',
+  natDictDropzoneText: 'لغت کی فائل یہاں ڈراپ کریں یا براؤز کریں',
+  natDictDropzoneHint: '.zip, .tar.gz معاونت',
+  natDictResultsFor: 'نتائج برائے',
+  natDictNoResults: 'کوئی اندراج نہیں ملا۔',
+  natDictClose: 'بند کریں',
+  natDictName: 'نام',
+  natDictFormat: 'فارمیٹ',
+  natDictEntries: 'اندراجات',
+  natDictLanguages: 'زبانیں',
+  natDictImported: 'درآمد شدہ',
+  natDictBrowse: 'دیکھیں',
+  natDictNoDicts: 'ابھی تک کوئی لغت اپ لوڈ نہیں کی گئی۔',
+  natDictDeleteConfirm: 'کیا "{0}" حذف کریں؟',
+  natDictImported_msg: '"{0}" کو {1} اندراجات کے ساتھ درآمد کیا گیا۔',
+
+  // Dictionary Browser
+  browserBack: 'واپس',
+  browserEntries: 'اندراجات',
+  browserAddWord: 'لفظ شامل کریں',
+  browserMerge: 'ضم کریں',
+  browserExport: 'برآمد',
+  browserSearchPlaceholder: 'سرخی تلاش کریں...',
+  browserSearch: 'تلاش',
+  browserClear: 'صاف کریں',
+  browserResultsFor: '"{0}" کے نتائج — {1} مماثلت',
+  browserResultsForPlural: '"{0}" کے نتائج — {1} مماثلتیں',
+  browserNoMatch: 'کوئی اندراج مماثل نہیں۔',
+  browserNoEntries: 'کوئی اندراج نہیں۔',
+  browserLoading: 'لوڈ ہو رہا ہے...',
+  browserEdit: 'ترمیم',
+  browserDelete: 'حذف',
+  browserDeleteConfirm: 'کیا "{0}" حذف کریں؟',
+  browserSaved: 'محفوظ ہو گیا۔',
+  browserDeleted: '"{0}" حذف ہو گیا۔',
+
+  // Export formats
+  exportStarDict: 'StarDict',
+  exportDSL: 'DSL (Lingvo)',
+  exportKobo: 'Kobo ریڈر',
+  exportKindle: 'Kindle (OPF)',
+  exportJSON: 'JSON',
+
+  // Article Editor
+  editorAddNew: 'نیا لفظ شامل کریں',
+  editorEdit: 'لفظ میں ترمیم',
+  editorHeadword: 'سرخی',
+  editorPronunciation: 'تلفظ',
+  editorSenses: 'معانی',
+  editorPartOfSpeech: 'حصۂ کلام',
+  editorGrammar: 'قواعد',
+  editorDefinition: 'تعریف',
+  editorLabel: 'لیبل (مثلاً غیر رسمی)',
+  editorExample: 'مثال',
+  editorAddExample: 'مثال',
+  editorAddMeaning: 'معنی',
+  editorAddSense: 'معنی شامل کریں',
+  editorWordLinks: 'الفاظ کے روابط',
+  editorTargetWord: 'ہدف لفظ',
+  editorNote: 'نوٹ',
+  editorAddLink: 'ربط شامل کریں',
+  editorCancel: 'منسوخ',
+  editorUpdate: 'اپ ڈیٹ',
+
+  // Merge
+  mergeTitle: 'مشابہ سرخیوں کو ضم کریں',
+  mergeDesc: 'مشابہ سرخیوں والے مضامین (مثلاً "لفظ [1]"، "لفظ [2]") کو ایک اندراج میں ضم کیا جا سکتا ہے۔',
+  mergeScanning: 'ڈپلیکیٹ تلاش ہو رہے ہیں...',
+  mergeNoDuplicates: 'کوئی ڈپلیکیٹ نہیں ملا۔',
+  mergeDone: 'مکمل! {0} گروپ ضم ہو گئے۔',
+  mergeGroups: 'گروپ',
+  mergeAll: 'سب ضم کریں',
+  mergeMerge: 'ضم کریں',
+  mergeMerging: 'ضم ہو رہا ہے...',
+  mergeArticles: 'مضامین',
+  mergeConfirmAll: 'کیا تمام {0} گروپ ضم کریں؟',
+  mergeMerged: '"{0}" ضم ہو گیا۔',
+  mergeMergedAll: '{0} گروپ ضم ہو گئے۔',
+
+  // Common
+  cancel: 'منسوخ',
+  save: 'محفوظ کریں',
+  close: 'بند کریں',
+  confirm: 'تصدیق',
+  loading: 'لوڈ ہو رہا ہے...',
+};
+
+export default ur;

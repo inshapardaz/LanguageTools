@@ -1,0 +1,146 @@
+const en = {
+  // App
+  appTitle: 'Script Converter',
+  appSubtitle: 'Urdu · Hindi · Roman',
+
+  // Tabs
+  tabConverter: 'Converter',
+  tabDictionary: 'Dictionary',
+  tabNaturalDictionary: 'Natural Dictionary',
+
+  // Language switcher
+  language: 'Language',
+
+  // Converter
+  converterInput: 'input',
+  converterOutput: 'output',
+  converterSwap: 'Swap',
+  converterConvert: 'Convert (Ctrl+Enter)',
+  converterConverting: 'Converting...',
+  converterPlaceholderOutput: 'Converted text will appear here...',
+  converterError: 'Failed to connect to the server.',
+
+  // Direction labels
+  'Roman → Urdu': 'Roman → Urdu',
+  'Roman → Hindi': 'Roman → Hindi',
+  'Urdu → Roman': 'Urdu → Roman',
+  'Urdu → Hindi': 'Urdu → Hindi',
+  'Hindi → Roman': 'Hindi → Roman',
+  'Hindi → Urdu': 'Hindi → Urdu',
+
+  // Dictionary Manager
+  dictWords: 'words',
+  dictWithUrdu: 'with Urdu',
+  dictWithHindi: 'with Hindi',
+  dictSearchPlaceholder: 'Search words...',
+  dictAddWord: 'Add Word',
+  dictEditEntry: 'Edit Entry',
+  dictAddEntry: 'Add Entry',
+  dictRoman: 'Roman',
+  dictUrdu: 'Urdu',
+  dictHindi: 'Hindi',
+  dictMeaning: 'Meaning',
+  dictCategory: 'Category',
+  dictActions: 'Actions',
+  dictNoEntries: 'No entries found.',
+  dictShowing: 'Showing {0} of {1}',
+  dictEntryUpdated: 'Entry updated.',
+  dictEntryAdded: 'Entry added.',
+  dictDeleted: 'Deleted.',
+  dictDeleteConfirm: 'Delete this entry?',
+
+  // Natural Dictionary
+  natDictDictionaries: 'dictionaries',
+  natDictTotalEntries: 'total entries',
+  natDictLookupPlaceholder: 'Look up a word...',
+  natDictLookup: 'Lookup',
+  natDictUpload: 'Upload Dictionary',
+  natDictUploadDesc: 'Upload a GoldenDict-compatible dictionary (.zip containing StarDict or DSL files).',
+  natDictDropzoneText: 'Drag a dictionary archive here or click to browse',
+  natDictDropzoneHint: 'Supports .zip, .tar.gz',
+  natDictResultsFor: 'Results for',
+  natDictNoResults: 'No entries found.',
+  natDictClose: 'Close',
+  natDictName: 'Name',
+  natDictFormat: 'Format',
+  natDictEntries: 'Entries',
+  natDictLanguages: 'Languages',
+  natDictImported: 'Imported',
+  natDictBrowse: 'Browse',
+  natDictNoDicts: 'No dictionaries uploaded yet.',
+  natDictDeleteConfirm: 'Delete "{0}"?',
+  natDictImported_msg: 'Imported "{0}" with {1} entries.',
+
+  // Dictionary Browser
+  browserBack: 'Back',
+  browserEntries: 'entries',
+  browserAddWord: 'Add Word',
+  browserMerge: 'Merge',
+  browserExport: 'Export',
+  browserSearchPlaceholder: 'Search headwords...',
+  browserSearch: 'Search',
+  browserClear: 'Clear',
+  browserResultsFor: 'Results for "{0}" — {1} match',
+  browserResultsForPlural: 'Results for "{0}" — {1} matches',
+  browserNoMatch: 'No entries match.',
+  browserNoEntries: 'No entries.',
+  browserLoading: 'Loading...',
+  browserEdit: 'Edit',
+  browserDelete: 'Delete',
+  browserDeleteConfirm: 'Delete "{0}"?',
+  browserSaved: 'Saved.',
+  browserDeleted: 'Deleted "{0}".',
+
+  // Export formats
+  exportStarDict: 'StarDict',
+  exportDSL: 'DSL (Lingvo)',
+  exportKobo: 'Kobo Reader',
+  exportKindle: 'Kindle (OPF)',
+  exportJSON: 'JSON',
+
+  // Article Editor
+  editorAddNew: 'Add New Word',
+  editorEdit: 'Edit Word',
+  editorHeadword: 'Headword',
+  editorPronunciation: 'Pronunciation',
+  editorSenses: 'Senses',
+  editorPartOfSpeech: 'Part of speech',
+  editorGrammar: 'Grammar',
+  editorDefinition: 'Definition',
+  editorLabel: 'Label (e.g. informal)',
+  editorExample: 'Example',
+  editorAddExample: 'Example',
+  editorAddMeaning: 'Meaning',
+  editorAddSense: 'Add Sense',
+  editorWordLinks: 'Word Links',
+  editorTargetWord: 'Target word',
+  editorNote: 'Note',
+  editorAddLink: 'Add Link',
+  editorCancel: 'Cancel',
+  editorUpdate: 'Update',
+
+  // Merge
+  mergeTitle: 'Merge Duplicate Headwords',
+  mergeDesc: 'Articles with similar headwords (e.g. "word [1]", "word [2]") can be merged into a single entry.',
+  mergeScanning: 'Scanning for duplicates...',
+  mergeNoDuplicates: 'No duplicates found.',
+  mergeDone: 'Done! Merged {0} group(s).',
+  mergeGroups: 'groups',
+  mergeAll: 'Merge All',
+  mergeMerge: 'Merge',
+  mergeMerging: 'Merging...',
+  mergeArticles: 'articles',
+  mergeConfirmAll: 'Merge all {0} groups?',
+  mergeMerged: 'Merged "{0}".',
+  mergeMergedAll: 'Merged {0} groups.',
+
+  // Common
+  cancel: 'Cancel',
+  save: 'Save',
+  close: 'Close',
+  confirm: 'Confirm',
+  loading: 'Loading...',
+} as const;
+
+export default en;
+export type TranslationKeys = keyof typeof en;

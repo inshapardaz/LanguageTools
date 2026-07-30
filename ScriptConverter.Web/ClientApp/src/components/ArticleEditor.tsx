@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Modal, TextInput, Button, Group, Stack, Paper, Text, Select, ActionIcon, Divider } from '@mantine/core';
 import { IconPlus, IconTrash } from '@tabler/icons-react';
+import { useI18n } from '../i18n';
 
 const LINK_TYPES = [
   { value: 'Synonym', label: 'Synonym' },
@@ -19,6 +20,7 @@ interface Props {
 }
 
 export default function ArticleEditor({ article, dictionaryId, onSave, onCancel }: Props) {
+  const { t } = useI18n();
   const isEdit = !!article?.id;
 
   const [headword, setHeadword] = useState(article?.headword || '');
@@ -77,21 +79,21 @@ export default function ArticleEditor({ article, dictionaryId, onSave, onCancel 
   };
 
   return (
-    <Modal opened onClose={onCancel} title={isEdit ? 'Edit Word' : 'Add New Word'} size="xl" closeOnClickOutside={!saving}>
+    <Modal opened onClose={onCancel} title={isEdit ? t('editorEdit') : t('editorAddNew')} size="xl" closeOnClickOutside={!saving}>
       <Stack gap="sm">
         <Group grow>
-          <TextInput label="Headword *" value={headword} onChange={(e) => setHeadword(e.currentTarget.value)} placeholder="e.g. run" />
-          <TextInput label="Pronunciation" value={pronunciation} onChange={(e) => setPronunciation(e.currentTarget.value)} placeholder="e.g. rʌn" />
+          <TextInput label={`${t('editorHeadword')} *`} value={headword} onChange={(e) => setHeadword(e.currentTarget.value)} placeholder="e.g. run" />
+          <TextInput label={t('editorPronunciation')} value={pronunciation} onChange={(e) => setPronunciation(e.currentTarget.value)} placeholder="e.g. rʌn" />
         </Group>
 
-        <Divider label="Senses" labelPosition="left" />
+        <Divider label={t('editorSenses')} labelPosition="left" />
 
         {senses.map((sense, si) => (
-          <Paper key={si} p="sm" withBorder radius="sm" bg="gray.0">
+          <Paper key={si} p="sm" withBorder radius="sm" bg="var(--mantine-color-body)">
             <Group justify="space-between" mb="xs">
               <Group grow style={{ flex: 1 }}>
-                <TextInput size="xs" placeholder="Part of speech" value={sense.partOfSpeech || ''} onChange={(e) => updateSense(si, 'partOfSpeech', e.currentTarget.value)} />
-                <TextInput size="xs" placeholder="Grammar" value={sense.grammar || ''} onChange={(e) => updateSense(si, 'grammar', e.currentTarget.value)} />
+                <TextInput size="xs" placeholder={t('editorPartOfSpeech')} value={sense.partOfSpeech || ''} onChange={(e) => updateSense(si, 'partOfSpeech', e.currentTarget.value)} />
+                <TextInput size="xs" placeholder={t('editorGrammar')} value={sense.grammar || ''} onChange={(e) => updateSense(si, 'grammar', e.currentTarget.value)} />
               </Group>
               {senses.length > 1 && <ActionIcon size="sm" color="red" variant="subtle" onClick={() => removeSense(si)}><IconTrash size={12} /></ActionIcon>}
             </Group>
@@ -100,41 +102,41 @@ export default function ArticleEditor({ article, dictionaryId, onSave, onCancel 
               <Paper key={mi} p="xs" mb="xs" withBorder radius="xs">
                 <Group justify="space-between" align="flex-start">
                   <Stack gap={4} style={{ flex: 1 }}>
-                    <TextInput size="xs" placeholder="Definition *" value={m.definition} onChange={(e) => updateMeaning(si, mi, 'definition', e.currentTarget.value)} />
-                    <TextInput size="xs" placeholder="Label (e.g. informal)" value={m.label || ''} onChange={(e) => updateMeaning(si, mi, 'label', e.currentTarget.value)} />
+                    <TextInput size="xs" placeholder={`${t('editorDefinition')} *`} value={m.definition} onChange={(e) => updateMeaning(si, mi, 'definition', e.currentTarget.value)} />
+                    <TextInput size="xs" placeholder={t('editorLabel')} value={m.label || ''} onChange={(e) => updateMeaning(si, mi, 'label', e.currentTarget.value)} />
                     {(m.examples || []).map((ex: string, ei: number) => (
                       <Group key={ei} gap={4}>
-                        <TextInput size="xs" placeholder="Example" value={ex} onChange={(e) => updateExample(si, mi, ei, e.currentTarget.value)} style={{ flex: 1 }} />
+                        <TextInput size="xs" placeholder={t('editorExample')} value={ex} onChange={(e) => updateExample(si, mi, ei, e.currentTarget.value)} style={{ flex: 1 }} />
                         <ActionIcon size="xs" color="red" variant="subtle" onClick={() => removeExample(si, mi, ei)}><IconTrash size={10} /></ActionIcon>
                       </Group>
                     ))}
-                    <Button size="compact-xs" variant="subtle" leftSection={<IconPlus size={10} />} onClick={() => addExample(si, mi)}>Example</Button>
+                    <Button size="compact-xs" variant="subtle" leftSection={<IconPlus size={10} />} onClick={() => addExample(si, mi)}>{t('editorAddExample')}</Button>
                   </Stack>
                   {sense.meanings.length > 1 && <ActionIcon size="xs" color="red" variant="subtle" onClick={() => removeMeaning(si, mi)}><IconTrash size={10} /></ActionIcon>}
                 </Group>
               </Paper>
             ))}
-            <Button size="compact-xs" variant="light" leftSection={<IconPlus size={10} />} onClick={() => addMeaning(si)}>Meaning</Button>
+            <Button size="compact-xs" variant="light" leftSection={<IconPlus size={10} />} onClick={() => addMeaning(si)}>{t('editorAddMeaning')}</Button>
           </Paper>
         ))}
-        <Button size="compact-xs" variant="light" leftSection={<IconPlus size={12} />} onClick={addSense}>Add Sense</Button>
+        <Button size="compact-xs" variant="light" leftSection={<IconPlus size={12} />} onClick={addSense}>{t('editorAddSense')}</Button>
 
-        <Divider label="Word Links" labelPosition="left" />
+        <Divider label={t('editorWordLinks')} labelPosition="left" />
 
         {links.map((link, li) => (
           <Group key={li} gap="xs">
             <Select size="xs" data={LINK_TYPES} value={typeof link.linkType === 'number' ? LINK_TYPES[link.linkType]?.value : link.linkType} onChange={(v) => updateLink(li, 'linkType', v || 'Synonym')} style={{ width: 130 }} />
-            <TextInput size="xs" placeholder="Target word" value={link.targetWord || ''} onChange={(e) => updateLink(li, 'targetWord', e.currentTarget.value)} style={{ flex: 1 }} />
-            <TextInput size="xs" placeholder="Note" value={link.note || ''} onChange={(e) => updateLink(li, 'note', e.currentTarget.value)} style={{ width: 120 }} />
+            <TextInput size="xs" placeholder={t('editorTargetWord')} value={link.targetWord || ''} onChange={(e) => updateLink(li, 'targetWord', e.currentTarget.value)} style={{ flex: 1 }} />
+            <TextInput size="xs" placeholder={t('editorNote')} value={link.note || ''} onChange={(e) => updateLink(li, 'note', e.currentTarget.value)} style={{ width: 120 }} />
             <ActionIcon size="sm" color="red" variant="subtle" onClick={() => removeLink(li)}><IconTrash size={12} /></ActionIcon>
           </Group>
         ))}
-        <Button size="compact-xs" variant="light" leftSection={<IconPlus size={12} />} onClick={addLink}>Add Link</Button>
+        <Button size="compact-xs" variant="light" leftSection={<IconPlus size={12} />} onClick={addLink}>{t('editorAddLink')}</Button>
 
         <Divider />
         <Group justify="flex-end">
-          <Button variant="default" onClick={onCancel} disabled={saving}>Cancel</Button>
-          <Button onClick={handleSave} loading={saving}>{isEdit ? 'Update' : 'Add Word'}</Button>
+          <Button variant="default" onClick={onCancel} disabled={saving}>{t('editorCancel')}</Button>
+          <Button onClick={handleSave} loading={saving}>{isEdit ? t('editorUpdate') : t('browserAddWord')}</Button>
         </Group>
       </Stack>
     </Modal>

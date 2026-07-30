@@ -1,23 +1,25 @@
 import { useState, useCallback } from 'react';
 import { Paper, Group, Button, Textarea, SegmentedControl, Stack, Alert, Grid } from '@mantine/core';
 import { IconArrowsExchange, IconAlertCircle } from '@tabler/icons-react';
+import { useI18n, type TranslationKeys } from '../i18n';
 
-const DIRECTIONS = [
-  { value: 'Roman|UrduArabic', label: 'Roman → Urdu' },
-  { value: 'Roman|HindiDevanagari', label: 'Roman → Hindi' },
-  { value: 'UrduArabic|Roman', label: 'Urdu → Roman' },
-  { value: 'UrduArabic|HindiDevanagari', label: 'Urdu → Hindi' },
-  { value: 'HindiDevanagari|Roman', label: 'Hindi → Roman' },
-  { value: 'HindiDevanagari|UrduArabic', label: 'Hindi → Urdu' },
+const DIRECTIONS: { value: string; labelKey: TranslationKeys }[] = [
+  { value: 'Roman|UrduArabic', labelKey: 'Roman → Urdu' },
+  { value: 'Roman|HindiDevanagari', labelKey: 'Roman → Hindi' },
+  { value: 'UrduArabic|Roman', labelKey: 'Urdu → Roman' },
+  { value: 'UrduArabic|HindiDevanagari', labelKey: 'Urdu → Hindi' },
+  { value: 'HindiDevanagari|Roman', labelKey: 'Hindi → Roman' },
+  { value: 'HindiDevanagari|UrduArabic', labelKey: 'Hindi → Urdu' },
 ];
 
-const SCRIPT_INFO: Record<string, { dir: 'ltr' | 'rtl'; placeholder: string }> = {
-  Roman: { dir: 'ltr', placeholder: 'Type romanised text here...' },
-  UrduArabic: { dir: 'rtl', placeholder: '...یہاں اردو ٹائپ کریں' },
-  HindiDevanagari: { dir: 'ltr', placeholder: 'यहाँ हिंदी टाइप करें...' },
+const SCRIPT_INFO: Record<string, { dir: 'ltr' | 'rtl'; placeholder: string; fontFamily: string }> = {
+  Roman: { dir: 'ltr', placeholder: 'Type romanised text here...', fontFamily: 'inherit' },
+  UrduArabic: { dir: 'rtl', placeholder: '...یہاں اردو ٹائپ کریں', fontFamily: "'Urdu UI', inherit" },
+  HindiDevanagari: { dir: 'ltr', placeholder: 'यहाँ हिंदी टाइप करें...', fontFamily: "'Noto Sans Devanagari', sans-serif" },
 };
 
 export default function Converter() {
+  const { t } = useI18n();
   const [direction, setDirection] = useState(DIRECTIONS[0].value);
   const [inputText, setInputText] = useState('');
   const [outputText, setOutputText] = useState('');
@@ -40,22 +42,23 @@ export default function Converter() {
       if (!res.ok) { setError(data.error || 'Conversion failed.'); setOutputText(''); }
       else { setOutputText(data.result); }
     } catch {
-      setError('Failed to connect to the server.');
+      setError(t('converterError'));
       setOutputText('');
     } finally {
       setLoading(false);
     }
-  }, [inputText, from, to]);
+  }, [inputText, from, to, t]);
 
   const swap = () => {
     const swapped = `${to}|${from}`;
-    const exists = DIRECTIONS.find(d => d.value === swapped);
-    if (exists) {
+    if (DIRECTIONS.find(d => d.value === swapped)) {
       setDirection(swapped);
       setInputText(outputText);
       setOutputText('');
     }
   };
+
+  const segmentData = DIRECTIONS.map(d => ({ value: d.value, label: t(d.labelKey) }));
 
   return (
     <Paper shadow="xs" p="lg" radius="md" withBorder>
@@ -63,7 +66,7 @@ export default function Converter() {
         <SegmentedControl
           value={direction}
           onChange={(v) => { setDirection(v); setOutputText(''); }}
-          data={DIRECTIONS}
+          data={segmentData}
           size="sm"
           fullWidth
         />
@@ -71,7 +74,7 @@ export default function Converter() {
         <Grid>
           <Grid.Col span={{ base: 12, sm: 6 }}>
             <Textarea
-              label={`${from} (input)`}
+              label={`${from} (${t('converterInput')})`}
               dir={SCRIPT_INFO[from]?.dir}
               placeholder={SCRIPT_INFO[from]?.placeholder}
               value={inputText}
@@ -79,31 +82,31 @@ export default function Converter() {
               onKeyDown={(e) => { if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) convert(); }}
               minRows={6}
               autosize
-              styles={{ input: { fontFamily: "'Noto Nastaliq Urdu', 'Noto Sans Devanagari', sans-serif", fontSize: '1.1rem' } }}
+              styles={{ input: { fontFamily: SCRIPT_INFO[from]?.fontFamily, fontSize: '1.1rem', lineHeight: 1.8 } }}
             />
           </Grid.Col>
           <Grid.Col span={{ base: 12, sm: 6 }}>
             <Textarea
-              label={`${to} (output)`}
+              label={`${to} (${t('converterOutput')})`}
               dir={SCRIPT_INFO[to]?.dir}
               value={outputText}
               readOnly
-              placeholder="Converted text will appear here..."
+              placeholder={t('converterPlaceholderOutput')}
               minRows={6}
               autosize
-              styles={{ input: { fontFamily: "'Noto Nastaliq Urdu', 'Noto Sans Devanagari', sans-serif", fontSize: '1.1rem', backgroundColor: 'var(--mantine-color-gray-0)' } }}
+              styles={{ input: { fontFamily: SCRIPT_INFO[to]?.fontFamily, fontSize: '1.1rem', lineHeight: 1.8, backgroundColor: 'var(--mantine-color-default)' } }}
             />
           </Grid.Col>
         </Grid>
 
         <Group justify="center">
           <Button variant="subtle" size="xs" leftSection={<IconArrowsExchange size={14} />} onClick={swap}>
-            Swap
+            {t('converterSwap')}
           </Button>
         </Group>
 
         <Button fullWidth onClick={convert} loading={loading} disabled={!inputText.trim()}>
-          Convert (Ctrl+Enter)
+          {t('converterConvert')}
         </Button>
 
         {error && (
