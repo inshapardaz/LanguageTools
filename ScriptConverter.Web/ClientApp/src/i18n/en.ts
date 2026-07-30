@@ -20,6 +20,20 @@ const en = {
   converterPlaceholderOutput: 'Converted text will appear here...',
   converterError: 'Failed to connect to the server.',
 
+  // Converter - Word Correction
+  correctionTitle: 'Word-by-Word Details',
+  correctionSource: 'Source',
+  correctionOutput: 'Output',
+  correctionOrigin: 'Origin',
+  correctionFromDict: 'Dictionary',
+  correctionFromRules: 'Rules',
+  correctionEdit: 'Edit',
+  correctionSave: 'Save',
+  correctionSaved: 'Correction saved to dictionary.',
+  correctionCancel: 'Cancel',
+  correctionCreateNew: 'Create new mapping',
+  correctionPlaceholder: 'Correct translation...',
+
   // Direction labels
   'Roman → Urdu': 'Roman → Urdu',
   'Roman → Hindi': 'Roman → Hindi',

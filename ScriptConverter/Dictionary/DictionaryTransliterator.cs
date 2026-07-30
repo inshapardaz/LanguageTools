@@ -73,7 +73,16 @@ public sealed class DictionaryTransliterator
 
     private string? LookupWithTarget(string word, Script target)
     {
-        var entry = _dictionary.Lookup(word);
+        // Normalize: strip punctuation and lowercase for case-insensitive matching
+        var cleaned = word.Trim();
+        // Strip leading and trailing punctuation
+        int start = 0, end = cleaned.Length;
+        while (start < end && char.IsPunctuation(cleaned[start])) start++;
+        while (end > start && char.IsPunctuation(cleaned[end - 1])) end--;
+        if (start >= end) return null;
+        cleaned = cleaned[start..end];
+
+        var entry = _dictionary.Lookup(cleaned);
         if (entry == null) return null;
 
         return target switch
@@ -112,41 +121,85 @@ public sealed class DictionaryTransliterator
         if (from != Script.Roman)
             return _ruleBasedFallback.Convert(input, from, to);
 
-        var words = input.Split(' ', StringSplitOptions.None);
+        // Tokenize preserving all whitespace (spaces, newlines, tabs)
+        var tokens = TokenizePreservingWhitespace(input);
         var result = new System.Text.StringBuilder();
-        int i = 0;
 
-        while (i < words.Length)
+        // Collect non-whitespace tokens for multi-word lookup
+        var wordTokens = tokens.Where(t => !t.IsWhitespace).Select(t => t.Text).ToArray();
+        int wordIndex = 0;
+        // Track which word tokens have been consumed by multi-word phrases
+        var consumed = new HashSet<int>();
+
+        // Try multi-word phrases first (pre-compute)
+        var phraseResults = new Dictionary<int, (string result, int count)>();
+        for (int wi = 0; wi < wordTokens.Length; wi++)
         {
-            if (string.IsNullOrWhiteSpace(words[i]))
-            {
-                result.Append(' ');
-                i++;
-                continue;
-            }
-
-            // Try multi-word lookup
-            var multiResult = TryMultiWordLookup(words, i, to);
+            if (consumed.Contains(wi)) continue;
+            var multiResult = TryMultiWordLookup(wordTokens, wi, to);
             if (multiResult != null)
             {
-                if (i > 0) result.Append(' ');
-                result.Append(multiResult.Value.result);
-                i += multiResult.Value.wordsConsumed;
+                phraseResults[wi] = multiResult.Value;
+                for (int c = 0; c < multiResult.Value.wordsConsumed; c++)
+                    consumed.Add(wi + c);
+            }
+        }
+
+        // Now iterate tokens and build result
+        wordIndex = 0;
+        foreach (var token in tokens)
+        {
+            if (token.IsWhitespace)
+            {
+                result.Append(token.Text);
                 continue;
             }
 
-            // Single word
-            if (i > 0) result.Append(' ');
-            var single = LookupWithTarget(words[i], to);
-            if (single != null)
+            // Check if this word is part of a multi-word phrase
+            if (phraseResults.TryGetValue(wordIndex, out var phrase))
             {
-                result.Append(single);
+                result.Append(phrase.result);
+                wordIndex++;
+                continue;
+            }
+
+            if (consumed.Contains(wordIndex))
+            {
+                // Skip — already consumed by a phrase starting earlier
+                wordIndex++;
+                continue;
+            }
+
+            // Single word — strip punctuation, lookup, convert
+            var rawWord = token.Text;
+            int pStart = 0, pEnd = rawWord.Length;
+            while (pStart < pEnd && char.IsPunctuation(rawWord[pStart])) pStart++;
+            while (pEnd > pStart && char.IsPunctuation(rawWord[pEnd - 1])) pEnd--;
+
+            if (pStart >= pEnd)
+            {
+                result.Append(rawWord); // entirely punctuation
             }
             else
             {
-                result.Append(_ruleBasedFallback.Convert(words[i], Script.Roman, to));
+                var leadPunct = rawWord[..pStart];
+                var trailPunct = rawWord[pEnd..];
+                var cleanWord = rawWord[pStart..pEnd];
+
+                result.Append(leadPunct);
+                var single = LookupWithTarget(cleanWord, to);
+                if (single != null)
+                {
+                    result.Append(single);
+                }
+                else
+                {
+                    result.Append(_ruleBasedFallback.Convert(cleanWord, Script.Roman, to));
+                }
+                result.Append(trailPunct);
             }
-            i++;
+
+            wordIndex++;
         }
 
         return result.ToString();

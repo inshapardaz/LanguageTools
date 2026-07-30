@@ -22,6 +22,20 @@ const ur: Record<TranslationKeys, string> = {
   converterPlaceholderOutput: 'تبدیل شدہ متن یہاں ظاہر ہوگا...',
   converterError: 'سرور سے رابطہ نہیں ہو سکا۔',
 
+  // Converter - Word Correction
+  correctionTitle: 'لفظ بہ لفظ تفصیلات',
+  correctionSource: 'ماخذ',
+  correctionOutput: 'نتیجہ',
+  correctionOrigin: 'ذریعہ',
+  correctionFromDict: 'لغت',
+  correctionFromRules: 'قواعد',
+  correctionEdit: 'ترمیم',
+  correctionSave: 'محفوظ کریں',
+  correctionSaved: 'ترمیم لغت میں محفوظ ہو گئی۔',
+  correctionCancel: 'منسوخ',
+  correctionCreateNew: 'نیا نقشہ بنائیں',
+  correctionPlaceholder: 'درست ترجمہ...',
+
   // Direction labels
   'Roman → Urdu': 'رومن ← اردو',
   'Roman → Hindi': 'رومن ← ہندی',
