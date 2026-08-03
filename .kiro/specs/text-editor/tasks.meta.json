@@ -1,0 +1,307 @@
+{
+  "pbtResults": {},
+  "executionHistory": {
+    "1. Install Lexical dependencies (`@lexical/react`, `@lexical/rich-text`, `@lexical/list`, `@lexical/link`, `@lexical/code`, `@lexical/selection`, `@lexical/utils`)": [
+      {
+        "executionId": "1f9737e0-b9b3-48cb-a2c7-ba10bdeef6d0",
+        "chatSessionId": "sess_96bf7623-04f6-4a24-b097-607ecfac25f5",
+        "timestamp": 1785494523394
+      },
+      {
+        "executionId": "1f9737e0-b9b3-48cb-a2c7-ba10bdeef6d0",
+        "chatSessionId": "sess_96bf7623-04f6-4a24-b097-607ecfac25f5",
+        "timestamp": 1785494775317
+      }
+    ],
+    "2. Create `src/components/Editor/` folder structure with `types.ts`, `themes/editorTheme.ts`, `styles.css`": [
+      {
+        "executionId": "a8c28b52-1fe2-43ae-934d-4d8fdebd18ed",
+        "chatSessionId": "sess_85120eab-a9b0-4efe-9c6a-bae94726694c",
+        "timestamp": 1785494810859
+      },
+      {
+        "executionId": "a8c28b52-1fe2-43ae-934d-4d8fdebd18ed",
+        "chatSessionId": "sess_85120eab-a9b0-4efe-9c6a-bae94726694c",
+        "timestamp": 1785494927661
+      }
+    ],
+    "3. Implement `Editor.tsx` — LexicalComposer with RichTextPlugin, HistoryPlugin, ListPlugin, LinkPlugin, basic theme": [
+      {
+        "executionId": "e5b4755b-dbf0-4773-8c72-0d92b60d1b0f",
+        "chatSessionId": "sess_a576b11c-b8b7-479a-b5f0-59da09b26486",
+        "timestamp": 1785494941225
+      },
+      {
+        "executionId": "e5b4755b-dbf0-4773-8c72-0d92b60d1b0f",
+        "chatSessionId": "sess_a576b11c-b8b7-479a-b5f0-59da09b26486",
+        "timestamp": 1785495345586
+      }
+    ],
+    "4. Implement `EditorToolbar.tsx` — Undo/Redo, Block type selector (P, H1-H6), Inline format buttons (B, I, U, S), Alignment buttons": [
+      {
+        "executionId": "3b035609-3dff-4e2a-8bec-2ab7e77a0d86",
+        "chatSessionId": "sess_dac4d603-affc-46c2-9b71-ffbf3826ac14",
+        "timestamp": 1785749216606
+      },
+      {
+        "executionId": "3b035609-3dff-4e2a-8bec-2ab7e77a0d86",
+        "chatSessionId": "sess_dac4d603-affc-46c2-9b71-ffbf3826ac14",
+        "timestamp": 1785749630986
+      }
+    ],
+    "5. Implement `plugins/ToolbarPlugin.tsx` — Syncs Lexical editor state to toolbar active states (bold active, current block type, etc.)": [
+      {
+        "executionId": "a4307a4a-fc95-4b7e-8a8b-9bbbe8cb128a",
+        "chatSessionId": "sess_976ecefa-93e3-48c6-b236-ba7b1f8aab86",
+        "timestamp": 1785750032571
+      },
+      {
+        "executionId": "a4307a4a-fc95-4b7e-8a8b-9bbbe8cb128a",
+        "chatSessionId": "sess_976ecefa-93e3-48c6-b236-ba7b1f8aab86",
+        "timestamp": 1785750666056
+      }
+    ],
+    "6. Implement font selector (document-level) — Dropdown that sets CSS font-family on the editor root": [
+      {
+        "executionId": "ec1f2684-2c64-45a9-8452-f3b593e1b6e9",
+        "chatSessionId": "sess_4e977853-b73f-42f0-b174-e03e8a4ea0b7",
+        "timestamp": 1785750696756
+      },
+      {
+        "executionId": "ec1f2684-2c64-45a9-8452-f3b593e1b6e9",
+        "chatSessionId": "sess_4e977853-b73f-42f0-b174-e03e8a4ea0b7",
+        "timestamp": 1785750967273
+      }
+    ],
+    "7. Implement `plugins/ZoomPlugin.tsx` — Scale the editor content area, toolbar controls, keyboard shortcuts": [
+      {
+        "executionId": "7934d804-d7df-40e7-bf3d-a4754ee4c640",
+        "chatSessionId": "sess_5a7c476b-a80d-495a-8825-59869fa62254",
+        "timestamp": 1785750987585
+      },
+      {
+        "executionId": "7934d804-d7df-40e7-bf3d-a4754ee4c640",
+        "chatSessionId": "sess_5a7c476b-a80d-495a-8825-59869fa62254",
+        "timestamp": 1785751136669
+      }
+    ],
+    "8. Implement `plugins/LinkPlugin.tsx` — Insert/edit link modal, auto-detect URLs": [
+      {
+        "executionId": "87b8ef7e-f29e-433b-8566-dc9c60879811",
+        "chatSessionId": "sess_3d1c18ce-eab8-4812-95aa-dc09a66cdaeb",
+        "timestamp": 1785751574312
+      },
+      {
+        "executionId": "87b8ef7e-f29e-433b-8566-dc9c60879811",
+        "chatSessionId": "sess_3d1c18ce-eab8-4812-95aa-dc09a66cdaeb",
+        "timestamp": 1785751786471
+      }
+    ],
+    "9. Implement `plugins/ImagePlugin.tsx` and `nodes/ImageNode.tsx` — Insert via URL or file upload, resize handles, alt text": [
+      {
+        "executionId": "116679cd-0b11-4cf1-b6f4-a7f0beffcf90",
+        "chatSessionId": "sess_557be057-b343-4cbf-89c2-73f41a30b0ba",
+        "timestamp": 1785751801104
+      },
+      {
+        "executionId": "116679cd-0b11-4cf1-b6f4-a7f0beffcf90",
+        "chatSessionId": "sess_557be057-b343-4cbf-89c2-73f41a30b0ba",
+        "timestamp": 1785752126128
+      }
+    ],
+    "10. Implement `EditorStatusBar.tsx` — Word count, character count, current script detection, zoom display": [
+      {
+        "executionId": "5be80127-e2fb-4255-91a6-b825ccf84840",
+        "chatSessionId": "sess_ddabcde4-371c-4b6f-9124-7391f842d541",
+        "timestamp": 1785752155100
+      },
+      {
+        "executionId": "5be80127-e2fb-4255-91a6-b825ccf84840",
+        "chatSessionId": "sess_ddabcde4-371c-4b6f-9124-7391f842d541",
+        "timestamp": 1785752275344
+      }
+    ],
+    "11. Create `pages/TextEditor.tsx` — Page wrapper that integrates the editor into the app with nav tab": [
+      {
+        "executionId": "3eaf1dd5-7a7f-42f1-904d-bf8c7106b0e3",
+        "chatSessionId": "sess_fbbc4b88-0906-4cfa-b05b-9d06abedd923",
+        "timestamp": 1785752298883
+      },
+      {
+        "executionId": "3eaf1dd5-7a7f-42f1-904d-bf8c7106b0e3",
+        "chatSessionId": "sess_fbbc4b88-0906-4cfa-b05b-9d06abedd923",
+        "timestamp": 1785752375156
+      }
+    ],
+    "12. Add \"Editor\" tab to `App.tsx` and routing, add i18n keys for editor labels": [
+      {
+        "executionId": "22945735-2561-4069-a770-7c43ee6cafa1",
+        "chatSessionId": "sess_028dc818-f20b-45ef-a8d6-af8fc9d706c6",
+        "timestamp": 1785758405697
+      },
+      {
+        "executionId": "22945735-2561-4069-a770-7c43ee6cafa1",
+        "chatSessionId": "sess_028dc818-f20b-45ef-a8d6-af8fc9d706c6",
+        "timestamp": 1785758536237
+      }
+    ],
+    "13. Implement `plugins/TextCleanupPlugin.tsx` — Join lines, remove multiple spaces, trim paragraphs, remove empty paragraphs": [
+      {
+        "executionId": "8dc21c38-2b5a-4b97-b38d-f04f3f6826eb",
+        "chatSessionId": "sess_34bf3f0c-3860-474b-9799-985208beb2bd",
+        "timestamp": 1785758928192
+      },
+      {
+        "executionId": "8dc21c38-2b5a-4b97-b38d-f04f3f6826eb",
+        "chatSessionId": "sess_34bf3f0c-3860-474b-9799-985208beb2bd",
+        "timestamp": 1785759072849
+      }
+    ],
+    "14. Implement `plugins/TransliteratePlugin.tsx` — Direction selector, apply to selection or full doc via `/api/convert`": [
+      {
+        "executionId": "6ba5248f-9a9f-47f8-8a97-fa4a164ec7ee",
+        "chatSessionId": "sess_e590a3f2-fc06-438d-9529-894810838203",
+        "timestamp": 1785761593244
+      },
+      {
+        "executionId": "6ba5248f-9a9f-47f8-8a97-fa4a164ec7ee",
+        "chatSessionId": "sess_e590a3f2-fc06-438d-9529-894810838203",
+        "timestamp": 1785761713432
+      }
+    ],
+    "15. Implement document Save/Load — Serialize Lexical state to localStorage, list saved documents, open/delete": [
+      {
+        "executionId": "a90b5145-77f9-43b7-9c92-6c537fd52cc7",
+        "chatSessionId": "sess_daf9cf60-6cd5-4108-b3a4-0d11c19da9da",
+        "timestamp": 1785761761579
+      },
+      {
+        "executionId": "a90b5145-77f9-43b7-9c92-6c537fd52cc7",
+        "chatSessionId": "sess_daf9cf60-6cd5-4108-b3a4-0d11c19da9da",
+        "timestamp": 1785762002607
+      }
+    ],
+    "16. Implement Export — HTML download, plain text download, Markdown download": [
+      {
+        "executionId": "569d6527-5b92-4604-9fdc-a3ece11e9faa",
+        "chatSessionId": "sess_ceff1182-8e46-4396-9ae9-c0786b621511",
+        "timestamp": 1785762323608
+      },
+      {
+        "executionId": "569d6527-5b92-4604-9fdc-a3ece11e9faa",
+        "chatSessionId": "sess_ceff1182-8e46-4396-9ae9-c0786b621511",
+        "timestamp": 1785762553333
+      }
+    ],
+    "17. Define `DictionaryProvider` interface and implement it using existing `/api/dictionary` and `/api/convert` endpoints": [
+      {
+        "executionId": "f7baa98d-f77a-4879-bbc7-108a003b7b21",
+        "chatSessionId": "sess_065197e0-b6c6-4851-b2bc-5b31fb13a4da",
+        "timestamp": 1785762935140
+      },
+      {
+        "executionId": "f7baa98d-f77a-4879-bbc7-108a003b7b21",
+        "chatSessionId": "sess_065197e0-b6c6-4851-b2bc-5b31fb13a4da",
+        "timestamp": 1785763039078
+      }
+    ],
+    "18. Implement `plugins/SpellCheckPlugin.tsx` — Debounced word checking, red underline decorations, right-click suggestions": [
+      {
+        "executionId": "e1b4b5c8-a7ae-4c51-a222-a20683988601",
+        "chatSessionId": "sess_94b9bb44-a1b6-428c-9209-bf449828c8e2",
+        "timestamp": 1785763058598
+      },
+      {
+        "executionId": "e1b4b5c8-a7ae-4c51-a222-a20683988601",
+        "chatSessionId": "sess_94b9bb44-a1b6-428c-9209-bf449828c8e2",
+        "timestamp": 1785763259378
+      }
+    ],
+    "19. Implement `plugins/AutocompletePlugin.tsx` — Floating suggestion popup, Tab/Enter to accept, arrow navigation": [
+      {
+        "executionId": "92089d40-0970-448e-a999-d041818efcdc",
+        "chatSessionId": "sess_43ad98d4-0cdb-4484-941f-35c84e06af60",
+        "timestamp": 1785765166423
+      },
+      {
+        "executionId": "92089d40-0970-448e-a999-d041818efcdc",
+        "chatSessionId": "sess_43ad98d4-0cdb-4484-941f-35c84e06af60",
+        "timestamp": 1785765323884
+      }
+    ],
+    "20. Implement `plugins/AutocorrectPlugin.tsx` — Word boundary detection, auto-replace with undo support, toggle on/off": [
+      {
+        "executionId": "d403180e-8f06-421d-ac87-bb7477a96d4f",
+        "chatSessionId": "sess_ceab27f8-913c-49f7-a05e-afe7509048d9",
+        "timestamp": 1785765342049
+      },
+      {
+        "executionId": "d403180e-8f06-421d-ac87-bb7477a96d4f",
+        "chatSessionId": "sess_ceab27f8-913c-49f7-a05e-afe7509048d9",
+        "timestamp": 1785765555804
+      }
+    ],
+    "21. Implement `plugins/DictionaryLookupPlugin.tsx` — Double-click or Ctrl+D popup with transliterations, meaning, edit link": [
+      {
+        "executionId": "179b7570-dc57-41cd-97cc-18b9df77dfbb",
+        "chatSessionId": "sess_d10511fd-04c1-4990-90a7-7ebbc2da740b",
+        "timestamp": 1785769454968
+      },
+      {
+        "executionId": "179b7570-dc57-41cd-97cc-18b9df77dfbb",
+        "chatSessionId": "sess_d10511fd-04c1-4990-90a7-7ebbc2da740b",
+        "timestamp": 1785769610925
+      }
+    ],
+    "22. RTL editing — Correct cursor behavior, paragraph direction toggle, mixed LTR/RTL support": [
+      {
+        "executionId": "09a102be-dc98-4e2e-834d-eb1afc18c386",
+        "chatSessionId": "sess_cdfafed3-c145-4e4e-8804-9027106e087c",
+        "timestamp": 1785769674531
+      },
+      {
+        "executionId": "09a102be-dc98-4e2e-834d-eb1afc18c386",
+        "chatSessionId": "sess_cdfafed3-c145-4e4e-8804-9027106e087c",
+        "timestamp": 1785769823244
+      }
+    ],
+    "23. Mobile/responsive toolbar — Collapsed groups, overflow menu on small screens": [
+      {
+        "executionId": "d75b1672-1bea-4fe1-aecb-bd965c8d61d1",
+        "chatSessionId": "sess_ca2d5917-9c01-42de-9d5b-0df49eb700c0",
+        "timestamp": 1785770284272
+      },
+      {
+        "executionId": "d75b1672-1bea-4fe1-aecb-bd965c8d61d1",
+        "chatSessionId": "sess_ca2d5917-9c01-42de-9d5b-0df49eb700c0",
+        "timestamp": 1785770473957
+      }
+    ],
+    "24. Keyboard shortcuts panel — Help modal listing all available shortcuts": [
+      {
+        "executionId": "507266c3-dd3c-4b39-a4de-07024e557a03",
+        "chatSessionId": "sess_aa9c5d82-f765-46d9-8237-840a889c1c35",
+        "timestamp": 1785771037612
+      },
+      {
+        "executionId": "507266c3-dd3c-4b39-a4de-07024e557a03",
+        "chatSessionId": "sess_aa9c5d82-f765-46d9-8237-840a889c1c35",
+        "timestamp": 1785771183447
+      }
+    ],
+    "25. Performance optimization — Debounce spell-check for large docs, virtual list for autocomplete": [
+      {
+        "executionId": "5086a1b3-c501-44de-809a-e686ae0f2840",
+        "chatSessionId": "sess_64ecb527-937a-42a4-8edb-9492bb18754d",
+        "timestamp": 1785771243364
+      }
+    ],
+    "26. Accessibility audit — ARIA labels, focus management, screen reader testing": [
+      {
+        "executionId": "f460a6fc-1cb8-413f-b0a4-7663055daec1",
+        "chatSessionId": "sess_81748965-ba84-46ad-9a7e-307ad6c17922",
+        "timestamp": 1785771765799
+      }
+    ]
+  }
+}

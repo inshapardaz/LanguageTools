@@ -1,10 +1,11 @@
 import { AppShell, Group, Tabs, Title, Text, Box, SegmentedControl, ActionIcon, Tooltip, useMantineColorScheme, type MantineColorScheme } from '@mantine/core';
-import { IconLanguage, IconBook, IconLibrary, IconSun, IconMoon, IconDeviceDesktop } from '@tabler/icons-react';
+import { IconLanguage, IconBook, IconLibrary, IconEdit, IconSun, IconMoon, IconDeviceDesktop } from '@tabler/icons-react';
 import { useRouter } from './router';
 import { useI18n } from './i18n';
 import Converter from './pages/Converter';
 import DictionaryManager from './pages/DictionaryManager';
 import NaturalDictionary from './pages/NaturalDictionary';
+import TextEditor from './pages/TextEditor';
 
 interface AppProps {
   colorScheme: MantineColorScheme;
@@ -24,6 +25,7 @@ export default function App({ colorScheme, onColorSchemeChange }: AppProps) {
 
   const activeTab = route.page === 'natural-dictionary' ? 'natural-dictionary'
     : route.page === 'dictionary' ? 'dictionary'
+    : route.page === 'editor' ? 'editor'
     : 'converter';
 
   return (
@@ -58,6 +60,9 @@ export default function App({ colorScheme, onColorSchemeChange }: AppProps) {
                 </Tabs.Tab>
                 <Tabs.Tab value="natural-dictionary" leftSection={<IconLibrary size={16} />}>
                   {t('tabNaturalDictionary')}
+                </Tabs.Tab>
+                <Tabs.Tab value="editor" leftSection={<IconEdit size={16} />}>
+                  {t('tabEditor')}
                 </Tabs.Tab>
               </Tabs.List>
             </Tabs>
@@ -100,6 +105,7 @@ export default function App({ colorScheme, onColorSchemeChange }: AppProps) {
               onBackToList={backToList}
             />
           )}
+          {activeTab === 'editor' && <TextEditor />}
         </Box>
       </AppShell.Main>
     </AppShell>
