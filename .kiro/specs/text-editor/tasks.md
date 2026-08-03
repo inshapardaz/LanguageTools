@@ -36,4 +36,4 @@
 - [x] 23. Mobile/responsive toolbar — Collapsed groups, overflow menu on small screens
 - [x] 24. Keyboard shortcuts panel — Help modal listing all available shortcuts
 - [x] 25. Performance optimization — Debounce spell-check for large docs, virtual list for autocomplete
-- [-] 26. Accessibility audit — ARIA labels, focus management, screen reader testing
+- [x] 26. Accessibility audit — ARIA labels, focus management, screen reader testing

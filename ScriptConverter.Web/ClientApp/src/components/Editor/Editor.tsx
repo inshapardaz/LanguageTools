@@ -125,6 +125,8 @@ export default function Editor({
         {/* Toolbar */}
         {showToolbar && (
           <Box
+            component="nav"
+            aria-label="Editor toolbar"
             px="sm"
             py="xs"
             style={{
@@ -182,6 +184,8 @@ export default function Editor({
 
         {/* Editor content area */}
         <Box
+          component="section"
+          aria-label="Document editing area"
           dir={direction}
           className="editor-content-area"
           style={{
@@ -198,7 +202,13 @@ export default function Editor({
             }}
           >
             <RichTextPlugin
-              contentEditable={<ContentEditable className="editor-root" />}
+              contentEditable={
+                <ContentEditable
+                  className="editor-root"
+                  aria-label="Rich text editor"
+                  aria-multiline="true"
+                />
+              }
               ErrorBoundary={LexicalErrorBoundary}
             />
           </Box>
@@ -207,6 +217,8 @@ export default function Editor({
         {/* Status bar */}
         {showStatusBar && (
           <Box
+            component="footer"
+            aria-label="Editor status"
             px="sm"
             py={4}
             style={{

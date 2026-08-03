@@ -244,7 +244,7 @@ export default function TextCleanupPlugin() {
     <Menu position="bottom-start" withinPortal={false}>
       <Menu.Target>
         <Tooltip label="Text cleanup" position="bottom" withArrow>
-          <ActionIcon variant="subtle" size="sm" aria-label="Text cleanup">
+          <ActionIcon variant="subtle" size="sm" aria-label="Text cleanup" aria-haspopup="menu">
             <IconClearFormatting size={16} />
           </ActionIcon>
         </Tooltip>

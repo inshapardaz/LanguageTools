@@ -59,19 +59,19 @@ export default function DocumentManager({
   return (
     <>
       {/* Toolbar buttons */}
-      <Group gap={4}>
+      <Group gap={4} role="group" aria-label="Document management">
         <Tooltip label={t('textEditorNewDoc')}>
-          <ActionIcon variant="subtle" size="sm" onClick={onNew}>
+          <ActionIcon variant="subtle" size="sm" onClick={onNew} aria-label={t('textEditorNewDoc')}>
             <IconFilePlus size={18} />
           </ActionIcon>
         </Tooltip>
         <Tooltip label={t('textEditorOpenDoc')}>
-          <ActionIcon variant="subtle" size="sm" onClick={() => setOpened(true)}>
+          <ActionIcon variant="subtle" size="sm" onClick={() => setOpened(true)} aria-label={t('textEditorOpenDoc')} aria-haspopup="dialog">
             <IconFolder size={18} />
           </ActionIcon>
         </Tooltip>
         <Tooltip label={t('textEditorSaveDoc')}>
-          <ActionIcon variant="subtle" size="sm" onClick={onSave}>
+          <ActionIcon variant="subtle" size="sm" onClick={onSave} aria-label={t('textEditorSaveDoc')}>
             <IconDeviceFloppy size={18} />
           </ActionIcon>
         </Tooltip>
@@ -107,6 +107,15 @@ export default function DocumentManager({
                   <Box
                     style={{ cursor: 'pointer', flex: 1, overflow: 'hidden' }}
                     onClick={() => handleOpen(doc.id)}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={`Open document: ${doc.title}`}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        handleOpen(doc.id);
+                      }
+                    }}
                   >
                     <Text fw={500} truncate>
                       <IconFile size={14} style={{ marginRight: 4, verticalAlign: 'middle' }} />
@@ -121,6 +130,7 @@ export default function DocumentManager({
                     color="red"
                     size="sm"
                     onClick={() => handleDelete(doc.id)}
+                    aria-label={`Delete document: ${doc.title}`}
                   >
                     <IconTrash size={16} />
                   </ActionIcon>

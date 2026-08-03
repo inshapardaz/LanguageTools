@@ -31,7 +31,7 @@ export default function ExportPlugin() {
     <Menu position="bottom-start" withinPortal={false}>
       <Menu.Target>
         <Tooltip label="Export" position="bottom" withArrow>
-          <ActionIcon variant="subtle" size="sm" aria-label="Export">
+          <ActionIcon variant="subtle" size="sm" aria-label="Export" aria-haspopup="menu">
             <IconFileExport size={16} />
           </ActionIcon>
         </Tooltip>

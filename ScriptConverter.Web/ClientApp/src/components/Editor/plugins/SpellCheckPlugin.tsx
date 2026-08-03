@@ -625,6 +625,8 @@ export default function SpellCheckPlugin({
         left: contextMenu.x,
         zIndex: 1000,
       }}
+      role="dialog"
+      aria-label={`Spelling suggestions for "${contextMenu.word}"`}
     >
       <Menu opened onClose={() => setContextMenu(null)} withinPortal={false}>
         <Menu.Target>

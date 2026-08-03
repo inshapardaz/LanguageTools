@@ -58,7 +58,7 @@ export default function TextEditor() {
   }, []);
 
   return (
-    <Paper shadow="xs" p="lg" radius="md" withBorder>
+    <Paper shadow="xs" p="lg" radius="md" withBorder component="main" aria-label="Text Editor">
       {/* Document management toolbar */}
       <Box mb="sm" style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
         <DocumentManager

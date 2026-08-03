@@ -149,7 +149,7 @@ export default function EditorToolbar({
 
   // Alignment buttons group (used inline on desktop, in overflow on mobile)
   const alignmentButtons = (
-    <Group gap={2} wrap="nowrap">
+    <Group gap={2} wrap="nowrap" role="group" aria-label="Text alignment">
       <Tooltip label="Align left" position="bottom" withArrow>
         <ActionIcon
           variant="subtle"
@@ -347,9 +347,9 @@ export default function EditorToolbar({
 
   // Desktop layout: full toolbar
   return (
-    <Group gap="xs" wrap="nowrap">
+    <Group gap="xs" wrap="nowrap" role="toolbar" aria-label="Text formatting toolbar">
       {/* History group */}
-      <Group gap={2} wrap="nowrap">
+      <Group gap={2} wrap="nowrap" role="group" aria-label="History">
         <Tooltip label="Undo" position="bottom" withArrow>
           <ActionIcon
             variant="subtle"
@@ -377,12 +377,14 @@ export default function EditorToolbar({
       <Divider orientation="vertical" />
 
       {/* Block type selector */}
-      {blockTypeSelector}
+      <Group gap={2} wrap="nowrap" role="group" aria-label="Block type">
+        {blockTypeSelector}
+      </Group>
 
       <Divider orientation="vertical" />
 
       {/* Inline format buttons */}
-      <Group gap={2} wrap="nowrap">
+      <Group gap={2} wrap="nowrap" role="group" aria-label="Inline formatting">
         <Tooltip label="Bold" position="bottom" withArrow>
           <ActionIcon
             variant={activeFormats.bold ? 'filled' : 'subtle'}
@@ -452,12 +454,16 @@ export default function EditorToolbar({
       <Divider orientation="vertical" />
 
       {/* Alignment buttons */}
-      {alignmentButtons}
+      <Group gap={2} wrap="nowrap" role="group" aria-label="Text alignment">
+        {alignmentButtons}
+      </Group>
 
       <Divider orientation="vertical" />
 
       {/* Document group — Font selector */}
-      {fontSelector}
+      <Group gap={2} wrap="nowrap" role="group" aria-label="Document settings">
+        {fontSelector}
+      </Group>
     </Group>
   );
 }

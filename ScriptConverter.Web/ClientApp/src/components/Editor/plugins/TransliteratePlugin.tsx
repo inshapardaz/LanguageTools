@@ -162,6 +162,7 @@ export default function TransliteratePlugin() {
             variant="subtle"
             size="sm"
             aria-label="Transliterate"
+            aria-haspopup="menu"
             loading={loading}
           >
             {loading ? <Loader size={14} /> : <IconLanguage size={16} />}

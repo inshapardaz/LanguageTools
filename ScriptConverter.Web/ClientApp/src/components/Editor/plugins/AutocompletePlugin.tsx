@@ -88,6 +88,8 @@ function VirtualSuggestionList({
     <div
       ref={containerRef}
       onScroll={handleScroll}
+      role="listbox"
+      aria-label="Autocomplete suggestions"
       style={{
         maxHeight: MAX_VISIBLE_HEIGHT,
         overflowY: 'auto',
@@ -101,6 +103,9 @@ function VirtualSuggestionList({
           return (
             <Text
               key={suggestion}
+              id={`autocomplete-option-${actualIndex}`}
+              role="option"
+              aria-selected={actualIndex === selectedIndex}
               size="sm"
               px="sm"
               py={4}
@@ -467,29 +472,51 @@ export default function AutocompletePlugin({
   if (!popup) return null;
 
   return (
-    <Paper
-      className="autocomplete-popup"
-      shadow="md"
-      withBorder
-      style={{
-        position: 'fixed',
-        top: popup.position.top,
-        left: popup.position.left,
-        zIndex: 1000,
-        minWidth: 150,
-        maxWidth: 300,
-      }}
-    >
-      <VirtualSuggestionList
-        suggestions={popup.suggestions}
-        selectedIndex={popup.selectedIndex}
-        onSelect={acceptSuggestion}
-        onHover={(index) => {
-          setPopup((prev) =>
-            prev ? { ...prev, selectedIndex: index } : null,
-          );
+    <>
+      {/* Screen reader announcement for suggestion count */}
+      <div
+        aria-live="polite"
+        aria-atomic="true"
+        style={{
+          position: 'absolute',
+          width: '1px',
+          height: '1px',
+          padding: 0,
+          margin: '-1px',
+          overflow: 'hidden',
+          clip: 'rect(0, 0, 0, 0)',
+          whiteSpace: 'nowrap',
+          border: 0,
         }}
-      />
-    </Paper>
+      >
+        {popup.suggestions.length} suggestion{popup.suggestions.length !== 1 ? 's' : ''} available. Use arrow keys to navigate.
+      </div>
+      <Paper
+        className="autocomplete-popup"
+        shadow="md"
+        withBorder
+        role="dialog"
+        aria-label="Autocomplete suggestions"
+        style={{
+          position: 'fixed',
+          top: popup.position.top,
+          left: popup.position.left,
+          zIndex: 1000,
+          minWidth: 150,
+          maxWidth: 300,
+        }}
+      >
+        <VirtualSuggestionList
+          suggestions={popup.suggestions}
+          selectedIndex={popup.selectedIndex}
+          onSelect={acceptSuggestion}
+          onHover={(index) => {
+            setPopup((prev) =>
+              prev ? { ...prev, selectedIndex: index } : null,
+            );
+          }}
+        />
+      </Paper>
+    </>
   );
 }

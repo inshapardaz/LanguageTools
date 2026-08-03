@@ -364,18 +364,30 @@ function ImageComponent({ src, alt, width, height, nodeKey }: ImageComponentProp
           <span
             className="editor-image-resize-handle editor-image-resize-tl"
             onPointerDown={(e) => handleResizeStartStable(e, 'top-left')}
+            role="separator"
+            aria-label="Resize image from top-left"
+            aria-orientation="horizontal"
           />
           <span
             className="editor-image-resize-handle editor-image-resize-tr"
             onPointerDown={(e) => handleResizeStartStable(e, 'top-right')}
+            role="separator"
+            aria-label="Resize image from top-right"
+            aria-orientation="horizontal"
           />
           <span
             className="editor-image-resize-handle editor-image-resize-bl"
             onPointerDown={(e) => handleResizeStartStable(e, 'bottom-left')}
+            role="separator"
+            aria-label="Resize image from bottom-left"
+            aria-orientation="horizontal"
           />
           <span
             className="editor-image-resize-handle editor-image-resize-br"
             onPointerDown={(e) => handleResizeStartStable(e, 'bottom-right')}
+            role="separator"
+            aria-label="Resize image from bottom-right"
+            aria-orientation="horizontal"
           />
         </>
       )}

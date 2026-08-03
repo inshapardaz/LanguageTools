@@ -377,6 +377,9 @@ export default function DictionaryLookupPlugin({
       shadow="lg"
       withBorder
       p="sm"
+      role="dialog"
+      aria-label={`Dictionary lookup: ${entry.word}`}
+      aria-modal="false"
       style={{
         position: 'fixed',
         top: position.top,
@@ -442,12 +445,13 @@ export default function DictionaryLookupPlugin({
 
         {/* Actions */}
         <Divider />
-        <Group gap="xs" wrap="wrap">
+        <Group gap="xs" wrap="wrap" role="group" aria-label="Transliterate in place">
           <Button
             size="xs"
             variant="light"
             color="green"
             onClick={() => handleTransliterate('urdu')}
+            aria-label="Transliterate to Urdu"
           >
             → Urdu
           </Button>
@@ -456,6 +460,7 @@ export default function DictionaryLookupPlugin({
             variant="light"
             color="orange"
             onClick={() => handleTransliterate('hindi')}
+            aria-label="Transliterate to Hindi"
           >
             → Hindi
           </Button>
@@ -464,6 +469,7 @@ export default function DictionaryLookupPlugin({
             variant="light"
             color="blue"
             onClick={() => handleTransliterate('roman')}
+            aria-label="Transliterate to Roman"
           >
             → Roman
           </Button>

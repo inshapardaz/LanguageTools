@@ -306,3 +306,106 @@
     min-width: 200px;
   }
 }
+
+/* ===== Accessibility: Focus indicators ===== */
+
+/* Visible focus ring on all interactive elements within the editor */
+.editor-root:focus-visible {
+  outline: 2px solid var(--mantine-color-blue-5);
+  outline-offset: 2px;
+  border-radius: var(--mantine-radius-sm);
+}
+
+/* ===== Accessibility: High contrast mode ===== */
+
+@media (forced-colors: active) {
+  /* Ensure focus indicators are visible in high contrast mode */
+  .editor-root:focus-visible {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+
+  /* Spell-check underlines remain visible */
+  .editor-spellcheck-error {
+    text-decoration: underline wavy;
+    text-decoration-color: Mark;
+  }
+
+  /* Editor image selection indicator */
+  .editor-image-selected {
+    outline: 2px solid Highlight;
+    outline-offset: 2px;
+  }
+
+  /* Resize handles must be visible */
+  .editor-image-resize-handle {
+    background-color: Highlight;
+    border-color: HighlightText;
+  }
+
+  /* Block quote left border */
+  .editor-quote {
+    border-left-color: CanvasText;
+  }
+
+  .editor-root[dir='rtl'] .editor-quote {
+    border-right-color: CanvasText;
+  }
+
+  /* Link color */
+  .editor-link {
+    color: LinkText;
+  }
+
+  /* Autocomplete popup selected item */
+  .autocomplete-popup [aria-selected='true'] {
+    background-color: Highlight;
+    color: HighlightText;
+  }
+
+  /* Dictionary popup */
+  .dictionary-lookup-popup {
+    border: 1px solid CanvasText;
+  }
+}
+
+/* Preference for more contrast (non-forced-colors approach) */
+@media (prefers-contrast: more) {
+  .editor-root:focus-visible {
+    outline: 3px solid var(--mantine-color-blue-9);
+    outline-offset: 2px;
+  }
+
+  .editor-link {
+    text-decoration-thickness: 2px;
+  }
+
+  .editor-quote {
+    border-left-width: 6px;
+  }
+
+  .editor-root[dir='rtl'] .editor-quote {
+    border-right-width: 6px;
+  }
+
+  .editor-spellcheck-error {
+    text-decoration-thickness: 2px;
+  }
+
+  .editor-image-selected {
+    outline-width: 3px;
+  }
+}
+
+/* ===== Accessibility: Visually hidden utility (for sr-only text) ===== */
+.editor-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

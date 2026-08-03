@@ -90,7 +90,7 @@ export default function EditorStatusBar({ zoom }: EditorStatusBarProps) {
   const zoomPercentage = Math.round(zoom * 100);
 
   return (
-    <Group gap="xs" wrap="nowrap">
+    <Group gap="xs" wrap="nowrap" aria-live="polite" aria-atomic="true" role="status">
       <Text size="xs" c="dimmed">
         Words: {formatNumber(wordCount)}
       </Text>

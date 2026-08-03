@@ -93,7 +93,7 @@ export default function ZoomPlugin({
   const canZoomOut = zoom > MIN_ZOOM;
 
   return (
-    <Group gap={2} wrap="nowrap">
+    <Group gap={2} wrap="nowrap" role="group" aria-label="Zoom controls">
       <Tooltip label="Zoom out (Ctrl+-)" position="bottom" withArrow>
         <ActionIcon
           variant="subtle"

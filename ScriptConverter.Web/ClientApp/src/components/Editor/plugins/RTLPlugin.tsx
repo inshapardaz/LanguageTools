@@ -128,7 +128,7 @@ export default function RTLPlugin() {
   );
 
   return (
-    <Group gap={2} wrap="nowrap">
+    <Group gap={2} wrap="nowrap" role="group" aria-label="Text direction">
       <Tooltip label="Left-to-right paragraph" position="bottom" withArrow>
         <ActionIcon
           variant={currentDirection === 'ltr' ? 'filled' : 'subtle'}
