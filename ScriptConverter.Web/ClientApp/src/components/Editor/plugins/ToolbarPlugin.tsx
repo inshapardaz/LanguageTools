@@ -14,6 +14,7 @@ import { $getNearestNodeOfType } from '@lexical/utils';
 
 import type { ReactNode } from 'react';
 import EditorToolbar from '../EditorToolbar';
+import type { ParagraphDirection } from './RTLPlugin';
 
 /**
  * ToolbarPlugin listens for Lexical editor state changes and syncs the
@@ -25,11 +26,13 @@ export default function ToolbarPlugin({
   onFontChange,
   compact,
   overflowItems,
+  currentDirection,
 }: {
   currentFont: string;
   onFontChange: (font: string) => void;
   compact?: boolean;
   overflowItems?: ReactNode;
+  currentDirection?: ParagraphDirection;
 }) {
   const [editor] = useLexicalComposerContext();
 
@@ -124,6 +127,7 @@ export default function ToolbarPlugin({
       canRedo={canRedo}
       currentFont={currentFont}
       onFontChange={onFontChange}
+      currentDirection={currentDirection}
       compact={compact}
       overflowItems={overflowItems}
     />

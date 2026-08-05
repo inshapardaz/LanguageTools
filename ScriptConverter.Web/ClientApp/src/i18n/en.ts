@@ -294,6 +294,13 @@ const en = {
   textEditorExportText: 'Export as Plain Text',
   textEditorExportMarkdown: 'Export as Markdown',
   textEditorShortcuts: 'Keyboard shortcuts (Ctrl+/)',
+
+  // Lists, Quotes, Horizontal Rule
+  toolbarBulletList: 'Bullet list',
+  toolbarNumberedList: 'Numbered list',
+  toolbarBlockquote: 'Blockquote',
+  toolbarHorizontalRule: 'Horizontal rule',
+  toolbarBlockElements: 'Block elements',
 } as const;
 
 export default en;

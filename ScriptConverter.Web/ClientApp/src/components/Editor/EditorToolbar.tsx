@@ -14,6 +14,10 @@ import {
   IconLink,
   IconPhoto,
   IconDots,
+  IconList,
+  IconListNumbers,
+  IconBlockquote,
+  IconSeparator,
 } from '@tabler/icons-react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import {
@@ -22,9 +26,15 @@ import {
   UNDO_COMMAND,
   REDO_COMMAND,
 } from 'lexical';
-import { $createHeadingNode, type HeadingTagType } from '@lexical/rich-text';
+import { $createHeadingNode, type HeadingTagType, $createQuoteNode } from '@lexical/rich-text';
 import { $createParagraphNode, $getSelection, $isRangeSelection } from 'lexical';
 import { $setBlocksType } from '@lexical/selection';
+import {
+  INSERT_ORDERED_LIST_COMMAND,
+  INSERT_UNORDERED_LIST_COMMAND,
+  REMOVE_LIST_COMMAND,
+} from '@lexical/list';
+import { INSERT_HORIZONTAL_RULE_COMMAND } from '@lexical/react/LexicalHorizontalRuleNode';
 import { INSERT_LINK_COMMAND } from './plugins/LinkPlugin';
 import { INSERT_IMAGE_COMMAND } from './plugins/ImagePlugin';
 import { useI18n } from '../../i18n';
@@ -41,6 +51,8 @@ export interface EditorToolbarProps {
   canRedo: boolean;
   currentFont: string;
   onFontChange: (font: string) => void;
+  /** Current active paragraph direction — used to flip directional icons */
+  currentDirection?: 'ltr' | 'rtl' | null;
   /** When true, collapses less-used groups into an overflow menu (for mobile/small screens) */
   compact?: boolean;
   /** Additional toolbar items to render in the overflow menu when compact */
@@ -60,11 +72,15 @@ export default function EditorToolbar({
   canRedo,
   currentFont,
   onFontChange,
+  currentDirection = null,
   compact = false,
   overflowItems,
 }: EditorToolbarProps) {
   const [editor] = useLexicalComposerContext();
   const { t } = useI18n();
+
+  const isRtl = currentDirection === 'rtl';
+  const iconFlipStyle: React.CSSProperties | undefined = isRtl ? { transform: 'scaleX(-1)' } : undefined;
 
   const BLOCK_TYPE_OPTIONS = useMemo(() => [
     { value: 'paragraph', label: t('blockParagraph') },
@@ -134,6 +150,39 @@ export default function EditorToolbar({
 
   const handleInsertImage = useCallback(() => {
     editor.dispatchCommand(INSERT_IMAGE_COMMAND, { showDialog: true });
+  }, [editor]);
+
+  const handleInsertBulletList = useCallback(() => {
+    if (blockType === 'ul') {
+      editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
+    } else {
+      editor.dispatchCommand(INSERT_UNORDERED_LIST_COMMAND, undefined);
+    }
+  }, [editor, blockType]);
+
+  const handleInsertNumberedList = useCallback(() => {
+    if (blockType === 'ol') {
+      editor.dispatchCommand(REMOVE_LIST_COMMAND, undefined);
+    } else {
+      editor.dispatchCommand(INSERT_ORDERED_LIST_COMMAND, undefined);
+    }
+  }, [editor, blockType]);
+
+  const handleInsertQuote = useCallback(() => {
+    editor.update(() => {
+      const selection = $getSelection();
+      if (!$isRangeSelection(selection)) return;
+
+      if (blockType === 'quote') {
+        $setBlocksType(selection, () => $createParagraphNode());
+      } else {
+        $setBlocksType(selection, () => $createQuoteNode());
+      }
+    });
+  }, [editor, blockType]);
+
+  const handleInsertHorizontalRule = useCallback(() => {
+    editor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined);
   }, [editor]);
 
   // Block type selector (used inline on desktop, in overflow on mobile)
@@ -223,7 +272,7 @@ export default function EditorToolbar({
               disabled={!canUndo}
               aria-label={t('toolbarUndo')}
             >
-              <IconArrowBackUp size={16} />
+              <IconArrowBackUp size={16} style={iconFlipStyle} />
             </ActionIcon>
           </Tooltip>
           <Tooltip label={t('toolbarRedo')} position="bottom" withArrow>
@@ -234,7 +283,7 @@ export default function EditorToolbar({
               disabled={!canRedo}
               aria-label={t('toolbarRedo')}
             >
-              <IconArrowForwardUp size={16} />
+              <IconArrowForwardUp size={16} style={iconFlipStyle} />
             </ActionIcon>
           </Tooltip>
         </Group>
@@ -332,6 +381,55 @@ export default function EditorToolbar({
             <Menu.Label>{t('toolbarAlignment')}</Menu.Label>
             <Menu.Item closeMenuOnClick={false}>{alignmentButtons}</Menu.Item>
             <Menu.Divider />
+            <Menu.Label>{t('toolbarBlockElements')}</Menu.Label>
+            <Menu.Item closeMenuOnClick={false}>
+              <Group gap={2} wrap="nowrap" role="group" aria-label={t('toolbarBlockElements')}>
+                <Tooltip label={t('toolbarBulletList')} position="bottom" withArrow>
+                  <ActionIcon
+                    variant={blockType === 'ul' ? 'filled' : 'subtle'}
+                    size="sm"
+                    onClick={handleInsertBulletList}
+                    aria-label={t('toolbarBulletList')}
+                    aria-pressed={blockType === 'ul'}
+                  >
+                    <IconList size={16} />
+                  </ActionIcon>
+                </Tooltip>
+                <Tooltip label={t('toolbarNumberedList')} position="bottom" withArrow>
+                  <ActionIcon
+                    variant={blockType === 'ol' ? 'filled' : 'subtle'}
+                    size="sm"
+                    onClick={handleInsertNumberedList}
+                    aria-label={t('toolbarNumberedList')}
+                    aria-pressed={blockType === 'ol'}
+                  >
+                    <IconListNumbers size={16} />
+                  </ActionIcon>
+                </Tooltip>
+                <Tooltip label={t('toolbarBlockquote')} position="bottom" withArrow>
+                  <ActionIcon
+                    variant={blockType === 'quote' ? 'filled' : 'subtle'}
+                    size="sm"
+                    onClick={handleInsertQuote}
+                    aria-label={t('toolbarBlockquote')}
+                    aria-pressed={blockType === 'quote'}
+                  >
+                    <IconBlockquote size={16} />
+                  </ActionIcon>
+                </Tooltip>
+                <Tooltip label={t('toolbarHorizontalRule')} position="bottom" withArrow>
+                  <ActionIcon
+                    variant="subtle"
+                    size="sm"
+                    onClick={handleInsertHorizontalRule}
+                    aria-label={t('toolbarHorizontalRule')}
+                  >
+                    <IconSeparator size={16} />
+                  </ActionIcon>
+                </Tooltip>
+              </Group>
+            </Menu.Item>
+            <Menu.Divider />
             <Menu.Label>{t('toolbarFont')}</Menu.Label>
             <Menu.Item closeMenuOnClick={false}>{fontSelector}</Menu.Item>
             {overflowItems && (
@@ -360,7 +458,7 @@ export default function EditorToolbar({
             disabled={!canUndo}
             aria-label={t('toolbarUndo')}
           >
-            <IconArrowBackUp size={16} />
+            <IconArrowBackUp size={16} style={iconFlipStyle} />
           </ActionIcon>
         </Tooltip>
         <Tooltip label={t('toolbarRedo')} position="bottom" withArrow>
@@ -371,7 +469,7 @@ export default function EditorToolbar({
             disabled={!canRedo}
             aria-label={t('toolbarRedo')}
           >
-            <IconArrowForwardUp size={16} />
+            <IconArrowForwardUp size={16} style={iconFlipStyle} />
           </ActionIcon>
         </Tooltip>
       </Group>
@@ -449,6 +547,55 @@ export default function EditorToolbar({
             aria-label={t('toolbarInsertImage')}
           >
             <IconPhoto size={16} />
+          </ActionIcon>
+        </Tooltip>
+      </Group>
+
+      <Divider orientation="vertical" />
+
+      {/* Block elements: lists, quote, HR */}
+      <Group gap={2} wrap="nowrap" role="group" aria-label={t('toolbarBlockElements')}>
+        <Tooltip label={t('toolbarBulletList')} position="bottom" withArrow>
+          <ActionIcon
+            variant={blockType === 'ul' ? 'filled' : 'subtle'}
+            size="sm"
+            onClick={handleInsertBulletList}
+            aria-label={t('toolbarBulletList')}
+            aria-pressed={blockType === 'ul'}
+          >
+            <IconList size={16} />
+          </ActionIcon>
+        </Tooltip>
+        <Tooltip label={t('toolbarNumberedList')} position="bottom" withArrow>
+          <ActionIcon
+            variant={blockType === 'ol' ? 'filled' : 'subtle'}
+            size="sm"
+            onClick={handleInsertNumberedList}
+            aria-label={t('toolbarNumberedList')}
+            aria-pressed={blockType === 'ol'}
+          >
+            <IconListNumbers size={16} />
+          </ActionIcon>
+        </Tooltip>
+        <Tooltip label={t('toolbarBlockquote')} position="bottom" withArrow>
+          <ActionIcon
+            variant={blockType === 'quote' ? 'filled' : 'subtle'}
+            size="sm"
+            onClick={handleInsertQuote}
+            aria-label={t('toolbarBlockquote')}
+            aria-pressed={blockType === 'quote'}
+          >
+            <IconBlockquote size={16} />
+          </ActionIcon>
+        </Tooltip>
+        <Tooltip label={t('toolbarHorizontalRule')} position="bottom" withArrow>
+          <ActionIcon
+            variant="subtle"
+            size="sm"
+            onClick={handleInsertHorizontalRule}
+            aria-label={t('toolbarHorizontalRule')}
+          >
+            <IconSeparator size={16} />
           </ActionIcon>
         </Tooltip>
       </Group>

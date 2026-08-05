@@ -16,6 +16,11 @@ import { useI18n } from '../../../i18n';
 
 export type ParagraphDirection = 'ltr' | 'rtl' | null;
 
+export interface RTLPluginProps {
+  /** Callback invoked when the active paragraph direction changes. */
+  onDirectionChange?: (direction: ParagraphDirection) => void;
+}
+
 /**
  * Command to set paragraph direction. Payload is 'ltr' | 'rtl'.
  */
@@ -27,7 +32,7 @@ export const SET_PARAGRAPH_DIRECTION_COMMAND: LexicalCommand<'ltr' | 'rtl'> =
  * It adds toolbar buttons to set the current paragraph's direction and syncs
  * the active direction state for display.
  */
-export default function RTLPlugin() {
+export default function RTLPlugin({ onDirectionChange }: RTLPluginProps = {}) {
   const [editor] = useLexicalComposerContext();
   const [currentDirection, setCurrentDirection] = useState<ParagraphDirection>(null);
   const { t } = useI18n();
@@ -129,6 +134,13 @@ export default function RTLPlugin() {
     [editor],
   );
 
+  // Notify parent when direction changes
+  useEffect(() => {
+    onDirectionChange?.(currentDirection);
+  }, [currentDirection, onDirectionChange]);
+
+  const isRtl = currentDirection === 'rtl';
+
   return (
     <Group gap={2} wrap="nowrap" role="group" aria-label="Text direction">
       <Tooltip label={t('textEditorDirectionLTR')} position="bottom" withArrow>
@@ -139,7 +151,7 @@ export default function RTLPlugin() {
           aria-label="Left-to-right paragraph"
           aria-pressed={currentDirection === 'ltr'}
         >
-          <IconTextDirectionLtr size={16} />
+          <IconTextDirectionLtr size={16} style={isRtl ? { transform: 'scaleX(-1)' } : undefined} />
         </ActionIcon>
       </Tooltip>
       <Tooltip label={t('textEditorDirectionRTL')} position="bottom" withArrow>
@@ -150,7 +162,7 @@ export default function RTLPlugin() {
           aria-label="Right-to-left paragraph"
           aria-pressed={currentDirection === 'rtl'}
         >
-          <IconTextDirectionRtl size={16} />
+          <IconTextDirectionRtl size={16} style={isRtl ? { transform: 'scaleX(-1)' } : undefined} />
         </ActionIcon>
       </Tooltip>
     </Group>

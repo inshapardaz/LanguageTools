@@ -1,11 +1,14 @@
-import { AppShell, Group, Tabs, Title, Text, Box, SegmentedControl, ActionIcon, Tooltip, useMantineColorScheme, type MantineColorScheme } from '@mantine/core';
+import { AppShell, Group, Tabs, Title, Text, Box, SegmentedControl, ActionIcon, Tooltip, useMantineColorScheme, type MantineColorScheme, Loader, Center } from '@mantine/core';
 import { IconLanguage, IconBook, IconLibrary, IconEdit, IconSun, IconMoon, IconDeviceDesktop } from '@tabler/icons-react';
+import { lazy, Suspense } from 'react';
 import { useRouter } from './router';
 import { useI18n } from './i18n';
-import Converter from './pages/Converter';
-import DictionaryManager from './pages/DictionaryManager';
-import NaturalDictionary from './pages/NaturalDictionary';
-import TextEditor from './pages/TextEditor';
+
+// Lazy-loaded page components for bundle splitting
+const Converter = lazy(() => import('./pages/Converter'));
+const DictionaryManager = lazy(() => import('./pages/DictionaryManager'));
+const NaturalDictionary = lazy(() => import('./pages/NaturalDictionary'));
+const TextEditor = lazy(() => import('./pages/TextEditor'));
 
 interface AppProps {
   colorScheme: MantineColorScheme;
@@ -95,17 +98,19 @@ export default function App({ colorScheme, onColorSchemeChange }: AppProps) {
 
       <AppShell.Main>
         <Box style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-          {activeTab === 'converter' && <Converter />}
-          {activeTab === 'dictionary' && <DictionaryManager />}
-          {activeTab === 'natural-dictionary' && (
-            <NaturalDictionary
-              activeDictionaryId={route.dictionaryId}
-              urlParams={route.params}
-              onBrowse={browseDictionary}
-              onBackToList={backToList}
-            />
-          )}
-          {activeTab === 'editor' && <TextEditor />}
+          <Suspense fallback={<Center py="xl"><Loader size="md" /></Center>}>
+            {activeTab === 'converter' && <Converter />}
+            {activeTab === 'dictionary' && <DictionaryManager />}
+            {activeTab === 'natural-dictionary' && (
+              <NaturalDictionary
+                activeDictionaryId={route.dictionaryId}
+                urlParams={route.params}
+                onBrowse={browseDictionary}
+                onBackToList={backToList}
+              />
+            )}
+            {activeTab === 'editor' && <TextEditor />}
+          </Suspense>
         </Box>
       </AppShell.Main>
     </AppShell>

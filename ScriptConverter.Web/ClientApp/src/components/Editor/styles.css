@@ -173,6 +173,21 @@
   text-decoration: underline wavy red;
 }
 
+/* Horizontal rule */
+.editor-hr {
+  border: none;
+  border-top: 2px solid var(--mantine-color-gray-4);
+  margin: 1em 0;
+  padding: 0;
+  cursor: default;
+}
+
+.editor-hr.selected {
+  outline: 2px solid var(--mantine-color-blue-5);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
 /* Zoom — content area container */
 .editor-content-area {
   position: relative;
@@ -289,6 +304,41 @@
 .editor-list-item[dir='ltr'] {
   direction: ltr;
   text-align: left;
+}
+
+/* Per-paragraph RTL list padding */
+.editor-list-ol[dir='rtl'],
+.editor-list-ul[dir='rtl'] {
+  padding-left: 0;
+  padding-right: 1.5em;
+}
+
+.editor-list-ol[dir='ltr'],
+.editor-list-ul[dir='ltr'] {
+  padding-left: 1.5em;
+  padding-right: 0;
+}
+
+/* Per-paragraph RTL blockquote border */
+.editor-quote[dir='rtl'] {
+  border-left: none;
+  border-right: 4px solid var(--mantine-color-gray-4);
+}
+
+.editor-quote[dir='ltr'] {
+  border-left: 4px solid var(--mantine-color-gray-4);
+  border-right: none;
+}
+
+/* Content area direction — ensures overall layout follows active direction */
+.editor-content-area[dir='rtl'] .editor-root {
+  text-align: right;
+  direction: rtl;
+}
+
+.editor-content-area[dir='ltr'] .editor-root {
+  text-align: left;
+  direction: ltr;
 }
 
 /* Mixed direction document — ensure proper cursor behavior */

@@ -50,6 +50,9 @@ const editorTheme: EditorThemeClasses = {
 
   // Image
   image: 'editor-image',
+
+  // Horizontal Rule
+  horizontalRule: 'editor-hr',
 };
 
 export default editorTheme;

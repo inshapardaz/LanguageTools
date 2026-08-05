@@ -9,6 +9,8 @@ import { ListPlugin } from '@lexical/react/LexicalListPlugin';
 import { LinkPlugin as LexicalLinkPlugin } from '@lexical/react/LexicalLinkPlugin';
 import { OnChangePlugin } from '@lexical/react/LexicalOnChangePlugin';
 import { LexicalErrorBoundary } from '@lexical/react/LexicalErrorBoundary';
+import { HorizontalRuleNode } from '@lexical/react/LexicalHorizontalRuleNode';
+import { HorizontalRulePlugin } from '@lexical/react/LexicalHorizontalRulePlugin';
 import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 import { ListNode, ListItemNode } from '@lexical/list';
 import { LinkNode, AutoLinkNode } from '@lexical/link';
@@ -25,6 +27,7 @@ import TextCleanupPlugin from './plugins/TextCleanupPlugin';
 import TransliteratePlugin from './plugins/TransliteratePlugin';
 import ExportPlugin from './plugins/ExportPlugin';
 import RTLPlugin from './plugins/RTLPlugin';
+import type { ParagraphDirection } from './plugins/RTLPlugin';
 import LinkPlugin from './plugins/LinkPlugin';
 import ImagePlugin from './plugins/ImagePlugin';
 import SavePlugin from './plugins/SavePlugin';
@@ -62,7 +65,14 @@ export default function Editor({
 }: EditorProps) {
   const [currentFont, setCurrentFont] = useState<string>(documentFont || '');
   const [currentZoom, setCurrentZoom] = useState<number>(initialZoom);
+  const [activeDirection, setActiveDirection] = useState<ParagraphDirection>(direction === 'rtl' ? 'rtl' : 'ltr');
   const isMobile = useMediaQuery('(max-width: 768px)') ?? false;
+
+  const handleDirectionChange = useCallback((dir: ParagraphDirection) => {
+    if (dir) {
+      setActiveDirection(dir);
+    }
+  }, []);
   const initialConfig = useMemo(
     () => ({
       namespace: 'ScriptConverterEditor',
@@ -77,6 +87,7 @@ export default function Editor({
         CodeNode,
         CodeHighlightNode,
         ImageNode,
+        HorizontalRuleNode,
       ],
       onError: (error: Error) => {
         console.error('[Editor]', error);
@@ -140,6 +151,7 @@ export default function Editor({
               currentFont={currentFont}
               onFontChange={setCurrentFont}
               compact={isMobile}
+              currentDirection={activeDirection}
               overflowItems={
                 isMobile ? (
                   <>
@@ -147,7 +159,7 @@ export default function Editor({
                       <ZoomPlugin initialZoom={initialZoom} onZoomChange={setCurrentZoom} />
                     </Menu.Item>
                     <Menu.Item closeMenuOnClick={false}>
-                      <RTLPlugin />
+                      <RTLPlugin onDirectionChange={handleDirectionChange} />
                     </Menu.Item>
                     <Menu.Item closeMenuOnClick={false}>
                       <TextCleanupPlugin />
@@ -170,7 +182,7 @@ export default function Editor({
                 <Divider orientation="vertical" />
                 <ZoomPlugin initialZoom={initialZoom} onZoomChange={setCurrentZoom} />
                 <Divider orientation="vertical" />
-                <RTLPlugin />
+                <RTLPlugin onDirectionChange={handleDirectionChange} />
                 <Divider orientation="vertical" />
                 <TextCleanupPlugin />
                 <TransliteratePlugin />
@@ -186,7 +198,7 @@ export default function Editor({
         <Box
           component="section"
           aria-label="Document editing area"
-          dir={direction}
+          dir={activeDirection || direction}
           className="editor-content-area"
           style={{
             flex: 1,
@@ -197,7 +209,7 @@ export default function Editor({
             style={{
               fontFamily: currentFont || 'inherit',
               transform: currentZoom !== 1 ? `scale(${currentZoom})` : undefined,
-              transformOrigin: 'top left',
+              transformOrigin: (activeDirection || direction) === 'rtl' ? 'top right' : 'top left',
               width: currentZoom !== 1 ? `${100 / currentZoom}%` : undefined,
             }}
           >
@@ -234,6 +246,7 @@ export default function Editor({
       {/* Plugins */}
       <HistoryPlugin />
       <ListPlugin />
+      <HorizontalRulePlugin />
       <LexicalLinkPlugin />
       <LinkPlugin />
       <ImagePlugin />

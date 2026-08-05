@@ -295,6 +295,13 @@ const ur: Record<TranslationKeys, string> = {
   textEditorExportText: 'برآمد بطور سادہ متن',
   textEditorExportMarkdown: 'برآمد بطور مارک ڈاؤن',
   textEditorShortcuts: 'کی بورڈ شارٹ کٹس (Ctrl+/)',
+
+  // Lists, Quotes, Horizontal Rule
+  toolbarBulletList: 'بلٹ لسٹ',
+  toolbarNumberedList: 'نمبر والی لسٹ',
+  toolbarBlockquote: 'بلاک اقتباس',
+  toolbarHorizontalRule: 'افقی لکیر',
+  toolbarBlockElements: 'بلاک عناصر',
 };
 
 export default ur;

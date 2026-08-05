@@ -96,7 +96,7 @@ export default function ZoomPlugin({
 
   return (
     <Group gap={2} wrap="nowrap" role="group" aria-label="Zoom controls">
-      <Tooltip label={t('textEditorZoomIn')} position="bottom" withArrow>
+      <Tooltip label={t('textEditorZoomOut')} position="bottom" withArrow>
         <ActionIcon
           variant="subtle"
           size="sm"
@@ -121,7 +121,7 @@ export default function ZoomPlugin({
         </Text>
       </Tooltip>
 
-      <Tooltip label={t('textEditorZoomOut')} position="bottom" withArrow>
+      <Tooltip label={t('textEditorZoomIn')} position="bottom" withArrow>
         <ActionIcon
           variant="subtle"
           size="sm"
