@@ -1,0 +1,35 @@
+**/.git
+**/.vs
+**/.vscode
+**/.idea
+**/bin
+**/obj
+**/TestResults
+**/node_modules
+**/bower_components
+
+# Build artifacts
+*.suo
+*.user
+*.log
+*.Cache
+
+# Test & coverage
+*[C]coverage*
+**/coverage.json
+
+# Documentation
+docs/
+*.md
+!README.md
+
+# IDE
+*.ncrunchproject
+*.jfm
+*.dbmdl
+
+# Environment-specific
+**/local.setting.json
+**/appsettings.Production.json
+**/appsettings.Production.smartasp.json
+**/*.lock.json

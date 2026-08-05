@@ -1,0 +1,3882 @@
+[
+  {
+    "id": "1e25e7af",
+    "roman": "aadmi",
+    "urdu": "آدمی",
+    "hindi": "आदमी",
+    "meaning": "man",
+    "category": "family"
+  },
+  {
+    "id": "f59c26d8",
+    "roman": "aag",
+    "urdu": "آگ",
+    "hindi": "आग",
+    "meaning": "fire",
+    "category": "nature"
+  },
+  {
+    "id": "4829f07a",
+    "roman": "aai",
+    "urdu": "آئے",
+    "hindi": "आए",
+    "meaning": "come",
+    "category": "verb"
+  },
+  {
+    "id": "f094a53c",
+    "roman": "aaj",
+    "urdu": "آج",
+    "hindi": "आज",
+    "meaning": "today",
+    "category": "time"
+  },
+  {
+    "id": "d0fd7e4d",
+    "roman": "aajiz",
+    "urdu": "عاجز",
+    "hindi": "आजिज़",
+    "meaning": "humble",
+    "category": "adjective"
+  },
+  {
+    "id": "303f189b",
+    "roman": "aana",
+    "urdu": "آنا",
+    "hindi": "आना",
+    "meaning": "to come",
+    "category": "verb"
+  },
+  {
+    "id": "16355906",
+    "roman": "aandhi",
+    "urdu": "آندھی",
+    "hindi": "",
+    "meaning": "Storm",
+    "category": "Noun"
+  },
+  {
+    "id": "0af7ef50",
+    "roman": "aankh",
+    "urdu": "آنکھ",
+    "hindi": "आँख",
+    "meaning": "eye",
+    "category": "body"
+  },
+  {
+    "id": "a762e2a6",
+    "roman": "aap",
+    "urdu": "آپ",
+    "hindi": "आप",
+    "meaning": "you (formal)",
+    "category": "pronoun"
+  },
+  {
+    "id": "291f3f4f",
+    "roman": "aasan",
+    "urdu": "آسان",
+    "hindi": "आसान",
+    "meaning": "easy",
+    "category": "adjective"
+  },
+  {
+    "id": "43152489",
+    "roman": "aasmaan",
+    "urdu": "آسمان",
+    "hindi": "आसमान",
+    "meaning": "sky",
+    "category": "nature"
+  },
+  {
+    "id": "f2e5e5fc",
+    "roman": "aata",
+    "urdu": "آتا",
+    "hindi": "आता",
+    "meaning": "comes (m)",
+    "category": "verb"
+  },
+  {
+    "id": "9fd35021",
+    "roman": "aath",
+    "urdu": "آٹھ",
+    "hindi": "आठ",
+    "meaning": "eight",
+    "category": "number"
+  },
+  {
+    "id": "0fea0121",
+    "roman": "aati",
+    "urdu": "آتی",
+    "hindi": "आती",
+    "meaning": "comes (f)",
+    "category": "verb"
+  },
+  {
+    "id": "80461858",
+    "roman": "aaya",
+    "urdu": "آیا",
+    "hindi": "आया",
+    "meaning": "came (m)",
+    "category": "verb"
+  },
+  {
+    "id": "2ee65c2e",
+    "roman": "aaye",
+    "urdu": "آئے",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "652a5be1",
+    "roman": "aayi",
+    "urdu": "آئی",
+    "hindi": "आई",
+    "meaning": "came (f)",
+    "category": "verb"
+  },
+  {
+    "id": "c970a57e",
+    "roman": "abba",
+    "urdu": "ابّا",
+    "hindi": "अब्बा",
+    "meaning": "father",
+    "category": "family"
+  },
+  {
+    "id": "a48a031b",
+    "roman": "abhi",
+    "urdu": "ابھی",
+    "hindi": "अभी",
+    "meaning": "now/right now",
+    "category": "time"
+  },
+  {
+    "id": "fbca9e94",
+    "roman": "abu",
+    "urdu": "ابو",
+    "hindi": "अबू",
+    "meaning": "father",
+    "category": "family"
+  },
+  {
+    "id": "afd6a4e7",
+    "roman": "accha",
+    "urdu": "اچھا",
+    "hindi": "अच्छा",
+    "meaning": "good (alternate spelling)",
+    "category": "adjective"
+  },
+  {
+    "id": "8cae8a2f",
+    "roman": "acha",
+    "urdu": "اچھا",
+    "hindi": "अच्छा",
+    "meaning": "good",
+    "category": "adjective"
+  },
+  {
+    "id": "f1896c45",
+    "roman": "agar",
+    "urdu": "اگر",
+    "hindi": "अगर",
+    "meaning": "if",
+    "category": "misc"
+  },
+  {
+    "id": "2d33c218",
+    "roman": "aik",
+    "urdu": "ایک",
+    "hindi": "एक",
+    "meaning": "one",
+    "category": "number"
+  },
+  {
+    "id": "4f1abd25",
+    "roman": "ajeeb",
+    "urdu": "عجیب",
+    "hindi": "अजीब",
+    "meaning": "strange/weird",
+    "category": "adjective"
+  },
+  {
+    "id": "b61398b1",
+    "roman": "alvida",
+    "urdu": "الوداع",
+    "hindi": "अलविदा",
+    "meaning": "farewell",
+    "category": "greeting"
+  },
+  {
+    "id": "51133b07",
+    "roman": "aman",
+    "urdu": "امن",
+    "hindi": "अमन",
+    "meaning": "peace",
+    "category": "misc"
+  },
+  {
+    "id": "da94415e",
+    "roman": "ambar",
+    "urdu": "امبر",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "3719cf85",
+    "roman": "ameer",
+    "urdu": "امیر",
+    "hindi": "अमीर",
+    "meaning": "rich",
+    "category": "adjective"
+  },
+  {
+    "id": "2fe6bbf1",
+    "roman": "ammi",
+    "urdu": "امّی",
+    "hindi": "अम्मी",
+    "meaning": "mother",
+    "category": "family"
+  },
+  {
+    "id": "285f42f5",
+    "roman": "anda",
+    "urdu": "انڈا",
+    "hindi": "अंडा",
+    "meaning": "egg",
+    "category": "food"
+  },
+  {
+    "id": "7602b44a",
+    "roman": "andar",
+    "urdu": "اندر",
+    "hindi": "अंदर",
+    "meaning": "inside",
+    "category": "adverb"
+  },
+  {
+    "id": "a5fa5a53",
+    "roman": "apna",
+    "urdu": "اپنا",
+    "hindi": "अपना",
+    "meaning": "own/self",
+    "category": "pronoun"
+  },
+  {
+    "id": "9edd4b67",
+    "roman": "assalamu alaikum",
+    "urdu": "اسلام علیکم",
+    "hindi": "अस्सलामु अलैकुम",
+    "meaning": "peace be upon you",
+    "category": "greeting"
+  },
+  {
+    "id": "b4d31bc5",
+    "roman": "athaarah",
+    "urdu": "اٹھارہ",
+    "hindi": "अठारह",
+    "meaning": "eighteen",
+    "category": "number"
+  },
+  {
+    "id": "09b1488d",
+    "roman": "aur",
+    "urdu": "اور",
+    "hindi": "और",
+    "meaning": "and/more",
+    "category": "misc"
+  },
+  {
+    "id": "ed1068cc",
+    "roman": "aurat",
+    "urdu": "عورت",
+    "hindi": "औरत",
+    "meaning": "woman",
+    "category": "family"
+  },
+  {
+    "id": "a133fe02",
+    "roman": "azaadi",
+    "urdu": "آزادی",
+    "hindi": "आज़ादी",
+    "meaning": "freedom",
+    "category": "misc"
+  },
+  {
+    "id": "29ed9f75",
+    "roman": "baad",
+    "urdu": "بعد",
+    "hindi": "बाद",
+    "meaning": "after/later",
+    "category": "time"
+  },
+  {
+    "id": "931e6382",
+    "roman": "baal",
+    "urdu": "بال",
+    "hindi": "बाल",
+    "meaning": "hair",
+    "category": "body"
+  },
+  {
+    "id": "5ac39faf",
+    "roman": "baandh",
+    "urdu": "باندھ",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "36ec4997",
+    "roman": "baarish",
+    "urdu": "بارش",
+    "hindi": "बारिश",
+    "meaning": "rain",
+    "category": "nature"
+  },
+  {
+    "id": "cab72368",
+    "roman": "baat",
+    "urdu": "بات",
+    "hindi": "बात",
+    "meaning": "talk/thing",
+    "category": "noun"
+  },
+  {
+    "id": "a6bf3508",
+    "roman": "bacha",
+    "urdu": "بچہ",
+    "hindi": "बच्चा",
+    "meaning": "child",
+    "category": "family"
+  },
+  {
+    "id": "7d18130d",
+    "roman": "bache",
+    "urdu": "بچے",
+    "hindi": "बच्चे",
+    "meaning": "children",
+    "category": "family"
+  },
+  {
+    "id": "de32fee5",
+    "roman": "bada",
+    "urdu": "بڑا",
+    "hindi": "बड़ा",
+    "meaning": "big",
+    "category": "adjective"
+  },
+  {
+    "id": "9b9a87d8",
+    "roman": "badal",
+    "urdu": "بدل",
+    "hindi": "बदल",
+    "meaning": "change",
+    "category": ""
+  },
+  {
+    "id": "c93aad68",
+    "roman": "badsoorat",
+    "urdu": "بدصورت",
+    "hindi": "बदसूरत",
+    "meaning": "ugly",
+    "category": "adjective"
+  },
+  {
+    "id": "c7f81877",
+    "roman": "badsurat",
+    "urdu": "بدصورت",
+    "hindi": "बदसूरत",
+    "meaning": "ugly",
+    "category": "adjective"
+  },
+  {
+    "id": "b54a14a5",
+    "roman": "badtameez",
+    "urdu": "بدتمیز",
+    "hindi": "बदतमीज़",
+    "meaning": "rude",
+    "category": "adjective"
+  },
+  {
+    "id": "94cecaa1",
+    "roman": "bahar",
+    "urdu": "باہر",
+    "hindi": "बाहर",
+    "meaning": "outside",
+    "category": "adverb"
+  },
+  {
+    "id": "e3d64d98",
+    "roman": "bahut",
+    "urdu": "بہت",
+    "hindi": "बहुत",
+    "meaning": "very/much",
+    "category": "adverb"
+  },
+  {
+    "id": "83617620",
+    "roman": "baingani",
+    "urdu": "بینگنی",
+    "hindi": "बैंगनी",
+    "meaning": "purple",
+    "category": "colour"
+  },
+  {
+    "id": "fca75ae1",
+    "roman": "baithna",
+    "urdu": "بیٹھنا",
+    "hindi": "बैठना",
+    "meaning": "to sit",
+    "category": "verb"
+  },
+  {
+    "id": "2bea8459",
+    "roman": "bakri",
+    "urdu": "بکری",
+    "hindi": "बकरी",
+    "meaning": "goat",
+    "category": "animal"
+  },
+  {
+    "id": "64c0714a",
+    "roman": "banana",
+    "urdu": "بنانا",
+    "hindi": "बनाना",
+    "meaning": "to make",
+    "category": "verb"
+  },
+  {
+    "id": "adfa3965",
+    "roman": "bara",
+    "urdu": "بڑا",
+    "hindi": "बड़ा",
+    "meaning": "big",
+    "category": "adjective"
+  },
+  {
+    "id": "fa88e58d",
+    "roman": "barah",
+    "urdu": "بارہ",
+    "hindi": "बारह",
+    "meaning": "twelve",
+    "category": "number"
+  },
+  {
+    "id": "8f8bbe74",
+    "roman": "basti",
+    "urdu": "بستی",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "2a8a0fec",
+    "roman": "bazaar",
+    "urdu": "بازار",
+    "hindi": "बाज़ार",
+    "meaning": "market",
+    "category": "noun"
+  },
+  {
+    "id": "246abc5a",
+    "roman": "bees",
+    "urdu": "بیس",
+    "hindi": "बीस",
+    "meaning": "twenty",
+    "category": "number"
+  },
+  {
+    "id": "68c90be9",
+    "roman": "behen",
+    "urdu": "بہن",
+    "hindi": "बहन",
+    "meaning": "sister",
+    "category": "family"
+  },
+  {
+    "id": "74439868",
+    "roman": "beta",
+    "urdu": "بیٹا",
+    "hindi": "बेटा",
+    "meaning": "son",
+    "category": "family"
+  },
+  {
+    "id": "0d4422cf",
+    "roman": "beti",
+    "urdu": "بیٹی",
+    "hindi": "बेटी",
+    "meaning": "daughter",
+    "category": "family"
+  },
+  {
+    "id": "b7e2bbf9",
+    "roman": "bhai",
+    "urdu": "بھائی",
+    "hindi": "भाई",
+    "meaning": "brother",
+    "category": "family"
+  },
+  {
+    "id": "acecf050",
+    "roman": "bheege",
+    "urdu": "بھیگے",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "3bd3e1b9",
+    "roman": "bhi",
+    "urdu": "بھی",
+    "hindi": "भी",
+    "meaning": "also/too",
+    "category": "adverb"
+  },
+  {
+    "id": "db402004",
+    "roman": "bhoora",
+    "urdu": "بھورا",
+    "hindi": "भूरा",
+    "meaning": "brown",
+    "category": "colour"
+  },
+  {
+    "id": "49d3768a",
+    "roman": "bilkul",
+    "urdu": "بالکل",
+    "hindi": "बिल्कुल",
+    "meaning": "absolutely",
+    "category": "adverb"
+  },
+  {
+    "id": "1f6c1cf2",
+    "roman": "billi",
+    "urdu": "بلی",
+    "hindi": "बिल्ली",
+    "meaning": "cat",
+    "category": "animal"
+  },
+  {
+    "id": "840d00dc",
+    "roman": "biryani",
+    "urdu": "بریانی",
+    "hindi": "बिरयानी",
+    "meaning": "biryani",
+    "category": "food"
+  },
+  {
+    "id": "855527f9",
+    "roman": "biwi",
+    "urdu": "بیوی",
+    "hindi": "बीवी",
+    "meaning": "wife",
+    "category": "family"
+  },
+  {
+    "id": "25e56ed5",
+    "roman": "bolna",
+    "urdu": "بولنا",
+    "hindi": "बोलना",
+    "meaning": "to speak",
+    "category": "verb"
+  },
+  {
+    "id": "93c880b7",
+    "roman": "budh",
+    "urdu": "بدھ",
+    "hindi": "बुधवार",
+    "meaning": "Wednesday",
+    "category": "day"
+  },
+  {
+    "id": "c76d8758",
+    "roman": "bura",
+    "urdu": "برا",
+    "hindi": "बुरा",
+    "meaning": "bad",
+    "category": "adjective"
+  },
+  {
+    "id": "e0929e47",
+    "roman": "chaalees",
+    "urdu": "چالیس",
+    "hindi": "चालीस",
+    "meaning": "forty",
+    "category": "number"
+  },
+  {
+    "id": "a6659837",
+    "roman": "chaar",
+    "urdu": "چار",
+    "hindi": "चार",
+    "meaning": "four",
+    "category": "number"
+  },
+  {
+    "id": "39db610b",
+    "roman": "chacha",
+    "urdu": "چاچا",
+    "hindi": "चाचा",
+    "meaning": "uncle (paternal)",
+    "category": "family"
+  },
+  {
+    "id": "f6735f6b",
+    "roman": "chahiye",
+    "urdu": "چاہیے",
+    "hindi": "चाहिए",
+    "meaning": "should/need",
+    "category": "verb"
+  },
+  {
+    "id": "06c83aae",
+    "roman": "chahna",
+    "urdu": "چاہنا",
+    "hindi": "चाहना",
+    "meaning": "to want",
+    "category": "verb"
+  },
+  {
+    "id": "cdb149fa",
+    "roman": "chai",
+    "urdu": "چائے",
+    "hindi": "चाय",
+    "meaning": "tea",
+    "category": "food"
+  },
+  {
+    "id": "026814a9",
+    "roman": "chalna",
+    "urdu": "چلنا",
+    "hindi": "चलना",
+    "meaning": "to walk/move",
+    "category": "verb"
+  },
+  {
+    "id": "8b1ef93a",
+    "roman": "chand",
+    "urdu": "چاند",
+    "hindi": "चाँद",
+    "meaning": "moon",
+    "category": "nature"
+  },
+  {
+    "id": "ab6a1fdf",
+    "roman": "charaag",
+    "urdu": "چراغ",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "900b02ca",
+    "roman": "chaudah",
+    "urdu": "چودہ",
+    "hindi": "चौदह",
+    "meaning": "fourteen",
+    "category": "number"
+  },
+  {
+    "id": "bc16497e",
+    "roman": "chawal",
+    "urdu": "چاول",
+    "hindi": "चावल",
+    "meaning": "rice",
+    "category": "food"
+  },
+  {
+    "id": "93013448",
+    "roman": "che",
+    "urdu": "چھ",
+    "hindi": "छह",
+    "meaning": "six",
+    "category": "number"
+  },
+  {
+    "id": "5f7218f6",
+    "roman": "cheeni",
+    "urdu": "چینی",
+    "hindi": "चीनी",
+    "meaning": "sugar",
+    "category": "food"
+  },
+  {
+    "id": "02110f30",
+    "roman": "cheez",
+    "urdu": "چیز",
+    "hindi": "चीज़",
+    "meaning": "thing",
+    "category": "misc"
+  },
+  {
+    "id": "59070ff7",
+    "roman": "chehra",
+    "urdu": "چہرہ",
+    "hindi": "चेहरा",
+    "meaning": "face",
+    "category": "body"
+  },
+  {
+    "id": "6cb350f5",
+    "roman": "chhey",
+    "urdu": "چھ",
+    "hindi": "छह",
+    "meaning": "six",
+    "category": "number"
+  },
+  {
+    "id": "da5050bf",
+    "roman": "chhota",
+    "urdu": "چھوٹا",
+    "hindi": "छोटा",
+    "meaning": "small",
+    "category": "adjective"
+  },
+  {
+    "id": "c6770e93",
+    "roman": "chirya",
+    "urdu": "چڑیا",
+    "hindi": "चिड़िया",
+    "meaning": "bird",
+    "category": "animal"
+  },
+  {
+    "id": "e408e4cf",
+    "roman": "chota",
+    "urdu": "چھوٹا",
+    "hindi": "छोटा",
+    "meaning": "small",
+    "category": "adjective"
+  },
+  {
+    "id": "66ceab82",
+    "roman": "chota",
+    "urdu": "چھوٹا",
+    "hindi": "छोटा",
+    "meaning": "small/short",
+    "category": "adjective"
+  },
+  {
+    "id": "5bb6a76a",
+    "roman": "crore",
+    "urdu": "کروڑ",
+    "hindi": "करोड़",
+    "meaning": "ten million",
+    "category": "number"
+  },
+  {
+    "id": "e34283eb",
+    "roman": "dada",
+    "urdu": "دادا",
+    "hindi": "दादा",
+    "meaning": "paternal grandfather",
+    "category": "family"
+  },
+  {
+    "id": "c2909ec5",
+    "roman": "dadi",
+    "urdu": "دادی",
+    "hindi": "दादी",
+    "meaning": "paternal grandmother",
+    "category": "family"
+  },
+  {
+    "id": "7c9e0f3c",
+    "roman": "dant",
+    "urdu": "دانت",
+    "hindi": "दाँत",
+    "meaning": "tooth/teeth",
+    "category": "body"
+  },
+  {
+    "id": "590164ed",
+    "roman": "dar",
+    "urdu": "ڈر",
+    "hindi": "डर",
+    "meaning": "fear",
+    "category": "emotion"
+  },
+  {
+    "id": "24623ec0",
+    "roman": "darakht",
+    "urdu": "درخت",
+    "hindi": "दरख़्त",
+    "meaning": "tree",
+    "category": "nature"
+  },
+  {
+    "id": "fd5f373e",
+    "roman": "darwaza",
+    "urdu": "دروازہ",
+    "hindi": "दरवाज़ा",
+    "meaning": "door",
+    "category": "noun"
+  },
+  {
+    "id": "a7802cac",
+    "roman": "darya",
+    "urdu": "دریا",
+    "hindi": "दरिया",
+    "meaning": "river",
+    "category": "nature"
+  },
+  {
+    "id": "53af9f05",
+    "roman": "das",
+    "urdu": "دس",
+    "hindi": "दस",
+    "meaning": "ten",
+    "category": "number"
+  },
+  {
+    "id": "535466a6",
+    "roman": "deewana",
+    "urdu": "دیوانہ",
+    "hindi": "दीवाना",
+    "meaning": "crazy/mad",
+    "category": "adjective"
+  },
+  {
+    "id": "b5fe6671",
+    "roman": "dekhna",
+    "urdu": "دیکھنا",
+    "hindi": "देखना",
+    "meaning": "to see",
+    "category": "verb"
+  },
+  {
+    "id": "23ae896d",
+    "roman": "delhi",
+    "urdu": "دہلی",
+    "hindi": "दिल्ली",
+    "meaning": "Delhi",
+    "category": "place"
+  },
+  {
+    "id": "9056de41",
+    "roman": "dena",
+    "urdu": "دینا",
+    "hindi": "देना",
+    "meaning": "to give",
+    "category": "verb"
+  },
+  {
+    "id": "30974342",
+    "roman": "dheere",
+    "urdu": "دھیرے",
+    "hindi": "धीरे",
+    "meaning": "slowly",
+    "category": "adverb"
+  },
+  {
+    "id": "33c6a2f4",
+    "roman": "dil",
+    "urdu": "دل",
+    "hindi": "दिल",
+    "meaning": "heart",
+    "category": "body"
+  },
+  {
+    "id": "07b65eba",
+    "roman": "dilkash",
+    "urdu": "دلکش",
+    "hindi": "दिलकश",
+    "meaning": "charming",
+    "category": "adjective"
+  },
+  {
+    "id": "cb003b1d",
+    "roman": "din",
+    "urdu": "دن",
+    "hindi": "दिन",
+    "meaning": "day",
+    "category": "noun"
+  },
+  {
+    "id": "1b1b9eb7",
+    "roman": "diyan",
+    "urdu": "دیاں",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "50c8d158",
+    "roman": "do",
+    "urdu": "دو",
+    "hindi": "दो",
+    "meaning": "two",
+    "category": "number"
+  },
+  {
+    "id": "520a5159",
+    "roman": "doodh",
+    "urdu": "دودھ",
+    "hindi": "दूध",
+    "meaning": "milk",
+    "category": "food"
+  },
+  {
+    "id": "152156e8",
+    "roman": "door",
+    "urdu": "دور",
+    "hindi": "दूर",
+    "meaning": "far",
+    "category": "adverb"
+  },
+  {
+    "id": "b69ec211",
+    "roman": "dopehar",
+    "urdu": "دوپہر",
+    "hindi": "दोपहर",
+    "meaning": "afternoon",
+    "category": "time"
+  },
+  {
+    "id": "187f3820",
+    "roman": "doriyon",
+    "urdu": "ڈوریوں",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "7f1d2ae9",
+    "roman": "doriyon,",
+    "urdu": "ڈوریوں،",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "2b119b94",
+    "roman": "dost",
+    "urdu": "دوست",
+    "hindi": "दोस्त",
+    "meaning": "friend",
+    "category": "family"
+  },
+  {
+    "id": "4f0b171c",
+    "roman": "dua",
+    "urdu": "دعا",
+    "hindi": "दुआ",
+    "meaning": "prayer",
+    "category": "noun"
+  },
+  {
+    "id": "4062c990",
+    "roman": "dukaan",
+    "urdu": "دکان",
+    "hindi": "दुकान",
+    "meaning": "shop",
+    "category": "noun"
+  },
+  {
+    "id": "58c10cda",
+    "roman": "dunia",
+    "urdu": "دنیا",
+    "hindi": "दुनिया",
+    "meaning": "world",
+    "category": "misc"
+  },
+  {
+    "id": "082954f4",
+    "roman": "duniya",
+    "urdu": "دنیا",
+    "hindi": "दुनिया",
+    "meaning": "world",
+    "category": "misc"
+  },
+  {
+    "id": "a15ba0ec",
+    "roman": "ek",
+    "urdu": "ایک",
+    "hindi": "एक",
+    "meaning": "one",
+    "category": "number"
+  },
+  {
+    "id": "2a7fd897",
+    "roman": "fikar",
+    "urdu": "فکر",
+    "hindi": "फ़िक्र",
+    "meaning": "worry",
+    "category": "emotion"
+  },
+  {
+    "id": "5043fcfc",
+    "roman": "gaari",
+    "urdu": "گاڑی",
+    "hindi": "गाड़ी",
+    "meaning": "car/vehicle",
+    "category": "noun"
+  },
+  {
+    "id": "c4b43ed4",
+    "roman": "gaay",
+    "urdu": "گائے",
+    "hindi": "गाय",
+    "meaning": "cow",
+    "category": "animal"
+  },
+  {
+    "id": "9300376b",
+    "roman": "gai",
+    "urdu": "گئی",
+    "hindi": "",
+    "meaning": "went (female)",
+    "category": "verb"
+  },
+  {
+    "id": "d751e321",
+    "roman": "galat",
+    "urdu": "غلط",
+    "hindi": "ग़लत",
+    "meaning": "wrong",
+    "category": "misc"
+  },
+  {
+    "id": "c9cc9de0",
+    "roman": "ganda",
+    "urdu": "گندا",
+    "hindi": "गंदा",
+    "meaning": "dirty",
+    "category": "adjective"
+  },
+  {
+    "id": "b64a9a37",
+    "roman": "gaon",
+    "urdu": "گاؤں",
+    "hindi": "गाँव",
+    "meaning": "village",
+    "category": "noun"
+  },
+  {
+    "id": "3385c236",
+    "roman": "garam",
+    "urdu": "گرم",
+    "hindi": "गरम",
+    "meaning": "hot",
+    "category": "adjective"
+  },
+  {
+    "id": "c3a21235",
+    "roman": "gardan",
+    "urdu": "گردن",
+    "hindi": "गर्दन",
+    "meaning": "neck",
+    "category": "body"
+  },
+  {
+    "id": "1fb7a0f9",
+    "roman": "gaya",
+    "urdu": "گیا",
+    "hindi": "गया",
+    "meaning": "went (m)",
+    "category": "verb"
+  },
+  {
+    "id": "d9552d0b",
+    "roman": "gayi",
+    "urdu": "گئی",
+    "hindi": "गई",
+    "meaning": "went (f)",
+    "category": "verb"
+  },
+  {
+    "id": "1a2651c1",
+    "roman": "gham",
+    "urdu": "غم",
+    "hindi": "ग़म",
+    "meaning": "sorrow",
+    "category": "noun"
+  },
+  {
+    "id": "ef804bbd",
+    "roman": "gham",
+    "urdu": "غم",
+    "hindi": "ग़म",
+    "meaning": "grief",
+    "category": "emotion"
+  },
+  {
+    "id": "7564c1a9",
+    "roman": "ghanta",
+    "urdu": "گھنٹہ",
+    "hindi": "घंटा",
+    "meaning": "hour",
+    "category": "time"
+  },
+  {
+    "id": "439ecada",
+    "roman": "ghar",
+    "urdu": "گھر",
+    "hindi": "घर",
+    "meaning": "house/home",
+    "category": "noun"
+  },
+  {
+    "id": "70bf7063",
+    "roman": "ghareeb",
+    "urdu": "غریب",
+    "hindi": "ग़रीब",
+    "meaning": "poor",
+    "category": "adjective"
+  },
+  {
+    "id": "2e171fe9",
+    "roman": "ghee",
+    "urdu": "گھی",
+    "hindi": "घी",
+    "meaning": "ghee/butter",
+    "category": "food"
+  },
+  {
+    "id": "b5c2ac9f",
+    "roman": "ghora",
+    "urdu": "گھوڑا",
+    "hindi": "घोड़ा",
+    "meaning": "horse",
+    "category": "animal"
+  },
+  {
+    "id": "a0c43e27",
+    "roman": "gosht",
+    "urdu": "گوشت",
+    "hindi": "गोश्त",
+    "meaning": "meat",
+    "category": "food"
+  },
+  {
+    "id": "65ce13b8",
+    "roman": "gulabi",
+    "urdu": "گلابی",
+    "hindi": "गुलाबी",
+    "meaning": "pink",
+    "category": "colour"
+  },
+  {
+    "id": "432ab726",
+    "roman": "gussa",
+    "urdu": "غصہ",
+    "hindi": "ग़ुस्सा",
+    "meaning": "anger",
+    "category": "emotion"
+  },
+  {
+    "id": "07d7a9e8",
+    "roman": "gyarah",
+    "urdu": "گیارہ",
+    "hindi": "ग्यारह",
+    "meaning": "eleven",
+    "category": "number"
+  },
+  {
+    "id": "11924451",
+    "roman": "haan",
+    "urdu": "ہاں",
+    "hindi": "हाँ",
+    "meaning": "yes",
+    "category": "misc"
+  },
+  {
+    "id": "68deb929",
+    "roman": "haath",
+    "urdu": "ہاتھ",
+    "hindi": "हाथ",
+    "meaning": "hand",
+    "category": "body"
+  },
+  {
+    "id": "62f0197d",
+    "roman": "haathi",
+    "urdu": "ہاتھی",
+    "hindi": "हाथी",
+    "meaning": "elephant",
+    "category": "animal"
+  },
+  {
+    "id": "ff65cbf6",
+    "roman": "hafta",
+    "urdu": "ہفتہ",
+    "hindi": "हफ़्ता",
+    "meaning": "week",
+    "category": "time"
+  },
+  {
+    "id": "f1ed2088",
+    "roman": "hafta",
+    "urdu": "ہفتہ",
+    "hindi": "शनिवार",
+    "meaning": "Saturday",
+    "category": "day"
+  },
+  {
+    "id": "a3cc7e70",
+    "roman": "hai",
+    "urdu": "ہے",
+    "hindi": "है",
+    "meaning": "is",
+    "category": "verb"
+  },
+  {
+    "id": "dc21ec06",
+    "roman": "hain",
+    "urdu": "ہیں",
+    "hindi": "हैं",
+    "meaning": "are",
+    "category": "verb"
+  },
+  {
+    "id": "a80d12df",
+    "roman": "hairat",
+    "urdu": "حیرت",
+    "hindi": "हैरत",
+    "meaning": "surprise",
+    "category": "emotion"
+  },
+  {
+    "id": "6814856a",
+    "roman": "hamein",
+    "urdu": "ہمیں",
+    "hindi": "हमें",
+    "meaning": "to us",
+    "category": ""
+  },
+  {
+    "id": "02dd7f6c",
+    "roman": "hamesha",
+    "urdu": "ہمیشہ",
+    "hindi": "हमेशा",
+    "meaning": "always",
+    "category": "time"
+  },
+  {
+    "id": "58b587c0",
+    "roman": "hansna",
+    "urdu": "ہنسنا",
+    "hindi": "हँसना",
+    "meaning": "to laugh",
+    "category": "verb"
+  },
+  {
+    "id": "10b28111",
+    "roman": "haq",
+    "urdu": "حق",
+    "hindi": "हक़",
+    "meaning": "right/truth",
+    "category": "misc"
+  },
+  {
+    "id": "29946588",
+    "roman": "hara",
+    "urdu": "ہرا",
+    "hindi": "हरा",
+    "meaning": "green",
+    "category": "colour"
+  },
+  {
+    "id": "bc6b8dd9",
+    "roman": "hawa",
+    "urdu": "ہوا",
+    "hindi": "हवा",
+    "meaning": "wind/air",
+    "category": "nature"
+  },
+  {
+    "id": "25a57504",
+    "roman": "hazaar",
+    "urdu": "ہزار",
+    "hindi": "हज़ार",
+    "meaning": "thousand",
+    "category": "number"
+  },
+  {
+    "id": "4ab41c60",
+    "roman": "himmat",
+    "urdu": "ہمت",
+    "hindi": "हिम्मत",
+    "meaning": "courage",
+    "category": "emotion"
+  },
+  {
+    "id": "8c2f1108",
+    "roman": "hindustan",
+    "urdu": "ہندوستان",
+    "hindi": "हिंदुस्तान",
+    "meaning": "India",
+    "category": "place"
+  },
+  {
+    "id": "9c8724b7",
+    "roman": "ho",
+    "urdu": "ہو",
+    "hindi": "हो",
+    "meaning": "are (informal)",
+    "category": "verb"
+  },
+  {
+    "id": "8e7f755d",
+    "roman": "hona",
+    "urdu": "ہونا",
+    "hindi": "होना",
+    "meaning": "to be/happen",
+    "category": "verb"
+  },
+  {
+    "id": "cfe748da",
+    "roman": "hongay",
+    "urdu": "ہوں گے",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "12e7f639",
+    "roman": "hoon",
+    "urdu": "ہوں",
+    "hindi": "हूँ",
+    "meaning": "am",
+    "category": "verb"
+  },
+  {
+    "id": "c8828f8f",
+    "roman": "hospital",
+    "urdu": "ہسپتال",
+    "hindi": "हस्पताल",
+    "meaning": "hospital",
+    "category": "noun"
+  },
+  {
+    "id": "fef0f19d",
+    "roman": "hua",
+    "urdu": "ہوا",
+    "hindi": "हुआ",
+    "meaning": "happened",
+    "category": ""
+  },
+  {
+    "id": "bc52b0b1",
+    "roman": "hum",
+    "urdu": "ہم",
+    "hindi": "हम",
+    "meaning": "we",
+    "category": "pronoun"
+  },
+  {
+    "id": "ddd4d493",
+    "roman": "ilm",
+    "urdu": "علم",
+    "hindi": "इल्म",
+    "meaning": "knowledge",
+    "category": "noun"
+  },
+  {
+    "id": "fb383e14",
+    "roman": "insaaf",
+    "urdu": "انصاف",
+    "hindi": "इंसाफ़",
+    "meaning": "justice",
+    "category": "misc"
+  },
+  {
+    "id": "fe34d58a",
+    "roman": "insaan",
+    "urdu": "انسان",
+    "hindi": "इंसान",
+    "meaning": "human/person",
+    "category": "family"
+  },
+  {
+    "id": "9a7892de",
+    "roman": "is",
+    "urdu": "اس",
+    "hindi": "इस",
+    "meaning": "this/that",
+    "category": "pronoun"
+  },
+  {
+    "id": "306cfaaf",
+    "roman": "islamabad",
+    "urdu": "اسلام آباد",
+    "hindi": "इस्लामाबाद",
+    "meaning": "Islamabad",
+    "category": "place"
+  },
+  {
+    "id": "9b208b77",
+    "roman": "isliye",
+    "urdu": "اسلیے",
+    "hindi": "इसलिए",
+    "meaning": "therefore",
+    "category": "misc"
+  },
+  {
+    "id": "da9e372b",
+    "roman": "istemal",
+    "urdu": "استعمال",
+    "hindi": "इस्तेमाल",
+    "meaning": "use",
+    "category": "misc"
+  },
+  {
+    "id": "7d89ca43",
+    "roman": "itwaar",
+    "urdu": "اتوار",
+    "hindi": "रविवार",
+    "meaning": "Sunday",
+    "category": "day"
+  },
+  {
+    "id": "47e62653",
+    "roman": "itwar",
+    "urdu": "اتوار",
+    "hindi": "रविवार",
+    "meaning": "Sunday",
+    "category": "day"
+  },
+  {
+    "id": "0cc158af",
+    "roman": "izzat",
+    "urdu": "عزت",
+    "hindi": "इज़्ज़त",
+    "meaning": "respect/honour",
+    "category": "misc"
+  },
+  {
+    "id": "a7124ff1",
+    "roman": "jaayegi",
+    "urdu": "جائے گی",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "753f414f",
+    "roman": "jagah",
+    "urdu": "جگہ",
+    "hindi": "जगह",
+    "meaning": "place",
+    "category": "misc"
+  },
+  {
+    "id": "57274cff",
+    "roman": "jaldi",
+    "urdu": "جلدی",
+    "hindi": "जल्दी",
+    "meaning": "quickly",
+    "category": "adverb"
+  },
+  {
+    "id": "edc9a8bc",
+    "roman": "jalta",
+    "urdu": "جلتا",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "e07156bf",
+    "roman": "jana",
+    "urdu": "جانا",
+    "hindi": "जाना",
+    "meaning": "to go",
+    "category": "verb"
+  },
+  {
+    "id": "3de01508",
+    "roman": "jang",
+    "urdu": "جنگ",
+    "hindi": "जंग",
+    "meaning": "war",
+    "category": "misc"
+  },
+  {
+    "id": "715a08e7",
+    "roman": "jangal",
+    "urdu": "جنگل",
+    "hindi": "जंगल",
+    "meaning": "forest/jungle",
+    "category": "nature"
+  },
+  {
+    "id": "188ab253",
+    "roman": "jata",
+    "urdu": "جاتا",
+    "hindi": "जाता",
+    "meaning": "goes (m)",
+    "category": "verb"
+  },
+  {
+    "id": "3350bfcc",
+    "roman": "jati",
+    "urdu": "جاتی",
+    "hindi": "जाती",
+    "meaning": "goes (f)",
+    "category": "verb"
+  },
+  {
+    "id": "50178fdc",
+    "roman": "jawab",
+    "urdu": "جواب",
+    "hindi": "जवाब",
+    "meaning": "answer",
+    "category": "misc"
+  },
+  {
+    "id": "f34e41d0",
+    "roman": "jeena",
+    "urdu": "جینا",
+    "hindi": "जीना",
+    "meaning": "to live",
+    "category": "verb"
+  },
+  {
+    "id": "c5fcc33b",
+    "roman": "jhoot",
+    "urdu": "جھوٹ",
+    "hindi": "झूठ",
+    "meaning": "lie",
+    "category": "noun"
+  },
+  {
+    "id": "062eb3e4",
+    "roman": "ji",
+    "urdu": "جی",
+    "hindi": "जी",
+    "meaning": "yes/sir",
+    "category": "greeting"
+  },
+  {
+    "id": "c90f0f3c",
+    "roman": "ji haan",
+    "urdu": "جی ہاں",
+    "hindi": "जी हाँ",
+    "meaning": "yes sir",
+    "category": "greeting"
+  },
+  {
+    "id": "a6508c43",
+    "roman": "ji nahi",
+    "urdu": "جی نہیں",
+    "hindi": "जी नहीं",
+    "meaning": "no sir",
+    "category": "greeting"
+  },
+  {
+    "id": "f984c009",
+    "roman": "jism",
+    "urdu": "جسم",
+    "hindi": "जिस्म",
+    "meaning": "body",
+    "category": "body"
+  },
+  {
+    "id": "e279e1ae",
+    "roman": "juma",
+    "urdu": "جمعہ",
+    "hindi": "शुक्रवार",
+    "meaning": "Friday",
+    "category": "day"
+  },
+  {
+    "id": "6f3fbbae",
+    "roman": "jumarat",
+    "urdu": "جمعرات",
+    "hindi": "गुरुवार",
+    "meaning": "Thursday",
+    "category": "day"
+  },
+  {
+    "id": "ceb5b33d",
+    "roman": "jumeraat",
+    "urdu": "جمعرات",
+    "hindi": "गुरुवार",
+    "meaning": "Thursday",
+    "category": "day"
+  },
+  {
+    "id": "f9f77b16",
+    "roman": "jumma",
+    "urdu": "جمعہ",
+    "hindi": "शुक्रवार",
+    "meaning": "Friday",
+    "category": "day"
+  },
+  {
+    "id": "dfb87f35",
+    "roman": "jungle",
+    "urdu": "جنگل",
+    "hindi": "जंगल",
+    "meaning": "forest/jungle",
+    "category": "nature"
+  },
+  {
+    "id": "34649c95",
+    "roman": "ka",
+    "urdu": "کا",
+    "hindi": "का",
+    "meaning": "of (m.sg)",
+    "category": "preposition"
+  },
+  {
+    "id": "ea97239c",
+    "roman": "kaagzi",
+    "urdu": "کاغذی",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "b6662ab7",
+    "roman": "kaam",
+    "urdu": "کام",
+    "hindi": "काम",
+    "meaning": "work",
+    "category": "noun"
+  },
+  {
+    "id": "5c061150",
+    "roman": "kaan",
+    "urdu": "کان",
+    "hindi": "कान",
+    "meaning": "ear",
+    "category": "body"
+  },
+  {
+    "id": "ed2b00ad",
+    "roman": "kab",
+    "urdu": "کب",
+    "hindi": "कब",
+    "meaning": "when",
+    "category": "question"
+  },
+  {
+    "id": "7f5fb82b",
+    "roman": "kabhi",
+    "urdu": "کبھی",
+    "hindi": "कभी",
+    "meaning": "ever/sometimes",
+    "category": "time"
+  },
+  {
+    "id": "3138300a",
+    "roman": "kacchi",
+    "urdu": "کچی",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "56236d7d",
+    "roman": "kahan",
+    "urdu": "کہاں",
+    "hindi": "कहाँ",
+    "meaning": "where",
+    "category": "question"
+  },
+  {
+    "id": "de97aad6",
+    "roman": "kahin",
+    "urdu": "کہیں",
+    "hindi": "कहें",
+    "meaning": "",
+    "category": ""
+  },
+  {
+    "id": "f62a69e3",
+    "roman": "kaisa",
+    "urdu": "کیسا",
+    "hindi": "कैसा",
+    "meaning": "how/what kind",
+    "category": "question"
+  },
+  {
+    "id": "6c9a6155",
+    "roman": "kaise",
+    "urdu": "کیسے",
+    "hindi": "कैसे",
+    "meaning": "how",
+    "category": "question"
+  },
+  {
+    "id": "cc66b776",
+    "roman": "kal",
+    "urdu": "کل",
+    "hindi": "कल",
+    "meaning": "yesterday/tomorrow",
+    "category": "time"
+  },
+  {
+    "id": "b2e54620",
+    "roman": "kala",
+    "urdu": "کالا",
+    "hindi": "काला",
+    "meaning": "black",
+    "category": "colour"
+  },
+  {
+    "id": "3d03f354",
+    "roman": "kam",
+    "urdu": "کم",
+    "hindi": "कम",
+    "meaning": "less",
+    "category": "adverb"
+  },
+  {
+    "id": "09cf0bf6",
+    "roman": "kamra",
+    "urdu": "کمرہ",
+    "hindi": "कमरा",
+    "meaning": "room",
+    "category": "noun"
+  },
+  {
+    "id": "1c0ff1bc",
+    "roman": "kamzor",
+    "urdu": "کمزور",
+    "hindi": "कमज़ोर",
+    "meaning": "weak",
+    "category": "adjective"
+  },
+  {
+    "id": "c6d8340e",
+    "roman": "kapre",
+    "urdu": "کپڑے",
+    "hindi": "कपड़े",
+    "meaning": "clothes",
+    "category": "noun"
+  },
+  {
+    "id": "350c09f0",
+    "roman": "karachi",
+    "urdu": "کراچی",
+    "hindi": "कराची",
+    "meaning": "Karachi",
+    "category": "place"
+  },
+  {
+    "id": "087bc178",
+    "roman": "karein",
+    "urdu": "کریں",
+    "hindi": "करें",
+    "meaning": "do (formal)",
+    "category": "verb"
+  },
+  {
+    "id": "6ff7267c",
+    "roman": "karna",
+    "urdu": "کرنا",
+    "hindi": "करना",
+    "meaning": "to do",
+    "category": "verb"
+  },
+  {
+    "id": "c32a445f",
+    "roman": "karta",
+    "urdu": "کرتا",
+    "hindi": "करता",
+    "meaning": "does (m)",
+    "category": "verb"
+  },
+  {
+    "id": "c63c76a3",
+    "roman": "karte",
+    "urdu": "کرتے",
+    "hindi": "करते",
+    "meaning": "do (pl)",
+    "category": "verb"
+  },
+  {
+    "id": "c0b896df",
+    "roman": "karti",
+    "urdu": "کرتی",
+    "hindi": "करती",
+    "meaning": "does (f)",
+    "category": "verb"
+  },
+  {
+    "id": "a5f882d7",
+    "roman": "kaun",
+    "urdu": "کون",
+    "hindi": "कौन",
+    "meaning": "who",
+    "category": "question"
+  },
+  {
+    "id": "7f65109c",
+    "roman": "ke",
+    "urdu": "کے",
+    "hindi": "के",
+    "meaning": "of (m)",
+    "category": "preposition"
+  },
+  {
+    "id": "ff6e0ad3",
+    "roman": "ke baad",
+    "urdu": "کے بعد",
+    "hindi": "के बाद",
+    "meaning": "after",
+    "category": "preposition"
+  },
+  {
+    "id": "b18357f2",
+    "roman": "ke bina",
+    "urdu": "کے بغیر",
+    "hindi": "के बिना",
+    "meaning": "without",
+    "category": "preposition"
+  },
+  {
+    "id": "e4c43fe6",
+    "roman": "ke liye",
+    "urdu": "کے لیے",
+    "hindi": "के लिए",
+    "meaning": "for",
+    "category": "preposition"
+  },
+  {
+    "id": "6336cdfb",
+    "roman": "ke pehle",
+    "urdu": "کے پہلے",
+    "hindi": "के पहले",
+    "meaning": "before",
+    "category": "preposition"
+  },
+  {
+    "id": "278f10a2",
+    "roman": "ke saath",
+    "urdu": "کے ساتھ",
+    "hindi": "के साथ",
+    "meaning": "with",
+    "category": "preposition"
+  },
+  {
+    "id": "ae95959f",
+    "roman": "khaali",
+    "urdu": "خالی",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "4ff85923",
+    "roman": "khala",
+    "urdu": "خالہ",
+    "hindi": "ख़ाला",
+    "meaning": "aunt (maternal)",
+    "category": "family"
+  },
+  {
+    "id": "d4552c25",
+    "roman": "khana",
+    "urdu": "کھانا",
+    "hindi": "खाना",
+    "meaning": "to eat / food",
+    "category": "verb"
+  },
+  {
+    "id": "2374d0e4",
+    "roman": "khatam",
+    "urdu": "ختم",
+    "hindi": "ख़तम",
+    "meaning": "end/finish",
+    "category": "misc"
+  },
+  {
+    "id": "c9b744c4",
+    "roman": "khirki",
+    "urdu": "کھڑکی",
+    "hindi": "खिड़की",
+    "meaning": "window",
+    "category": "noun"
+  },
+  {
+    "id": "98def994",
+    "roman": "khoobsoorat",
+    "urdu": "خوبصورت",
+    "hindi": "खूबसूरत",
+    "meaning": "beautiful",
+    "category": "adjective"
+  },
+  {
+    "id": "f16fedbd",
+    "roman": "khoobsurat",
+    "urdu": "خوبصورت",
+    "hindi": "खूबसूरत",
+    "meaning": "beautiful",
+    "category": "adjective"
+  },
+  {
+    "id": "f5d2d345",
+    "roman": "khoon",
+    "urdu": "خون",
+    "hindi": "ख़ून",
+    "meaning": "blood",
+    "category": "body"
+  },
+  {
+    "id": "9cffe412",
+    "roman": "khuda hafiz",
+    "urdu": "خدا حافظ",
+    "hindi": "खुदा हाफ़िज़",
+    "meaning": "goodbye",
+    "category": "greeting"
+  },
+  {
+    "id": "df6dff1e",
+    "roman": "khush",
+    "urdu": "خوش",
+    "hindi": "ख़ुश",
+    "meaning": "happy",
+    "category": "adjective"
+  },
+  {
+    "id": "370a8c69",
+    "roman": "khushi",
+    "urdu": "خوشی",
+    "hindi": "ख़ुशी",
+    "meaning": "happiness",
+    "category": "noun"
+  },
+  {
+    "id": "c1dfbb5e",
+    "roman": "khushi",
+    "urdu": "خوشی",
+    "hindi": "ख़ुशी",
+    "meaning": "happiness",
+    "category": "emotion"
+  },
+  {
+    "id": "3938f787",
+    "roman": "khwab",
+    "urdu": "خواب",
+    "hindi": "ख़्वाब",
+    "meaning": "dream",
+    "category": "noun"
+  },
+  {
+    "id": "3a24d828",
+    "roman": "ki",
+    "urdu": "کی",
+    "hindi": "की",
+    "meaning": "of (f)",
+    "category": "preposition"
+  },
+  {
+    "id": "d8ee0f59",
+    "roman": "kidhar",
+    "urdu": "کدھر",
+    "hindi": "किधर",
+    "meaning": "which direction",
+    "category": "question"
+  },
+  {
+    "id": "2c66db48",
+    "roman": "kisi",
+    "urdu": "کسی",
+    "hindi": "किसी",
+    "meaning": "someone",
+    "category": "pronoun"
+  },
+  {
+    "id": "b0728124",
+    "roman": "kisne",
+    "urdu": "کس نے",
+    "hindi": "किसने",
+    "meaning": "who (ergative)",
+    "category": "pronoun"
+  },
+  {
+    "id": "e9d3880f",
+    "roman": "kitab",
+    "urdu": "کتاب",
+    "hindi": "किताब",
+    "meaning": "book",
+    "category": "noun"
+  },
+  {
+    "id": "10d287e0",
+    "roman": "kitna",
+    "urdu": "کتنا",
+    "hindi": "कितना",
+    "meaning": "how much",
+    "category": "question"
+  },
+  {
+    "id": "1e502194",
+    "roman": "kitne",
+    "urdu": "کتنے",
+    "hindi": "कितने",
+    "meaning": "how many",
+    "category": "question"
+  },
+  {
+    "id": "07933e3e",
+    "roman": "kiya",
+    "urdu": "کیا",
+    "hindi": "किया",
+    "meaning": "did",
+    "category": "verb"
+  },
+  {
+    "id": "8331c1a6",
+    "roman": "ko",
+    "urdu": "کو",
+    "hindi": "को",
+    "meaning": "to",
+    "category": "preposition"
+  },
+  {
+    "id": "3b33fc28",
+    "roman": "koi",
+    "urdu": "کوئی",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "6ddca6da",
+    "roman": "kon",
+    "urdu": "کون",
+    "hindi": "कौन",
+    "meaning": "who",
+    "category": "question"
+  },
+  {
+    "id": "dcf0f7d0",
+    "roman": "kori",
+    "urdu": "کوری",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "463cb48b",
+    "roman": "kuch",
+    "urdu": "کچھ",
+    "hindi": "कुछ",
+    "meaning": "some/something",
+    "category": "pronoun"
+  },
+  {
+    "id": "5296ce02",
+    "roman": "kursi",
+    "urdu": "کرسی",
+    "hindi": "कुर्सी",
+    "meaning": "chair",
+    "category": "noun"
+  },
+  {
+    "id": "f196dfb9",
+    "roman": "kutta",
+    "urdu": "کتا",
+    "hindi": "कुत्ता",
+    "meaning": "dog",
+    "category": "animal"
+  },
+  {
+    "id": "7bdb4212",
+    "roman": "kya",
+    "urdu": "کیا",
+    "hindi": "क्या",
+    "meaning": "what",
+    "category": "question"
+  },
+  {
+    "id": "e4494d33",
+    "roman": "kyun",
+    "urdu": "کیوں",
+    "hindi": "क्यों",
+    "meaning": "why",
+    "category": "question"
+  },
+  {
+    "id": "15f3b651",
+    "roman": "laal",
+    "urdu": "لال",
+    "hindi": "लाल",
+    "meaning": "red",
+    "category": "colour"
+  },
+  {
+    "id": "19f07428",
+    "roman": "lahore",
+    "urdu": "لاہور",
+    "hindi": "लाहौर",
+    "meaning": "Lahore",
+    "category": "place"
+  },
+  {
+    "id": "ed962422",
+    "roman": "lakh",
+    "urdu": "لاکھ",
+    "hindi": "लाख",
+    "meaning": "hundred thousand",
+    "category": "number"
+  },
+  {
+    "id": "7649cbb6",
+    "roman": "lamba",
+    "urdu": "لمبا",
+    "hindi": "लम्बा",
+    "meaning": "tall/long",
+    "category": "adjective"
+  },
+  {
+    "id": "39985f73",
+    "roman": "larka",
+    "urdu": "لڑکا",
+    "hindi": "लड़का",
+    "meaning": "boy",
+    "category": "family"
+  },
+  {
+    "id": "6e17eb86",
+    "roman": "larki",
+    "urdu": "لڑکی",
+    "hindi": "लड़की",
+    "meaning": "girl",
+    "category": "family"
+  },
+  {
+    "id": "a8a9091e",
+    "roman": "lassi",
+    "urdu": "لسّی",
+    "hindi": "लस्सी",
+    "meaning": "yogurt drink",
+    "category": "food"
+  },
+  {
+    "id": "4031b07c",
+    "roman": "laut",
+    "urdu": "لوٹ",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "b5442c4f",
+    "roman": "lazeez",
+    "urdu": "لذیذ",
+    "hindi": "लज़ीज़",
+    "meaning": "delicious",
+    "category": "adjective"
+  },
+  {
+    "id": "e0022517",
+    "roman": "lekin",
+    "urdu": "لیکن",
+    "hindi": "लेकिन",
+    "meaning": "but",
+    "category": "misc"
+  },
+  {
+    "id": "370465a1",
+    "roman": "lena",
+    "urdu": "لینا",
+    "hindi": "लेना",
+    "meaning": "to take",
+    "category": "verb"
+  },
+  {
+    "id": "be93134a",
+    "roman": "likhna",
+    "urdu": "لکھنا",
+    "hindi": "लिखना",
+    "meaning": "to write",
+    "category": "verb"
+  },
+  {
+    "id": "7942f67a",
+    "roman": "log",
+    "urdu": "لوگ",
+    "hindi": "लोग",
+    "meaning": "people",
+    "category": "misc"
+  },
+  {
+    "id": "d29ba805",
+    "roman": "maaf kijiye",
+    "urdu": "معاف کیجیے",
+    "hindi": "माफ़ कीजिए",
+    "meaning": "excuse me",
+    "category": "greeting"
+  },
+  {
+    "id": "282b8ada",
+    "roman": "machli",
+    "urdu": "مچھلی",
+    "hindi": "मछली",
+    "meaning": "fish",
+    "category": "animal"
+  },
+  {
+    "id": "6d0965d6",
+    "roman": "machli",
+    "urdu": "مچھلی",
+    "hindi": "मछली",
+    "meaning": "fish",
+    "category": "food"
+  },
+  {
+    "id": "1a122c52",
+    "roman": "madad",
+    "urdu": "مدد",
+    "hindi": "मदद",
+    "meaning": "help",
+    "category": "misc"
+  },
+  {
+    "id": "28f7ad6f",
+    "roman": "magar",
+    "urdu": "مگر",
+    "hindi": "मगर",
+    "meaning": "if not",
+    "category": ""
+  },
+  {
+    "id": "3bbb95cd",
+    "roman": "mahina",
+    "urdu": "مہینہ",
+    "hindi": "महीना",
+    "meaning": "month",
+    "category": "time"
+  },
+  {
+    "id": "f473eef1",
+    "roman": "main",
+    "urdu": "میں",
+    "hindi": "मैं",
+    "meaning": "I",
+    "category": "pronoun"
+  },
+  {
+    "id": "a9e33f91",
+    "roman": "mangal",
+    "urdu": "منگل",
+    "hindi": "मंगलवार",
+    "meaning": "Tuesday",
+    "category": "day"
+  },
+  {
+    "id": "59ceb5e4",
+    "roman": "maqsad",
+    "urdu": "مقصد",
+    "hindi": "मक़सद",
+    "meaning": "purpose",
+    "category": "misc"
+  },
+  {
+    "id": "456e20d1",
+    "roman": "marna",
+    "urdu": "مرنا",
+    "hindi": "मरना",
+    "meaning": "to die",
+    "category": "verb"
+  },
+  {
+    "id": "ebe5b6ac",
+    "roman": "masjid",
+    "urdu": "مسجد",
+    "hindi": "मस्जिद",
+    "meaning": "mosque",
+    "category": "noun"
+  },
+  {
+    "id": "f8378ff5",
+    "roman": "masla",
+    "urdu": "مسئلہ",
+    "hindi": "मसला",
+    "meaning": "problem/issue",
+    "category": "misc"
+  },
+  {
+    "id": "a7760539",
+    "roman": "matlab",
+    "urdu": "مطلب",
+    "hindi": "मतलब",
+    "meaning": "meaning",
+    "category": "misc"
+  },
+  {
+    "id": "7f03ec48",
+    "roman": "maut",
+    "urdu": "موت",
+    "hindi": "मौत",
+    "meaning": "death",
+    "category": "noun"
+  },
+  {
+    "id": "d3eb5400",
+    "roman": "mayoosi",
+    "urdu": "مایوسی",
+    "hindi": "मायूसी",
+    "meaning": "disappointment",
+    "category": "emotion"
+  },
+  {
+    "id": "abf62f4d",
+    "roman": "mazaydar",
+    "urdu": "مزیدار",
+    "hindi": "मज़ेदार",
+    "meaning": "delicious/fun",
+    "category": "adjective"
+  },
+  {
+    "id": "21b52738",
+    "roman": "mazboot",
+    "urdu": "مضبوط",
+    "hindi": "मज़बूत",
+    "meaning": "strong",
+    "category": "adjective"
+  },
+  {
+    "id": "5cc6ff9d",
+    "roman": "mehenga",
+    "urdu": "مہنگا",
+    "hindi": "महँगा",
+    "meaning": "expensive",
+    "category": "adjective"
+  },
+  {
+    "id": "ac44045d",
+    "roman": "meherbani",
+    "urdu": "مہربانی",
+    "hindi": "मेहरबानी",
+    "meaning": "kindness/please",
+    "category": "greeting"
+  },
+  {
+    "id": "4782d750",
+    "roman": "mein",
+    "urdu": "میں",
+    "hindi": "में",
+    "meaning": "in",
+    "category": "preposition"
+  },
+  {
+    "id": "c52a1a9b",
+    "roman": "mein",
+    "urdu": "میں",
+    "hindi": "मैं",
+    "meaning": "I",
+    "category": "pronoun"
+  },
+  {
+    "id": "6c9e3cac",
+    "roman": "mez",
+    "urdu": "میز",
+    "hindi": "मेज़",
+    "meaning": "table",
+    "category": "noun"
+  },
+  {
+    "id": "d8a3d800",
+    "roman": "milna",
+    "urdu": "ملنا",
+    "hindi": "मिलना",
+    "meaning": "to meet/get",
+    "category": "verb"
+  },
+  {
+    "id": "0c3a628b",
+    "roman": "minet",
+    "urdu": "منٹ",
+    "hindi": "मिनट",
+    "meaning": "minute",
+    "category": "time"
+  },
+  {
+    "id": "c21bf708",
+    "roman": "mint",
+    "urdu": "منٹ",
+    "hindi": "मिनट",
+    "meaning": "minute",
+    "category": "time"
+  },
+  {
+    "id": "2ef7cf21",
+    "roman": "mirch",
+    "urdu": "مرچ",
+    "hindi": "मिर्च",
+    "meaning": "chili/pepper",
+    "category": "food"
+  },
+  {
+    "id": "a358cb25",
+    "roman": "mitaaye",
+    "urdu": "مٹائے",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "45d4d99d",
+    "roman": "mohabbat",
+    "urdu": "محبت",
+    "hindi": "मोहब्बत",
+    "meaning": "love",
+    "category": "noun"
+  },
+  {
+    "id": "f032978b",
+    "roman": "mulk",
+    "urdu": "ملک",
+    "hindi": "मुल्क",
+    "meaning": "country",
+    "category": "noun"
+  },
+  {
+    "id": "66785a71",
+    "roman": "mumbai",
+    "urdu": "ممبئی",
+    "hindi": "मुंबई",
+    "meaning": "Mumbai",
+    "category": "place"
+  },
+  {
+    "id": "ffcd966b",
+    "roman": "mumkin",
+    "urdu": "ممکن",
+    "hindi": "मुमकिन",
+    "meaning": "possible",
+    "category": "misc"
+  },
+  {
+    "id": "064ef16a",
+    "roman": "munfarid",
+    "urdu": "منفرد",
+    "hindi": "मुनफ़रिद",
+    "meaning": "unique",
+    "category": "adjective"
+  },
+  {
+    "id": "26febfe1",
+    "roman": "mungal",
+    "urdu": "منگل",
+    "hindi": "मंगलवार",
+    "meaning": "Tuesday",
+    "category": "day"
+  },
+  {
+    "id": "5d90452d",
+    "roman": "munh",
+    "urdu": "منہ",
+    "hindi": "मुँह",
+    "meaning": "mouth",
+    "category": "body"
+  },
+  {
+    "id": "e362b18b",
+    "roman": "murghi",
+    "urdu": "مرغی",
+    "hindi": "मुर्ग़ी",
+    "meaning": "hen/chicken",
+    "category": "animal"
+  },
+  {
+    "id": "3559f6a6",
+    "roman": "mushkil",
+    "urdu": "مشکل",
+    "hindi": "मुश्किल",
+    "meaning": "difficult",
+    "category": "adjective"
+  },
+  {
+    "id": "4299d247",
+    "roman": "naak",
+    "urdu": "ناک",
+    "hindi": "नाक",
+    "meaning": "nose",
+    "category": "body"
+  },
+  {
+    "id": "9c23dc91",
+    "roman": "naam",
+    "urdu": "نام",
+    "hindi": "नाम",
+    "meaning": "name",
+    "category": "noun"
+  },
+  {
+    "id": "2db722d3",
+    "roman": "naan",
+    "urdu": "نان",
+    "hindi": "नान",
+    "meaning": "naan bread",
+    "category": "food"
+  },
+  {
+    "id": "ed95e982",
+    "roman": "nae",
+    "urdu": "نہیں",
+    "hindi": "नहीं",
+    "meaning": "no",
+    "category": "misc"
+  },
+  {
+    "id": "a14c16aa",
+    "roman": "nahi",
+    "urdu": "نہیں",
+    "hindi": "नहीं",
+    "meaning": "no",
+    "category": "misc"
+  },
+  {
+    "id": "ebf500c1",
+    "roman": "nahin",
+    "urdu": "نہیں",
+    "hindi": "नहीं",
+    "meaning": "no",
+    "category": "misc"
+  },
+  {
+    "id": "e6b0c17e",
+    "roman": "namak",
+    "urdu": "نمک",
+    "hindi": "नमक",
+    "meaning": "salt",
+    "category": "food"
+  },
+  {
+    "id": "8e4b4d60",
+    "roman": "namaste",
+    "urdu": "نمستے",
+    "hindi": "नमस्ते",
+    "meaning": "hello (Hindi)",
+    "category": "greeting"
+  },
+  {
+    "id": "5088c2db",
+    "roman": "namumkin",
+    "urdu": "ناممکن",
+    "hindi": "नामुमकिन",
+    "meaning": "impossible",
+    "category": "misc"
+  },
+  {
+    "id": "532fe30a",
+    "roman": "nana",
+    "urdu": "نانا",
+    "hindi": "नाना",
+    "meaning": "maternal grandfather",
+    "category": "family"
+  },
+  {
+    "id": "e1ee1b51",
+    "roman": "nani",
+    "urdu": "نانی",
+    "hindi": "नानी",
+    "meaning": "maternal grandmother",
+    "category": "family"
+  },
+  {
+    "id": "925956b1",
+    "roman": "napasand",
+    "urdu": "ناپسند",
+    "hindi": "नापसंद",
+    "meaning": "dislike",
+    "category": "misc"
+  },
+  {
+    "id": "81b25797",
+    "roman": "naqaabil",
+    "urdu": "ناقابل",
+    "hindi": "नाक़ाबिल",
+    "meaning": "incapable/incredible",
+    "category": "misc"
+  },
+  {
+    "id": "80de0ad7",
+    "roman": "naraazgi",
+    "urdu": "ناراضگی",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "799fe161",
+    "roman": "naram",
+    "urdu": "نرم",
+    "hindi": "नरम",
+    "meaning": "soft",
+    "category": "adjective"
+  },
+  {
+    "id": "4f7e40f2",
+    "roman": "narnji",
+    "urdu": "نارنجی",
+    "hindi": "नारंगी",
+    "meaning": "orange",
+    "category": "colour"
+  },
+  {
+    "id": "407bfb9a",
+    "roman": "naya",
+    "urdu": "نیا",
+    "hindi": "नया",
+    "meaning": "new",
+    "category": "adjective"
+  },
+  {
+    "id": "f01222a8",
+    "roman": "nazdeek",
+    "urdu": "نزدیک",
+    "hindi": "नज़दीक",
+    "meaning": "near",
+    "category": "adverb"
+  },
+  {
+    "id": "f6a76094",
+    "roman": "neeche",
+    "urdu": "نیچے",
+    "hindi": "नीचे",
+    "meaning": "down/below",
+    "category": "adverb"
+  },
+  {
+    "id": "d55e219f",
+    "roman": "neela",
+    "urdu": "نیلا",
+    "hindi": "नीला",
+    "meaning": "blue",
+    "category": "colour"
+  },
+  {
+    "id": "e3d4f260",
+    "roman": "nibha",
+    "urdu": "نبھا",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "8720a26c",
+    "roman": "no",
+    "urdu": "نو",
+    "hindi": "नौ",
+    "meaning": "nine",
+    "category": "number"
+  },
+  {
+    "id": "4baa09e4",
+    "roman": "paanch",
+    "urdu": "پانچ",
+    "hindi": "पाँच",
+    "meaning": "five",
+    "category": "number"
+  },
+  {
+    "id": "caefa666",
+    "roman": "paani",
+    "urdu": "پانی",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "70474582",
+    "roman": "pachaas",
+    "urdu": "پچاس",
+    "hindi": "पचास",
+    "meaning": "fifty",
+    "category": "number"
+  },
+  {
+    "id": "ca2d4813",
+    "roman": "pahar",
+    "urdu": "پہاڑ",
+    "hindi": "पहाड़",
+    "meaning": "mountain",
+    "category": "nature"
+  },
+  {
+    "id": "96c69375",
+    "roman": "pair",
+    "urdu": "پیر",
+    "hindi": "पैर",
+    "meaning": "foot/leg",
+    "category": "body"
+  },
+  {
+    "id": "ba632a68",
+    "roman": "paisa",
+    "urdu": "پیسہ",
+    "hindi": "पैसा",
+    "meaning": "money",
+    "category": "noun"
+  },
+  {
+    "id": "8e6dca15",
+    "roman": "pakistan",
+    "urdu": "پاکستان",
+    "hindi": "पाकिस्तान",
+    "meaning": "Pakistan",
+    "category": "place"
+  },
+  {
+    "id": "33506f0b",
+    "roman": "pandrah",
+    "urdu": "پندرہ",
+    "hindi": "पंद्रह",
+    "meaning": "fifteen",
+    "category": "number"
+  },
+  {
+    "id": "8f421e98",
+    "roman": "pani",
+    "urdu": "پانی",
+    "hindi": "पानी",
+    "meaning": "water",
+    "category": "food"
+  },
+  {
+    "id": "8c09bf06",
+    "roman": "pani",
+    "urdu": "پانی",
+    "hindi": "पानी",
+    "meaning": "water",
+    "category": "nature"
+  },
+  {
+    "id": "cdfdecf4",
+    "roman": "par",
+    "urdu": "پر",
+    "hindi": "पर",
+    "meaning": "on/at",
+    "category": "preposition"
+  },
+  {
+    "id": "4b5687c5",
+    "roman": "parhna",
+    "urdu": "پڑھنا",
+    "hindi": "पढ़ना",
+    "meaning": "to read/study",
+    "category": "verb"
+  },
+  {
+    "id": "e16e53df",
+    "roman": "parso",
+    "urdu": "پرسوں",
+    "hindi": "परसों",
+    "meaning": "day before/after",
+    "category": "time"
+  },
+  {
+    "id": "c3ad22cb",
+    "roman": "pasand",
+    "urdu": "پسند",
+    "hindi": "पसंद",
+    "meaning": "like/preference",
+    "category": "misc"
+  },
+  {
+    "id": "335431ce",
+    "roman": "peela",
+    "urdu": "پیلا",
+    "hindi": "पीला",
+    "meaning": "yellow",
+    "category": "colour"
+  },
+  {
+    "id": "a34aab66",
+    "roman": "peena",
+    "urdu": "پینا",
+    "hindi": "पीना",
+    "meaning": "to drink",
+    "category": "verb"
+  },
+  {
+    "id": "c7ee944e",
+    "roman": "peer",
+    "urdu": "پیر",
+    "hindi": "सोमवार",
+    "meaning": "Monday",
+    "category": "day"
+  },
+  {
+    "id": "e55e0a13",
+    "roman": "pehle",
+    "urdu": "پہلے",
+    "hindi": "पहले",
+    "meaning": "before/earlier",
+    "category": "time"
+  },
+  {
+    "id": "141183c2",
+    "roman": "phal",
+    "urdu": "پھل",
+    "hindi": "फल",
+    "meaning": "fruit",
+    "category": "food"
+  },
+  {
+    "id": "4c6a8151",
+    "roman": "phir",
+    "urdu": "پھر",
+    "hindi": "फिर",
+    "meaning": "then/again",
+    "category": "adverb"
+  },
+  {
+    "id": "9682ac83",
+    "roman": "phone",
+    "urdu": "فون",
+    "hindi": "फ़ोन",
+    "meaning": "phone",
+    "category": "noun"
+  },
+  {
+    "id": "4ef56940",
+    "roman": "phool",
+    "urdu": "پھول",
+    "hindi": "फूल",
+    "meaning": "flower",
+    "category": "nature"
+  },
+  {
+    "id": "65996f9f",
+    "roman": "purana",
+    "urdu": "پرانا",
+    "hindi": "पुराना",
+    "meaning": "old (thing)",
+    "category": "adjective"
+  },
+  {
+    "id": "7a1fd192",
+    "roman": "pyar",
+    "urdu": "پیار",
+    "hindi": "प्यार",
+    "meaning": "love",
+    "category": "emotion"
+  },
+  {
+    "id": "46a96588",
+    "roman": "qalam",
+    "urdu": "قلم",
+    "hindi": "क़लम",
+    "meaning": "pen",
+    "category": "noun"
+  },
+  {
+    "id": "b26ce7d1",
+    "roman": "raasta",
+    "urdu": "راستہ",
+    "hindi": "रास्ता",
+    "meaning": "road/path",
+    "category": "noun"
+  },
+  {
+    "id": "0e3f4041",
+    "roman": "raat",
+    "urdu": "رات",
+    "hindi": "रात",
+    "meaning": "night",
+    "category": "time"
+  },
+  {
+    "id": "9936c31c",
+    "roman": "rainaa",
+    "urdu": "رینا",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "00da2763",
+    "roman": "rakhna",
+    "urdu": "رکھنا",
+    "hindi": "रखना",
+    "meaning": "to keep/put",
+    "category": "verb"
+  },
+  {
+    "id": "a906230c",
+    "roman": "rona",
+    "urdu": "رونا",
+    "hindi": "रोना",
+    "meaning": "to cry",
+    "category": "verb"
+  },
+  {
+    "id": "e499a9db",
+    "roman": "roti",
+    "urdu": "روٹی",
+    "hindi": "रोटी",
+    "meaning": "bread",
+    "category": "food"
+  },
+  {
+    "id": "65d045db",
+    "roman": "saaf",
+    "urdu": "صاف",
+    "hindi": "साफ़",
+    "meaning": "clean/clear",
+    "category": "adjective"
+  },
+  {
+    "id": "0aaf238b",
+    "roman": "saahil",
+    "urdu": "ساحل",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "b7b561e3",
+    "roman": "saal",
+    "urdu": "سال",
+    "hindi": "साल",
+    "meaning": "year",
+    "category": "time"
+  },
+  {
+    "id": "c10fdb39",
+    "roman": "saanp",
+    "urdu": "سانپ",
+    "hindi": "साँप",
+    "meaning": "snake",
+    "category": "animal"
+  },
+  {
+    "id": "376de388",
+    "roman": "saat",
+    "urdu": "سات",
+    "hindi": "सात",
+    "meaning": "seven",
+    "category": "number"
+  },
+  {
+    "id": "7d6406ac",
+    "roman": "sab",
+    "urdu": "سب",
+    "hindi": "सब",
+    "meaning": "all/everyone",
+    "category": "pronoun"
+  },
+  {
+    "id": "82c1aff4",
+    "roman": "sabzi",
+    "urdu": "سبزی",
+    "hindi": "सब्ज़ी",
+    "meaning": "vegetable",
+    "category": "food"
+  },
+  {
+    "id": "656a75f1",
+    "roman": "sach",
+    "urdu": "سچ",
+    "hindi": "सच",
+    "meaning": "truth",
+    "category": "noun"
+  },
+  {
+    "id": "e1eb011b",
+    "roman": "safed",
+    "urdu": "سفید",
+    "hindi": "सफ़ेद",
+    "meaning": "white",
+    "category": "colour"
+  },
+  {
+    "id": "b7c77c46",
+    "roman": "sahi",
+    "urdu": "صحیح",
+    "hindi": "सही",
+    "meaning": "correct/right",
+    "category": "misc"
+  },
+  {
+    "id": "78d627c7",
+    "roman": "sakht",
+    "urdu": "سخت",
+    "hindi": "सख़्त",
+    "meaning": "hard/strict",
+    "category": "adjective"
+  },
+  {
+    "id": "3f8f045c",
+    "roman": "sakoon",
+    "urdu": "سکون",
+    "hindi": "सुकून",
+    "meaning": "peace/calm",
+    "category": "emotion"
+  },
+  {
+    "id": "f140eeab",
+    "roman": "salam",
+    "urdu": "سلام",
+    "hindi": "सलाम",
+    "meaning": "peace/hello",
+    "category": "greeting"
+  },
+  {
+    "id": "7924f0bc",
+    "roman": "samajhna",
+    "urdu": "سمجھنا",
+    "hindi": "समझना",
+    "meaning": "to understand",
+    "category": "verb"
+  },
+  {
+    "id": "45a3ef27",
+    "roman": "samundar",
+    "urdu": "سمندر",
+    "hindi": "समंदर",
+    "meaning": "sea/ocean",
+    "category": "nature"
+  },
+  {
+    "id": "d5984374",
+    "roman": "sar",
+    "urdu": "سر",
+    "hindi": "सिर",
+    "meaning": "head",
+    "category": "body"
+  },
+  {
+    "id": "1c45de28",
+    "roman": "sasta",
+    "urdu": "سستا",
+    "hindi": "सस्ता",
+    "meaning": "cheap",
+    "category": "adjective"
+  },
+  {
+    "id": "a47d4b7a",
+    "roman": "satrah",
+    "urdu": "ستارہ",
+    "hindi": "सत्रह",
+    "meaning": "seventeen",
+    "category": "number"
+  },
+  {
+    "id": "7fa90467",
+    "roman": "sau",
+    "urdu": "سو",
+    "hindi": "सौ",
+    "meaning": "hundred",
+    "category": "number"
+  },
+  {
+    "id": "6daf0321",
+    "roman": "sawal",
+    "urdu": "سوال",
+    "hindi": "सवाल",
+    "meaning": "question",
+    "category": "misc"
+  },
+  {
+    "id": "cf5d933a",
+    "roman": "school",
+    "urdu": "اسکول",
+    "hindi": "स्कूल",
+    "meaning": "school",
+    "category": "noun"
+  },
+  {
+    "id": "4e474f42",
+    "roman": "se",
+    "urdu": "سے",
+    "hindi": "से",
+    "meaning": "from/with",
+    "category": "preposition"
+  },
+  {
+    "id": "afc800f6",
+    "roman": "second",
+    "urdu": "سیکنڈ",
+    "hindi": "सेकंड",
+    "meaning": "second",
+    "category": "time"
+  },
+  {
+    "id": "21ee6c8a",
+    "roman": "sehra",
+    "urdu": "صحرا",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "9af9155c",
+    "roman": "shaam",
+    "urdu": "شام",
+    "hindi": "शाम",
+    "meaning": "evening",
+    "category": "time"
+  },
+  {
+    "id": "3d368ccd",
+    "roman": "shandaar",
+    "urdu": "شاندار",
+    "hindi": "शानदार",
+    "meaning": "fabulous/grand",
+    "category": "adjective"
+  },
+  {
+    "id": "61630b46",
+    "roman": "sharm",
+    "urdu": "شرم",
+    "hindi": "शर्म",
+    "meaning": "shame",
+    "category": "emotion"
+  },
+  {
+    "id": "8915952a",
+    "roman": "shayad",
+    "urdu": "شاید",
+    "hindi": "शायद",
+    "meaning": "maybe",
+    "category": "adverb"
+  },
+  {
+    "id": "305e909a",
+    "roman": "shehar",
+    "urdu": "شہر",
+    "hindi": "शहर",
+    "meaning": "city",
+    "category": "noun"
+  },
+  {
+    "id": "364d1b9d",
+    "roman": "sher",
+    "urdu": "شیر",
+    "hindi": "शेर",
+    "meaning": "lion",
+    "category": "animal"
+  },
+  {
+    "id": "ae34a6da",
+    "roman": "shohar",
+    "urdu": "شوہر",
+    "hindi": "शौहर",
+    "meaning": "husband",
+    "category": "family"
+  },
+  {
+    "id": "bb734d4f",
+    "roman": "shola",
+    "urdu": "شعلہ",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "fc8e8777",
+    "roman": "shukria",
+    "urdu": "شکریہ",
+    "hindi": "शुक्रिया",
+    "meaning": "thank you",
+    "category": "greeting"
+  },
+  {
+    "id": "3cdc3725",
+    "roman": "shukriya",
+    "urdu": "شکریہ",
+    "hindi": "शुक्रिया",
+    "meaning": "thank you",
+    "category": "greeting"
+  },
+  {
+    "id": "b2f090bc",
+    "roman": "shuru",
+    "urdu": "شروع",
+    "hindi": "शुरू",
+    "meaning": "start/beginning",
+    "category": "misc"
+  },
+  {
+    "id": "208cc4b6",
+    "roman": "sifar",
+    "urdu": "صفر",
+    "hindi": "शून्य",
+    "meaning": "zero",
+    "category": "number"
+  },
+  {
+    "id": "c8d69f54",
+    "roman": "sir",
+    "urdu": "سر",
+    "hindi": "सिर",
+    "meaning": "head",
+    "category": "body"
+  },
+  {
+    "id": "63952afa",
+    "roman": "sirf",
+    "urdu": "صرف",
+    "hindi": "सिर्फ़",
+    "meaning": "only",
+    "category": "adverb"
+  },
+  {
+    "id": "3ab6a369",
+    "roman": "sitara",
+    "urdu": "ستارہ",
+    "hindi": "सितारा",
+    "meaning": "star",
+    "category": "nature"
+  },
+  {
+    "id": "5f99eeca",
+    "roman": "siyaahi",
+    "urdu": "سیاہی",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "f35b3d2d",
+    "roman": "sochna",
+    "urdu": "سوچنا",
+    "hindi": "सोचना",
+    "meaning": "to think",
+    "category": "verb"
+  },
+  {
+    "id": "c10c6f8a",
+    "roman": "sohneya",
+    "urdu": "سوہنیے",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "bf4d67cc",
+    "roman": "solah",
+    "urdu": "سولہ",
+    "hindi": "सोलह",
+    "meaning": "sixteen",
+    "category": "number"
+  },
+  {
+    "id": "753cc6c3",
+    "roman": "somwar",
+    "urdu": "سوموار",
+    "hindi": "सोमवार",
+    "meaning": "Monday",
+    "category": "day"
+  },
+  {
+    "id": "ba87e30d",
+    "roman": "sona",
+    "urdu": "سونا",
+    "hindi": "सोना",
+    "meaning": "to sleep",
+    "category": "verb"
+  },
+  {
+    "id": "7c27cee3",
+    "roman": "subah",
+    "urdu": "صبح",
+    "hindi": "सुबह",
+    "meaning": "morning",
+    "category": "time"
+  },
+  {
+    "id": "1653bf90",
+    "roman": "sunn",
+    "urdu": "سٗن",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "7e8d20ab",
+    "roman": "sunna",
+    "urdu": "سننا",
+    "hindi": "सुनना",
+    "meaning": "to listen",
+    "category": "verb"
+  },
+  {
+    "id": "d11db9c4",
+    "roman": "suraj",
+    "urdu": "سورج",
+    "hindi": "सूरज",
+    "meaning": "sun",
+    "category": "nature"
+  },
+  {
+    "id": "fd278a12",
+    "roman": "tak",
+    "urdu": "تک",
+    "hindi": "तक",
+    "meaning": "until/up to",
+    "category": "preposition"
+  },
+  {
+    "id": "3b327921",
+    "roman": "taqat",
+    "urdu": "طاقت",
+    "hindi": "ताक़त",
+    "meaning": "power/strength",
+    "category": "misc"
+  },
+  {
+    "id": "42a78423",
+    "roman": "taraf",
+    "urdu": "طرف",
+    "hindi": "तरफ़",
+    "meaning": "side/direction",
+    "category": "misc"
+  },
+  {
+    "id": "f80232ac",
+    "roman": "tareeqa",
+    "urdu": "طریقہ",
+    "hindi": "तरीक़ा",
+    "meaning": "method/way",
+    "category": "misc"
+  },
+  {
+    "id": "44d7bf17",
+    "roman": "tayyar",
+    "urdu": "تیار",
+    "hindi": "तैयार",
+    "meaning": "ready/prepared",
+    "category": "misc"
+  },
+  {
+    "id": "824ea6db",
+    "roman": "teen",
+    "urdu": "تین",
+    "hindi": "तीन",
+    "meaning": "three",
+    "category": "number"
+  },
+  {
+    "id": "a775110f",
+    "roman": "tees",
+    "urdu": "تیس",
+    "hindi": "तीस",
+    "meaning": "thirty",
+    "category": "number"
+  },
+  {
+    "id": "0c179227",
+    "roman": "terah",
+    "urdu": "تیرہ",
+    "hindi": "तेरह",
+    "meaning": "thirteen",
+    "category": "number"
+  },
+  {
+    "id": "a8cfdb3b",
+    "roman": "tez",
+    "urdu": "تیز",
+    "hindi": "तेज़",
+    "meaning": "fast/sharp",
+    "category": "adjective"
+  },
+  {
+    "id": "3f1a1abb",
+    "roman": "tha",
+    "urdu": "تھا",
+    "hindi": "था",
+    "meaning": "was (m)",
+    "category": "verb"
+  },
+  {
+    "id": "2e8195d0",
+    "roman": "thanda",
+    "urdu": "ٹھنڈا",
+    "hindi": "ठंडा",
+    "meaning": "cold",
+    "category": "adjective"
+  },
+  {
+    "id": "32e41fd5",
+    "roman": "the",
+    "urdu": "تھے",
+    "hindi": "थे",
+    "meaning": "were",
+    "category": "verb"
+  },
+  {
+    "id": "2578fa00",
+    "roman": "theek",
+    "urdu": "ٹھیک",
+    "hindi": "ठीक",
+    "meaning": "okay/fine",
+    "category": "misc"
+  },
+  {
+    "id": "86b812d9",
+    "roman": "thi",
+    "urdu": "تھی",
+    "hindi": "थी",
+    "meaning": "was (f)",
+    "category": "verb"
+  },
+  {
+    "id": "b98d3839",
+    "roman": "thora",
+    "urdu": "تھوڑا",
+    "hindi": "थोड़ा",
+    "meaning": "a little",
+    "category": "adverb"
+  },
+  {
+    "id": "072a1c0d",
+    "roman": "to",
+    "urdu": "تو",
+    "hindi": "तो",
+    "meaning": "then",
+    "category": "misc"
+  },
+  {
+    "id": "42bcf714",
+    "roman": "tu",
+    "urdu": "تو",
+    "hindi": "तू",
+    "meaning": "you (very informal)",
+    "category": "pronoun"
+  },
+  {
+    "id": "7c3c365c",
+    "roman": "tum",
+    "urdu": "تم",
+    "hindi": "तुम",
+    "meaning": "you (informal)",
+    "category": "pronoun"
+  },
+  {
+    "id": "b2f66dcc",
+    "roman": "udaas",
+    "urdu": "اداس",
+    "hindi": "उदास",
+    "meaning": "sad",
+    "category": "adjective"
+  },
+  {
+    "id": "8ab6e3d9",
+    "roman": "umeed",
+    "urdu": "امید",
+    "hindi": "उम्मीद",
+    "meaning": "hope",
+    "category": "emotion"
+  },
+  {
+    "id": "481c003c",
+    "roman": "umeed",
+    "urdu": "امید",
+    "hindi": "उम्मीद",
+    "meaning": "hope",
+    "category": "noun"
+  },
+  {
+    "id": "0b557ceb",
+    "roman": "umr",
+    "urdu": "عمر",
+    "hindi": "उम्र",
+    "meaning": "",
+    "category": ""
+  },
+  {
+    "id": "371471d9",
+    "roman": "unees",
+    "urdu": "انیس",
+    "hindi": "उन्नीस",
+    "meaning": "nineteen",
+    "category": "number"
+  },
+  {
+    "id": "1e1ab014",
+    "roman": "ungli",
+    "urdu": "انگلی",
+    "hindi": "उंगली",
+    "meaning": "finger",
+    "category": "body"
+  },
+  {
+    "id": "876a5a69",
+    "roman": "upar",
+    "urdu": "اوپر",
+    "hindi": "ऊपर",
+    "meaning": "up/above",
+    "category": "adverb"
+  },
+  {
+    "id": "2961387e",
+    "roman": "us",
+    "urdu": "اس",
+    "hindi": "उस",
+    "meaning": "that",
+    "category": "pronoun"
+  },
+  {
+    "id": "751577cf",
+    "roman": "uthana",
+    "urdu": "اٹھانا",
+    "hindi": "उठाना",
+    "meaning": "to lift/pick up",
+    "category": "verb"
+  },
+  {
+    "id": "38afd2c4",
+    "roman": "uthna",
+    "urdu": "اٹھنا",
+    "hindi": "उठना",
+    "meaning": "to get up",
+    "category": "verb"
+  },
+  {
+    "id": "83fb13ef",
+    "roman": "wahan",
+    "urdu": "وہاں",
+    "hindi": "वहाँ",
+    "meaning": "there",
+    "category": "adverb"
+  },
+  {
+    "id": "151a25ce",
+    "roman": "wajah",
+    "urdu": "وجہ",
+    "hindi": "वजह",
+    "meaning": "reason",
+    "category": "misc"
+  },
+  {
+    "id": "a9126dd6",
+    "roman": "walaikum assalam",
+    "urdu": "وعلیکم السلام",
+    "hindi": "वालैकुम अस्सलाम",
+    "meaning": "and upon you peace",
+    "category": "greeting"
+  },
+  {
+    "id": "4a3c0a2b",
+    "roman": "waqt",
+    "urdu": "وقت",
+    "hindi": "वक़्त",
+    "meaning": "time",
+    "category": "time"
+  },
+  {
+    "id": "ce7898a0",
+    "roman": "warna",
+    "urdu": "ورنہ",
+    "hindi": "वरना",
+    "meaning": "otherwise",
+    "category": "misc"
+  },
+  {
+    "id": "6c8c2327",
+    "roman": "wazeh",
+    "urdu": "واضح",
+    "hindi": "वाज़ेह",
+    "meaning": "obvious/clear",
+    "category": "misc"
+  },
+  {
+    "id": "9ef57eb1",
+    "roman": "wo",
+    "urdu": "وہ",
+    "hindi": "वह",
+    "meaning": "he/she/they",
+    "category": "pronoun"
+  },
+  {
+    "id": "2c2728d0",
+    "roman": "woh",
+    "urdu": "وہ",
+    "hindi": "वह",
+    "meaning": "he/she/they",
+    "category": "pronoun"
+  },
+  {
+    "id": "3692d40b",
+    "roman": "ya",
+    "urdu": "یا",
+    "hindi": "या",
+    "meaning": "or",
+    "category": "misc"
+  },
+  {
+    "id": "062d58d7",
+    "roman": "yaariyon",
+    "urdu": "یاریوں",
+    "hindi": null,
+    "meaning": null,
+    "category": null
+  },
+  {
+    "id": "5758ae11",
+    "roman": "yahan",
+    "urdu": "یہاں",
+    "hindi": "यहाँ",
+    "meaning": "here",
+    "category": "adverb"
+  },
+  {
+    "id": "f9147c60",
+    "roman": "yaqeen",
+    "urdu": "یقین",
+    "hindi": "यक़ीन",
+    "meaning": "belief/faith",
+    "category": "misc"
+  },
+  {
+    "id": "78c3de1e",
+    "roman": "ye",
+    "urdu": "یہ",
+    "hindi": "यह",
+    "meaning": "this",
+    "category": "pronoun"
+  },
+  {
+    "id": "abc6087d",
+    "roman": "yeh",
+    "urdu": "یہ",
+    "hindi": "यह",
+    "meaning": "this",
+    "category": "pronoun"
+  },
+  {
+    "id": "dfa06c5a",
+    "roman": "yuun",
+    "urdu": "یوں",
+    "hindi": "यूँ",
+    "meaning": "such",
+    "category": ""
+  },
+  {
+    "id": "a91a288b",
+    "roman": "zameen",
+    "urdu": "زمین",
+    "hindi": "ज़मीन",
+    "meaning": "earth/land",
+    "category": "nature"
+  },
+  {
+    "id": "f97376fa",
+    "roman": "zaroor",
+    "urdu": "ضرور",
+    "hindi": "ज़रूर",
+    "meaning": "certainly",
+    "category": "adverb"
+  },
+  {
+    "id": "1931aa97",
+    "roman": "zaroorat",
+    "urdu": "ضرورت",
+    "hindi": "ज़रूरत",
+    "meaning": "need",
+    "category": "misc"
+  },
+  {
+    "id": "77803b41",
+    "roman": "zarurat",
+    "urdu": "ضرورت",
+    "hindi": "ज़रूरत",
+    "meaning": "need",
+    "category": ""
+  },
+  {
+    "id": "eefa9ad5",
+    "roman": "zindagi",
+    "urdu": "زندگی",
+    "hindi": "ज़िंदगी",
+    "meaning": "life",
+    "category": "noun"
+  },
+  {
+    "id": "9c08f223",
+    "roman": "zubaan",
+    "urdu": "زبان",
+    "hindi": "ज़ुबान",
+    "meaning": "tongue/language",
+    "category": "body"
+  },
+  {
+    "id": "ce555c01",
+    "roman": "zyada",
+    "urdu": "زیادہ",
+    "hindi": "ज़्यादा",
+    "meaning": "more/much",
+    "category": "adverb"
+  },
+  {
+    "id": "db145ce6",
+    "roman": "آسان",
+    "urdu": "",
+    "hindi": "",
+    "meaning": "",
+    "category": ""
+  },
+  {
+    "id": "a66c46a6",
+    "roman": "آسان",
+    "urdu": "",
+    "hindi": "",
+    "meaning": "",
+    "category": ""
+  },
+  {
+    "id": "72b06b8f",
+    "roman": "انداز",
+    "urdu": "",
+    "hindi": "",
+    "meaning": "",
+    "category": ""
+  },
+  {
+    "id": "de522178",
+    "roman": "ایکشن",
+    "urdu": "ایکشن",
+    "hindi": "",
+    "meaning": "",
+    "category": ""
+  },
+  {
+    "id": "5028838e",
+    "roman": "بازوں",
+    "urdu": "بازوں",
+    "hindi": "",
+    "meaning": "",
+    "category": ""
+  },
+  {
+    "id": "dbed98df",
+    "roman": "پڑتے",
+    "urdu": "پڑتے",
+    "hindi": "",
+    "meaning": "",
+    "category": ""
+  },
+  {
+    "id": "2a3843b1",
+    "roman": "تصویریں",
+    "urdu": "تصویریں",
+    "hindi": "",
+    "meaning": "",
+    "category": ""
+  },
+  {
+    "id": "a5eb0bbc",
+    "roman": "تنازعات",
+    "urdu": "تنازعات",
+    "hindi": "",
+    "meaning": "",
+    "category": ""
+  },
+  {
+    "id": "0f2c14b0",
+    "roman": "تنازعات",
+    "urdu": "تنازعات",
+    "hindi": "",
+    "meaning": "",
+    "category": ""
+  },
+  {
+    "id": "17e40793",
+    "roman": "چُکے",
+    "urdu": "چُکے",
+    "hindi": "",
+    "meaning": "",
+    "category": ""
+  },
+  {
+    "id": "3a2158a1",
+    "roman": "ڈالنے",
+    "urdu": "ڈالنے",
+    "hindi": "",
+    "meaning": "",
+    "category": ""
+  },
+  {
+    "id": "478ca510",
+    "roman": "زاویوں",
+    "urdu": "زاویوں",
+    "hindi": "",
+    "meaning": "",
+    "category": ""
+  },
+  {
+    "id": "e37c8cc2",
+    "roman": "سمجھتے",
+    "urdu": "سمجھتے",
+    "hindi": "",
+    "meaning": "",
+    "category": ""
+  },
+  {
+    "id": "075462a3",
+    "roman": "ضروری",
+    "urdu": "",
+    "hindi": "",
+    "meaning": "",
+    "category": ""
+  },
+  {
+    "id": "be375c3d",
+    "roman": "فیروز",
+    "urdu": "فیروز",
+    "hindi": "",
+    "meaning": "",
+    "category": ""
+  },
+  {
+    "id": "ccde1e58",
+    "roman": "کرنے",
+    "urdu": "کرنے",
+    "hindi": "",
+    "meaning": "",
+    "category": ""
+  },
+  {
+    "id": "6bba1cba",
+    "roman": "کھینچے",
+    "urdu": "کھینچے",
+    "hindi": "",
+    "meaning": "",
+    "category": ""
+  },
+  {
+    "id": "1e9929a8",
+    "roman": "مُجھے",
+    "urdu": "مُجھے",
+    "hindi": "",
+    "meaning": "",
+    "category": ""
+  },
+  {
+    "id": "b71d8532",
+    "roman": "مختلف",
+    "urdu": "",
+    "hindi": "",
+    "meaning": "",
+    "category": ""
+  },
+  {
+    "id": "3db7f4c4",
+    "roman": "مُسکرا",
+    "urdu": "مُسکرا",
+    "hindi": "",
+    "meaning": "",
+    "category": ""
+  },
+  {
+    "id": "dac67a81",
+    "roman": "معاملہ",
+    "urdu": "",
+    "hindi": "",
+    "meaning": "",
+    "category": ""
+  },
+  {
+    "id": "c92a02c2",
+    "roman": "ہنستے",
+    "urdu": "ہنستے",
+    "hindi": "",
+    "meaning": "",
+    "category": ""
+  }
+]
