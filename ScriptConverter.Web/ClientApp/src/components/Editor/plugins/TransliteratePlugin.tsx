@@ -13,6 +13,7 @@ import {
   type LexicalCommand,
 } from 'lexical';
 import { useEffect } from 'react';
+import { useI18n } from '../../../i18n';
 
 // --- Types ---
 
@@ -59,6 +60,7 @@ const DIRECTIONS: TransliterationDirection[] = [
 export default function TransliteratePlugin() {
   const [editor] = useLexicalComposerContext();
   const [loading, setLoading] = useState(false);
+  const { t } = useI18n();
 
   // Register the transliterate command
   useEffect(() => {
@@ -157,11 +159,11 @@ export default function TransliteratePlugin() {
   return (
     <Menu position="bottom-start" withinPortal={false}>
       <Menu.Target>
-        <Tooltip label="Transliterate" position="bottom" withArrow>
+        <Tooltip label={t('textEditorTransliterate')} position="bottom" withArrow>
           <ActionIcon
             variant="subtle"
             size="sm"
-            aria-label="Transliterate"
+            aria-label={t('textEditorTransliterate')}
             aria-haspopup="menu"
             loading={loading}
           >

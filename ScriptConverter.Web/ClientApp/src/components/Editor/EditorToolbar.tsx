@@ -1,4 +1,4 @@
-import { useCallback, type ReactNode } from 'react';
+import { useCallback, useMemo, type ReactNode } from 'react';
 import { ActionIcon, Divider, Group, Menu, Select, Tooltip } from '@mantine/core';
 import {
   IconArrowBackUp,
@@ -27,6 +27,7 @@ import { $createParagraphNode, $getSelection, $isRangeSelection } from 'lexical'
 import { $setBlocksType } from '@lexical/selection';
 import { INSERT_LINK_COMMAND } from './plugins/LinkPlugin';
 import { INSERT_IMAGE_COMMAND } from './plugins/ImagePlugin';
+import { useI18n } from '../../i18n';
 
 export interface EditorToolbarProps {
   activeFormats: {
@@ -46,27 +47,6 @@ export interface EditorToolbarProps {
   overflowItems?: ReactNode;
 }
 
-const BLOCK_TYPE_OPTIONS = [
-  { value: 'paragraph', label: 'Paragraph' },
-  { value: 'h1', label: 'Heading 1' },
-  { value: 'h2', label: 'Heading 2' },
-  { value: 'h3', label: 'Heading 3' },
-  { value: 'h4', label: 'Heading 4' },
-  { value: 'h5', label: 'Heading 5' },
-  { value: 'h6', label: 'Heading 6' },
-];
-
-const FONT_OPTIONS = [
-  { value: '', label: 'Default' },
-  { value: 'Arial, sans-serif', label: 'Arial' },
-  { value: 'Times New Roman, serif', label: 'Times New Roman' },
-  { value: 'Georgia, serif', label: 'Georgia' },
-  { value: 'Verdana, sans-serif', label: 'Verdana' },
-  { value: 'Courier New, monospace', label: 'Courier New' },
-  { value: 'Noto Naskh Arabic, serif', label: 'Noto Naskh Arabic' },
-  { value: 'Noto Sans Devanagari, sans-serif', label: 'Noto Sans Devanagari' },
-];
-
 /**
  * Editor toolbar with history, block type selector, inline formatting, and alignment controls.
  * Accepts active state as props (synced by ToolbarPlugin).
@@ -84,6 +64,28 @@ export default function EditorToolbar({
   overflowItems,
 }: EditorToolbarProps) {
   const [editor] = useLexicalComposerContext();
+  const { t } = useI18n();
+
+  const BLOCK_TYPE_OPTIONS = useMemo(() => [
+    { value: 'paragraph', label: t('blockParagraph') },
+    { value: 'h1', label: t('blockH1') },
+    { value: 'h2', label: t('blockH2') },
+    { value: 'h3', label: t('blockH3') },
+    { value: 'h4', label: t('blockH4') },
+    { value: 'h5', label: t('blockH5') },
+    { value: 'h6', label: t('blockH6') },
+  ], [t]);
+
+  const FONT_OPTIONS = useMemo(() => [
+    { value: '', label: t('fontDefault') },
+    { value: 'Arial, sans-serif', label: 'Arial' },
+    { value: 'Times New Roman, serif', label: 'Times New Roman' },
+    { value: 'Georgia, serif', label: 'Georgia' },
+    { value: 'Verdana, sans-serif', label: 'Verdana' },
+    { value: 'Courier New, monospace', label: 'Courier New' },
+    { value: 'Noto Naskh Arabic, serif', label: 'Noto Naskh Arabic' },
+    { value: 'Noto Sans Devanagari, sans-serif', label: 'Noto Sans Devanagari' },
+  ], [t]);
 
   const handleUndo = useCallback(() => {
     editor.dispatchCommand(UNDO_COMMAND, undefined);
@@ -142,50 +144,50 @@ export default function EditorToolbar({
       onChange={handleBlockTypeChange}
       data={BLOCK_TYPE_OPTIONS}
       w={120}
-      aria-label="Block type"
+      aria-label={t('toolbarBlockTypeLabel')}
       comboboxProps={{ withinPortal: true }}
     />
   );
 
   // Alignment buttons group (used inline on desktop, in overflow on mobile)
   const alignmentButtons = (
-    <Group gap={2} wrap="nowrap" role="group" aria-label="Text alignment">
-      <Tooltip label="Align left" position="bottom" withArrow>
+    <Group gap={2} wrap="nowrap" role="group" aria-label={t('toolbarTextAlignment')}>
+      <Tooltip label={t('toolbarAlignLeft')} position="bottom" withArrow>
         <ActionIcon
           variant="subtle"
           size="sm"
           onClick={() => handleAlign('left')}
-          aria-label="Align left"
+          aria-label={t('toolbarAlignLeft')}
         >
           <IconAlignLeft size={16} />
         </ActionIcon>
       </Tooltip>
-      <Tooltip label="Align center" position="bottom" withArrow>
+      <Tooltip label={t('toolbarAlignCenter')} position="bottom" withArrow>
         <ActionIcon
           variant="subtle"
           size="sm"
           onClick={() => handleAlign('center')}
-          aria-label="Align center"
+          aria-label={t('toolbarAlignCenter')}
         >
           <IconAlignCenter size={16} />
         </ActionIcon>
       </Tooltip>
-      <Tooltip label="Align right" position="bottom" withArrow>
+      <Tooltip label={t('toolbarAlignRight')} position="bottom" withArrow>
         <ActionIcon
           variant="subtle"
           size="sm"
           onClick={() => handleAlign('right')}
-          aria-label="Align right"
+          aria-label={t('toolbarAlignRight')}
         >
           <IconAlignRight size={16} />
         </ActionIcon>
       </Tooltip>
-      <Tooltip label="Justify" position="bottom" withArrow>
+      <Tooltip label={t('toolbarJustify')} position="bottom" withArrow>
         <ActionIcon
           variant="subtle"
           size="sm"
           onClick={() => handleAlign('justify')}
-          aria-label="Justify"
+          aria-label={t('toolbarJustify')}
         >
           <IconAlignJustified size={16} />
         </ActionIcon>
@@ -201,36 +203,36 @@ export default function EditorToolbar({
       onChange={(value) => onFontChange(value || '')}
       data={FONT_OPTIONS}
       w={160}
-      aria-label="Font family"
+      aria-label={t('toolbarFontLabel')}
       comboboxProps={{ withinPortal: true }}
-      placeholder="Font"
+      placeholder={t('toolbarFont')}
     />
   );
 
   // Compact/mobile layout: History + Inline + overflow menu
   if (compact) {
     return (
-      <Group gap="xs" wrap="nowrap" role="toolbar" aria-label="Text formatting toolbar">
+      <Group gap="xs" wrap="nowrap" role="toolbar" aria-label={t('toolbarLabel')}>
         {/* History group */}
-        <Group gap={2} wrap="nowrap" role="group" aria-label="History">
-          <Tooltip label="Undo" position="bottom" withArrow>
+        <Group gap={2} wrap="nowrap" role="group" aria-label={t('toolbarHistory')}>
+          <Tooltip label={t('toolbarUndo')} position="bottom" withArrow>
             <ActionIcon
               variant="subtle"
               size="sm"
               onClick={handleUndo}
               disabled={!canUndo}
-              aria-label="Undo"
+              aria-label={t('toolbarUndo')}
             >
               <IconArrowBackUp size={16} />
             </ActionIcon>
           </Tooltip>
-          <Tooltip label="Redo" position="bottom" withArrow>
+          <Tooltip label={t('toolbarRedo')} position="bottom" withArrow>
             <ActionIcon
               variant="subtle"
               size="sm"
               onClick={handleRedo}
               disabled={!canRedo}
-              aria-label="Redo"
+              aria-label={t('toolbarRedo')}
             >
               <IconArrowForwardUp size={16} />
             </ActionIcon>
@@ -240,67 +242,67 @@ export default function EditorToolbar({
         <Divider orientation="vertical" />
 
         {/* Inline format buttons */}
-        <Group gap={2} wrap="nowrap" role="group" aria-label="Inline formatting">
-          <Tooltip label="Bold" position="bottom" withArrow>
+        <Group gap={2} wrap="nowrap" role="group" aria-label={t('toolbarInlineFormatting')}>
+          <Tooltip label={t('toolbarBold')} position="bottom" withArrow>
             <ActionIcon
               variant={activeFormats.bold ? 'filled' : 'subtle'}
               size="sm"
               onClick={() => handleFormatText('bold')}
-              aria-label="Bold"
+              aria-label={t('toolbarBold')}
               aria-pressed={activeFormats.bold}
             >
               <IconBold size={16} />
             </ActionIcon>
           </Tooltip>
-          <Tooltip label="Italic" position="bottom" withArrow>
+          <Tooltip label={t('toolbarItalic')} position="bottom" withArrow>
             <ActionIcon
               variant={activeFormats.italic ? 'filled' : 'subtle'}
               size="sm"
               onClick={() => handleFormatText('italic')}
-              aria-label="Italic"
+              aria-label={t('toolbarItalic')}
               aria-pressed={activeFormats.italic}
             >
               <IconItalic size={16} />
             </ActionIcon>
           </Tooltip>
-          <Tooltip label="Underline" position="bottom" withArrow>
+          <Tooltip label={t('toolbarUnderline')} position="bottom" withArrow>
             <ActionIcon
               variant={activeFormats.underline ? 'filled' : 'subtle'}
               size="sm"
               onClick={() => handleFormatText('underline')}
-              aria-label="Underline"
+              aria-label={t('toolbarUnderline')}
               aria-pressed={activeFormats.underline}
             >
               <IconUnderline size={16} />
             </ActionIcon>
           </Tooltip>
-          <Tooltip label="Strikethrough" position="bottom" withArrow>
+          <Tooltip label={t('toolbarStrikethrough')} position="bottom" withArrow>
             <ActionIcon
               variant={activeFormats.strikethrough ? 'filled' : 'subtle'}
               size="sm"
               onClick={() => handleFormatText('strikethrough')}
-              aria-label="Strikethrough"
+              aria-label={t('toolbarStrikethrough')}
               aria-pressed={activeFormats.strikethrough}
             >
               <IconStrikethrough size={16} />
             </ActionIcon>
           </Tooltip>
-          <Tooltip label="Insert link" position="bottom" withArrow>
+          <Tooltip label={t('toolbarInsertLink')} position="bottom" withArrow>
             <ActionIcon
               variant="subtle"
               size="sm"
               onClick={handleInsertLink}
-              aria-label="Insert link"
+              aria-label={t('toolbarInsertLink')}
             >
               <IconLink size={16} />
             </ActionIcon>
           </Tooltip>
-          <Tooltip label="Insert image" position="bottom" withArrow>
+          <Tooltip label={t('toolbarInsertImage')} position="bottom" withArrow>
             <ActionIcon
               variant="subtle"
               size="sm"
               onClick={handleInsertImage}
-              aria-label="Insert image"
+              aria-label={t('toolbarInsertImage')}
             >
               <IconPhoto size={16} />
             </ActionIcon>
@@ -312,11 +314,11 @@ export default function EditorToolbar({
         {/* Overflow "More" menu */}
         <Menu position="bottom-end" withinPortal>
           <Menu.Target>
-            <Tooltip label="More options" position="bottom" withArrow>
+            <Tooltip label={t('toolbarMoreOptions')} position="bottom" withArrow>
               <ActionIcon
                 variant="subtle"
                 size="sm"
-                aria-label="More toolbar options"
+                aria-label={t('toolbarMoreOptions')}
                 aria-haspopup="menu"
               >
                 <IconDots size={16} />
@@ -324,18 +326,18 @@ export default function EditorToolbar({
             </Tooltip>
           </Menu.Target>
           <Menu.Dropdown>
-            <Menu.Label>Block type</Menu.Label>
+            <Menu.Label>{t('toolbarBlockType')}</Menu.Label>
             <Menu.Item closeMenuOnClick={false}>{blockTypeSelector}</Menu.Item>
             <Menu.Divider />
-            <Menu.Label>Alignment</Menu.Label>
+            <Menu.Label>{t('toolbarAlignment')}</Menu.Label>
             <Menu.Item closeMenuOnClick={false}>{alignmentButtons}</Menu.Item>
             <Menu.Divider />
-            <Menu.Label>Font</Menu.Label>
+            <Menu.Label>{t('toolbarFont')}</Menu.Label>
             <Menu.Item closeMenuOnClick={false}>{fontSelector}</Menu.Item>
             {overflowItems && (
               <>
                 <Menu.Divider />
-                <Menu.Label>More tools</Menu.Label>
+                <Menu.Label>{t('toolbarMoreTools')}</Menu.Label>
                 {overflowItems}
               </>
             )}
@@ -347,27 +349,27 @@ export default function EditorToolbar({
 
   // Desktop layout: full toolbar
   return (
-    <Group gap="xs" wrap="nowrap" role="toolbar" aria-label="Text formatting toolbar">
+    <Group gap="xs" wrap="nowrap" role="toolbar" aria-label={t('toolbarLabel')}>
       {/* History group */}
-      <Group gap={2} wrap="nowrap" role="group" aria-label="History">
-        <Tooltip label="Undo" position="bottom" withArrow>
+      <Group gap={2} wrap="nowrap" role="group" aria-label={t('toolbarHistory')}>
+        <Tooltip label={t('toolbarUndo')} position="bottom" withArrow>
           <ActionIcon
             variant="subtle"
             size="sm"
             onClick={handleUndo}
             disabled={!canUndo}
-            aria-label="Undo"
+            aria-label={t('toolbarUndo')}
           >
             <IconArrowBackUp size={16} />
           </ActionIcon>
         </Tooltip>
-        <Tooltip label="Redo" position="bottom" withArrow>
+        <Tooltip label={t('toolbarRedo')} position="bottom" withArrow>
           <ActionIcon
             variant="subtle"
             size="sm"
             onClick={handleRedo}
             disabled={!canRedo}
-            aria-label="Redo"
+            aria-label={t('toolbarRedo')}
           >
             <IconArrowForwardUp size={16} />
           </ActionIcon>
@@ -377,74 +379,74 @@ export default function EditorToolbar({
       <Divider orientation="vertical" />
 
       {/* Block type selector */}
-      <Group gap={2} wrap="nowrap" role="group" aria-label="Block type">
+      <Group gap={2} wrap="nowrap" role="group" aria-label={t('toolbarBlockType')}>
         {blockTypeSelector}
       </Group>
 
       <Divider orientation="vertical" />
 
       {/* Inline format buttons */}
-      <Group gap={2} wrap="nowrap" role="group" aria-label="Inline formatting">
-        <Tooltip label="Bold" position="bottom" withArrow>
+      <Group gap={2} wrap="nowrap" role="group" aria-label={t('toolbarInlineFormatting')}>
+        <Tooltip label={t('toolbarBold')} position="bottom" withArrow>
           <ActionIcon
             variant={activeFormats.bold ? 'filled' : 'subtle'}
             size="sm"
             onClick={() => handleFormatText('bold')}
-            aria-label="Bold"
+            aria-label={t('toolbarBold')}
             aria-pressed={activeFormats.bold}
           >
             <IconBold size={16} />
           </ActionIcon>
         </Tooltip>
-        <Tooltip label="Italic" position="bottom" withArrow>
+        <Tooltip label={t('toolbarItalic')} position="bottom" withArrow>
           <ActionIcon
             variant={activeFormats.italic ? 'filled' : 'subtle'}
             size="sm"
             onClick={() => handleFormatText('italic')}
-            aria-label="Italic"
+            aria-label={t('toolbarItalic')}
             aria-pressed={activeFormats.italic}
           >
             <IconItalic size={16} />
           </ActionIcon>
         </Tooltip>
-        <Tooltip label="Underline" position="bottom" withArrow>
+        <Tooltip label={t('toolbarUnderline')} position="bottom" withArrow>
           <ActionIcon
             variant={activeFormats.underline ? 'filled' : 'subtle'}
             size="sm"
             onClick={() => handleFormatText('underline')}
-            aria-label="Underline"
+            aria-label={t('toolbarUnderline')}
             aria-pressed={activeFormats.underline}
           >
             <IconUnderline size={16} />
           </ActionIcon>
         </Tooltip>
-        <Tooltip label="Strikethrough" position="bottom" withArrow>
+        <Tooltip label={t('toolbarStrikethrough')} position="bottom" withArrow>
           <ActionIcon
             variant={activeFormats.strikethrough ? 'filled' : 'subtle'}
             size="sm"
             onClick={() => handleFormatText('strikethrough')}
-            aria-label="Strikethrough"
+            aria-label={t('toolbarStrikethrough')}
             aria-pressed={activeFormats.strikethrough}
           >
             <IconStrikethrough size={16} />
           </ActionIcon>
         </Tooltip>
-        <Tooltip label="Insert link" position="bottom" withArrow>
+        <Tooltip label={t('toolbarInsertLink')} position="bottom" withArrow>
           <ActionIcon
             variant="subtle"
             size="sm"
             onClick={handleInsertLink}
-            aria-label="Insert link"
+            aria-label={t('toolbarInsertLink')}
           >
             <IconLink size={16} />
           </ActionIcon>
         </Tooltip>
-        <Tooltip label="Insert image" position="bottom" withArrow>
+        <Tooltip label={t('toolbarInsertImage')} position="bottom" withArrow>
           <ActionIcon
             variant="subtle"
             size="sm"
             onClick={handleInsertImage}
-            aria-label="Insert image"
+            aria-label={t('toolbarInsertImage')}
           >
             <IconPhoto size={16} />
           </ActionIcon>
@@ -454,14 +456,14 @@ export default function EditorToolbar({
       <Divider orientation="vertical" />
 
       {/* Alignment buttons */}
-      <Group gap={2} wrap="nowrap" role="group" aria-label="Text alignment">
+      <Group gap={2} wrap="nowrap" role="group" aria-label={t('toolbarTextAlignment')}>
         {alignmentButtons}
       </Group>
 
       <Divider orientation="vertical" />
 
       {/* Document group — Font selector */}
-      <Group gap={2} wrap="nowrap" role="group" aria-label="Document settings">
+      <Group gap={2} wrap="nowrap" role="group" aria-label={t('toolbarDocumentSettings')}>
         {fontSelector}
       </Group>
     </Group>

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { ActionIcon, Group, Text, Tooltip } from '@mantine/core';
 import { IconZoomIn, IconZoomOut } from '@tabler/icons-react';
+import { useI18n } from '../../../i18n';
 
 const MIN_ZOOM = 0.5;
 const MAX_ZOOM = 2.0;
@@ -24,6 +25,7 @@ export default function ZoomPlugin({
   onZoomChange,
 }: ZoomPluginProps) {
   const [zoom, setZoom] = useState<number>(clampZoom(initialZoom));
+  const { t } = useI18n();
 
   const applyZoom = useCallback(
     (newZoom: number) => {
@@ -94,7 +96,7 @@ export default function ZoomPlugin({
 
   return (
     <Group gap={2} wrap="nowrap" role="group" aria-label="Zoom controls">
-      <Tooltip label="Zoom out (Ctrl+-)" position="bottom" withArrow>
+      <Tooltip label={t('textEditorZoomIn')} position="bottom" withArrow>
         <ActionIcon
           variant="subtle"
           size="sm"
@@ -106,7 +108,7 @@ export default function ZoomPlugin({
         </ActionIcon>
       </Tooltip>
 
-      <Tooltip label="Reset zoom (Ctrl+0)" position="bottom" withArrow>
+      <Tooltip  label={t('textEditorZoomReset')} position="bottom" withArrow>
         <Text
           size="xs"
           w={40}
@@ -119,7 +121,7 @@ export default function ZoomPlugin({
         </Text>
       </Tooltip>
 
-      <Tooltip label="Zoom in (Ctrl+=)" position="bottom" withArrow>
+      <Tooltip label={t('textEditorZoomOut')} position="bottom" withArrow>
         <ActionIcon
           variant="subtle"
           size="sm"

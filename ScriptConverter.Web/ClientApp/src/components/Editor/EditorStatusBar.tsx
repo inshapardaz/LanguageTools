@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Divider, Group, Text } from '@mantine/core';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { $getRoot } from 'lexical';
+import { useI18n } from '../../i18n';
 
 export interface EditorStatusBarProps {
   /** Current zoom level (1.0 = 100%). */
@@ -45,6 +46,7 @@ function formatNumber(n: number): string {
  */
 export default function EditorStatusBar({ zoom }: EditorStatusBarProps) {
   const [editor] = useLexicalComposerContext();
+  const { t } = useI18n();
   const [wordCount, setWordCount] = useState(0);
   const [charCount, setCharCount] = useState(0);
   const [script, setScript] = useState<DetectedScript>('None');
@@ -89,22 +91,30 @@ export default function EditorStatusBar({ zoom }: EditorStatusBarProps) {
 
   const zoomPercentage = Math.round(zoom * 100);
 
+  const scriptLabels: Record<DetectedScript, string> = {
+    Roman: t('scriptRoman'),
+    Urdu: t('scriptUrdu'),
+    Hindi: t('scriptHindi'),
+    Mixed: t('scriptMixed'),
+    None: t('scriptNone'),
+  };
+
   return (
     <Group gap="xs" wrap="nowrap" aria-live="polite" aria-atomic="true" role="status">
       <Text size="xs" c="dimmed">
-        Words: {formatNumber(wordCount)}
+        {t('statusBarWords')}: {formatNumber(wordCount)}
       </Text>
       <Divider orientation="vertical" />
       <Text size="xs" c="dimmed">
-        Characters: {formatNumber(charCount)}
+        {t('statusBarCharacters')}: {formatNumber(charCount)}
       </Text>
       <Divider orientation="vertical" />
       <Text size="xs" c="dimmed">
-        Script: {script}
+        {t('statusBarScript')}: {scriptLabels[script]}
       </Text>
       <Divider orientation="vertical" />
       <Text size="xs" c="dimmed">
-        Zoom: {zoomPercentage}%
+        {t('statusBarZoom')}: {zoomPercentage}%
       </Text>
     </Group>
   );

@@ -1,5 +1,7 @@
 import { useMemo } from 'react';
 import { Box, Group, Kbd, Modal, Stack, Text } from '@mantine/core';
+import { useI18n } from '../../i18n';
+import type { TranslationKeys } from '../../i18n';
 
 export interface KeyboardShortcutsModalProps {
   opened: boolean;
@@ -8,11 +10,11 @@ export interface KeyboardShortcutsModalProps {
 
 interface ShortcutEntry {
   keys: string[];
-  description: string;
+  descriptionKey: TranslationKeys;
 }
 
 interface ShortcutGroup {
-  label: string;
+  labelKey: TranslationKeys;
   shortcuts: ShortcutEntry[];
 }
 
@@ -36,40 +38,40 @@ function getShortcutGroups(): ShortcutGroup[] {
 
   return [
     {
-      label: 'Formatting',
+      labelKey: 'shortcutsFormatting',
       shortcuts: [
-        { keys: [mod, 'B'], description: 'Bold' },
-        { keys: [mod, 'I'], description: 'Italic' },
-        { keys: [mod, 'U'], description: 'Underline' },
+        { keys: [mod, 'B'], descriptionKey: 'shortcutBold' },
+        { keys: [mod, 'I'], descriptionKey: 'shortcutItalic' },
+        { keys: [mod, 'U'], descriptionKey: 'shortcutUnderline' },
       ],
     },
     {
-      label: 'History',
+      labelKey: 'shortcutsHistory',
       shortcuts: [
-        { keys: [mod, 'Z'], description: 'Undo' },
-        { keys: [mod, 'Y'], description: 'Redo' },
-        { keys: [mod, 'Shift', 'Z'], description: 'Redo (alternate)' },
+        { keys: [mod, 'Z'], descriptionKey: 'shortcutUndo' },
+        { keys: [mod, 'Y'], descriptionKey: 'shortcutRedo' },
+        { keys: [mod, 'Shift', 'Z'], descriptionKey: 'shortcutRedoAlt' },
       ],
     },
     {
-      label: 'Zoom',
+      labelKey: 'shortcutsZoom',
       shortcuts: [
-        { keys: [mod, '='], description: 'Zoom in' },
-        { keys: [mod, '-'], description: 'Zoom out' },
-        { keys: [mod, '0'], description: 'Reset zoom' },
+        { keys: [mod, '='], descriptionKey: 'shortcutZoomIn' },
+        { keys: [mod, '-'], descriptionKey: 'shortcutZoomOut' },
+        { keys: [mod, '0'], descriptionKey: 'shortcutResetZoom' },
       ],
     },
     {
-      label: 'Document',
+      labelKey: 'shortcutsDocument',
       shortcuts: [
-        { keys: [mod, 'S'], description: 'Save' },
+        { keys: [mod, 'S'], descriptionKey: 'shortcutSave' },
       ],
     },
     {
-      label: 'Tools',
+      labelKey: 'shortcutsTools',
       shortcuts: [
-        { keys: [mod, 'D'], description: 'Dictionary lookup' },
-        { keys: [mod, '/'], description: 'Show keyboard shortcuts' },
+        { keys: [mod, 'D'], descriptionKey: 'shortcutDictLookup' },
+        { keys: [mod, '/'], descriptionKey: 'shortcutShowShortcuts' },
       ],
     },
   ];
@@ -84,33 +86,34 @@ export default function KeyboardShortcutsModal({
   onClose,
 }: KeyboardShortcutsModalProps) {
   const groups = useMemo(() => getShortcutGroups(), []);
+  const { t } = useI18n();
 
   return (
     <Modal
       opened={opened}
       onClose={onClose}
-      title="Keyboard Shortcuts"
+      title={t('shortcutsTitle')}
       size="md"
-      aria-label="Keyboard shortcuts"
+      aria-label={t('shortcutsTitle')}
       centered
     >
       <Stack gap="md">
         {groups.map((group) => (
-          <Box key={group.label}>
+          <Box key={group.labelKey}>
             <Text fw={600} size="sm" mb="xs" c="dimmed">
-              {group.label}
+              {t(group.labelKey)}
             </Text>
             <Stack gap={4}>
               {group.shortcuts.map((shortcut) => (
                 <Group
-                  key={shortcut.description}
+                  key={shortcut.descriptionKey}
                   justify="space-between"
                   wrap="nowrap"
                   py={4}
                   px="xs"
                   style={{ borderRadius: 'var(--mantine-radius-sm)' }}
                 >
-                  <Text size="sm">{shortcut.description}</Text>
+                  <Text size="sm">{t(shortcut.descriptionKey)}</Text>
                   <Group gap={4} wrap="nowrap">
                     {shortcut.keys.map((key, i) => (
                       <span key={i}>

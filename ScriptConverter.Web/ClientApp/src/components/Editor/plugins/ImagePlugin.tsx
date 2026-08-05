@@ -17,6 +17,7 @@ import {
   type LexicalCommand,
 } from 'lexical';
 import { $createImageNode, type ImagePayload } from '../nodes/ImageNode';
+import { useI18n } from '../../../i18n';
 
 // ─── Command ───────────────────────────────────────────────────────────────────
 
@@ -47,6 +48,7 @@ function fileToBase64(file: File): Promise<string> {
  */
 export default function ImagePlugin() {
   const [editor] = useLexicalComposerContext();
+  const { t } = useI18n();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [mode, setMode] = useState<'url' | 'upload'>('url');
   const [url, setUrl] = useState('');
@@ -121,7 +123,7 @@ export default function ImagePlugin() {
     <Modal
       opened={isModalOpen}
       onClose={closeModal}
-      title="Insert Image"
+      title={t('imageModalTitle')}
       size="md"
       centered
     >
@@ -129,8 +131,8 @@ export default function ImagePlugin() {
         value={mode}
         onChange={(val) => setMode(val as 'url' | 'upload')}
         data={[
-          { label: 'URL', value: 'url' },
-          { label: 'Upload', value: 'upload' },
+          { label: t('imageModalUrl'), value: 'url' },
+          { label: t('imageModalUpload'), value: 'upload' },
         ]}
         fullWidth
         mb="md"
@@ -138,8 +140,8 @@ export default function ImagePlugin() {
 
       {mode === 'url' ? (
         <TextInput
-          label="Image URL"
-          placeholder="https://example.com/image.png"
+          label={t('imageModalImageUrl')}
+          placeholder={t('imageModalImageUrlPlaceholder')}
           value={url}
           onChange={(e) => setUrl(e.currentTarget.value)}
           mb="sm"
@@ -176,25 +178,25 @@ export default function ImagePlugin() {
               </Dropzone.Idle>
               <div>
                 <Text size="sm" inline>
-                  {file ? file.name : 'Drag an image here or click to select'}
+                  {file ? file.name : t('imageModalDropzoneText')}
                 </Text>
                 <Text size="xs" c="dimmed" inline mt={4}>
-                  Max file size: 10MB
+                  {t('imageModalMaxSize')}
                 </Text>
               </div>
             </Group>
           </Dropzone>
           {file && (
             <Text size="xs" c="dimmed" mb="sm">
-              Selected: {file.name} ({(file.size / 1024).toFixed(1)} KB)
+              {t('imageModalSelected')}: {file.name} ({(file.size / 1024).toFixed(1)} KB)
             </Text>
           )}
         </>
       )}
 
       <TextInput
-        label="Alt text"
-        placeholder="Describe the image"
+        label={t('imageModalAlt')}
+        placeholder={t('imageModalAltPlaceholder')}
         value={alt}
         onChange={(e) => setAlt(e.currentTarget.value)}
         mb="md"
@@ -202,13 +204,13 @@ export default function ImagePlugin() {
 
       <Group justify="flex-end">
         <Button variant="subtle" onClick={closeModal}>
-          Cancel
+          {t('imageModalCancel')}
         </Button>
         <Button
           onClick={handleInsert}
           disabled={mode === 'url' ? !url.trim() : !file}
         >
-          Insert
+          {t('imageModalInsert')}
         </Button>
       </Group>
     </Modal>

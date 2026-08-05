@@ -21,6 +21,7 @@ import {
   type ElementNode,
 } from 'lexical';
 import { useEffect } from 'react';
+import { useI18n } from '../../../i18n';
 
 // --- Exported Commands ---
 
@@ -169,6 +170,7 @@ function removeEmptyParagraphs(): void {
  */
 export default function TextCleanupPlugin() {
   const [editor] = useLexicalComposerContext();
+  const { t } = useI18n();
 
   // Register commands
   useEffect(() => {
@@ -243,8 +245,8 @@ export default function TextCleanupPlugin() {
   return (
     <Menu position="bottom-start" withinPortal={false}>
       <Menu.Target>
-        <Tooltip label="Text cleanup" position="bottom" withArrow>
-          <ActionIcon variant="subtle" size="sm" aria-label="Text cleanup" aria-haspopup="menu">
+        <Tooltip label={t('textEditorCleanup')} position="bottom" withArrow>
+          <ActionIcon variant="subtle" size="sm" aria-label={t('textEditorCleanup')} aria-haspopup="menu">
             <IconClearFormatting size={16} />
           </ActionIcon>
         </Tooltip>
@@ -255,25 +257,25 @@ export default function TextCleanupPlugin() {
           leftSection={<IconTextWrap size={14} />}
           onClick={handleJoinLines}
         >
-          Join lines
+          {t('textEditorJoinLines')}
         </Menu.Item>
         <Menu.Item
           leftSection={<IconSpacingVertical size={14} />}
           onClick={handleRemoveSpaces}
         >
-          Remove multiple spaces
+          {t('textEditorRemoveSpaces')}
         </Menu.Item>
         <Menu.Item
           leftSection={<IconIndentDecrease size={14} />}
           onClick={handleTrimParagraphs}
         >
-          Trim whitespace
+          {t('textEditorTrimWhiteSpaces')}
         </Menu.Item>
         <Menu.Item
           leftSection={<IconRowRemove size={14} />}
           onClick={handleRemoveEmptyParagraphs}
         >
-          Remove empty paragraphs
+          {t('textEditorRemoveEmpty')}
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>

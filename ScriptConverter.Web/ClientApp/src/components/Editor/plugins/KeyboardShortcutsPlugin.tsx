@@ -4,12 +4,14 @@ import { IconKeyboard } from '@tabler/icons-react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { COMMAND_PRIORITY_HIGH, KEY_DOWN_COMMAND } from 'lexical';
 import KeyboardShortcutsModal from '../KeyboardShortcutsModal';
+import { useI18n } from '../../../i18n';
 
 /**
  * Lexical plugin that registers Ctrl+/ (Cmd+/ on Mac) to open the keyboard
  * shortcuts help modal, and renders a toolbar button to trigger it manually.
  */
 export default function KeyboardShortcutsPlugin() {
+  const { t } = useI18n();
   const [editor] = useLexicalComposerContext();
   const [opened, setOpened] = useState(false);
 
@@ -47,12 +49,12 @@ export default function KeyboardShortcutsPlugin() {
 
   return (
     <>
-      <Tooltip label="Keyboard shortcuts (Ctrl+/)" position="bottom" withArrow>
+      <Tooltip label={t('textEditorShortcuts')} position="bottom" withArrow>
         <ActionIcon
           variant="subtle"
           size="sm"
           onClick={open}
-          aria-label="Keyboard shortcuts"
+          aria-label={t('shortcutsTitle')}
         >
           <IconKeyboard size={16} />
         </ActionIcon>

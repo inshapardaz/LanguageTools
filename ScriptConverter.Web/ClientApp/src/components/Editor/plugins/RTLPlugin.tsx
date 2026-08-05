@@ -12,6 +12,7 @@ import {
   type ElementNode,
 } from 'lexical';
 import { $getNearestBlockElementAncestorOrThrow } from '@lexical/utils';
+import { useI18n } from '../../../i18n';
 
 export type ParagraphDirection = 'ltr' | 'rtl' | null;
 
@@ -29,6 +30,7 @@ export const SET_PARAGRAPH_DIRECTION_COMMAND: LexicalCommand<'ltr' | 'rtl'> =
 export default function RTLPlugin() {
   const [editor] = useLexicalComposerContext();
   const [currentDirection, setCurrentDirection] = useState<ParagraphDirection>(null);
+  const { t } = useI18n();
 
   // Sync the current paragraph direction from the selection
   const updateDirectionState = useCallback(() => {
@@ -129,7 +131,7 @@ export default function RTLPlugin() {
 
   return (
     <Group gap={2} wrap="nowrap" role="group" aria-label="Text direction">
-      <Tooltip label="Left-to-right paragraph" position="bottom" withArrow>
+      <Tooltip label={t('textEditorDirectionLTR')} position="bottom" withArrow>
         <ActionIcon
           variant={currentDirection === 'ltr' ? 'filled' : 'subtle'}
           size="sm"
@@ -140,7 +142,7 @@ export default function RTLPlugin() {
           <IconTextDirectionLtr size={16} />
         </ActionIcon>
       </Tooltip>
-      <Tooltip label="Right-to-left paragraph" position="bottom" withArrow>
+      <Tooltip label={t('textEditorDirectionRTL')} position="bottom" withArrow>
         <ActionIcon
           variant={currentDirection === 'rtl' ? 'filled' : 'subtle'}
           size="sm"

@@ -24,6 +24,7 @@ import {
   type LexicalCommand,
   type RangeSelection,
 } from 'lexical';
+import { useI18n } from '../../../i18n';
 
 /**
  * Custom command to open the link insert/edit modal from toolbar.
@@ -88,6 +89,7 @@ function getSelectionText(selection: RangeSelection): string {
  */
 function FloatingLinkEditor() {
   const [editor] = useLexicalComposerContext();
+  const { t } = useI18n();
   const editorRef = useRef<HTMLDivElement>(null);
 
   const [isOpen, setIsOpen] = useState(false);
@@ -102,20 +104,31 @@ function FloatingLinkEditor() {
 
   const updatePosition = useCallback(() => {
     const nativeSelection = window.getSelection();
-    if (!nativeSelection || nativeSelection.rangeCount === 0) {
-      return;
-    }
-    const range = nativeSelection.getRangeAt(0);
-    const rect = range.getBoundingClientRect();
-
-    // Position below the selection
     const editorElement = editor.getRootElement();
     if (!editorElement) return;
 
     const editorRect = editorElement.getBoundingClientRect();
+
+    // Try to get a valid selection range rect
+    if (nativeSelection && nativeSelection.rangeCount > 0) {
+      const range = nativeSelection.getRangeAt(0);
+      const rect = range.getBoundingClientRect();
+
+      // A valid rect has non-zero dimensions or a meaningful position
+      if (rect.width > 0 || rect.height > 0) {
+        // Position below the selected text
+        setPosition({
+          top: rect.bottom - editorRect.top + 8,
+          left: Math.max(0, rect.left - editorRect.left),
+        });
+        return;
+      }
+    }
+
+    // Fallback: center the popup horizontally within the editor, place near the vertical middle
     setPosition({
-      top: rect.bottom - editorRect.top + 8,
-      left: rect.left - editorRect.left,
+      top: editorRect.height / 2 - 80,
+      left: Math.max(0, (editorRect.width - 320) / 2),
     });
   }, [editor]);
 
@@ -221,22 +234,23 @@ function FloatingLinkEditor() {
       className="floating-link-editor"
       style={{
         position: 'absolute',
-        top: position.top,
-        left: position.left,
+        top: Math.max(0, position.top),
+        left: Math.max(0, position.left),
         zIndex: 100,
         minWidth: 320,
+        maxWidth: 'calc(100% - 16px)',
       }}
-      aria-label="Link editor"
+      aria-label={t('linkEditorLabel')}
       role="dialog"
     >
       <TextInput
-        label="URL"
-        placeholder="https://example.com"
+        label={t('linkEditorUrl')}
+        placeholder={t('linkEditorUrlPlaceholder')}
         value={url}
         onChange={(e) => setUrl(e.currentTarget.value)}
         size="sm"
         mb="xs"
-        aria-label="Link URL"
+        aria-label={t('linkEditorUrl')}
         autoFocus
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
@@ -250,13 +264,13 @@ function FloatingLinkEditor() {
         }}
       />
       <TextInput
-        label="Text (optional)"
-        placeholder="Link text"
+        label={t('linkEditorText')}
+        placeholder={t('linkEditorTextPlaceholder')}
         value={linkText}
         onChange={(e) => setLinkText(e.currentTarget.value)}
         size="sm"
         mb="xs"
-        aria-label="Link text"
+        aria-label={t('linkEditorText')}
         onKeyDown={(e) => {
           if (e.key === 'Enter') {
             e.preventDefault();
@@ -269,30 +283,30 @@ function FloatingLinkEditor() {
         }}
       />
       <Checkbox
-        label="Open in new tab"
+        label={t('linkEditorOpenNewTab')}
         checked={openInNewTab}
         onChange={(e) => setOpenInNewTab(e.currentTarget.checked)}
         size="sm"
         mb="sm"
-        aria-label="Open link in new tab"
+        aria-label={t('linkEditorOpenNewTab')}
       />
       <Group justify="space-between">
         <Group gap="xs">
           <Button size="xs" onClick={handleSubmit} disabled={!url.trim()}>
-            {isEditMode ? 'Update' : 'Insert'}
+            {isEditMode ? t('linkEditorUpdate') : t('linkEditorInsert')}
           </Button>
           <Button size="xs" variant="subtle" onClick={closeEditor}>
-            Cancel
+            {t('linkEditorCancel')}
           </Button>
         </Group>
         {isEditMode && (
-          <Tooltip label="Remove link" position="bottom" withArrow>
+          <Tooltip label={t('linkEditorRemove')} position="bottom" withArrow>
             <ActionIcon
               variant="subtle"
               color="red"
               size="sm"
               onClick={handleRemove}
-              aria-label="Remove link"
+              aria-label={t('linkEditorRemove')}
             >
               <IconTrash size={16} />
             </ActionIcon>

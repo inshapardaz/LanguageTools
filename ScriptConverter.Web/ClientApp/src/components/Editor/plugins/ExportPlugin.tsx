@@ -3,6 +3,7 @@ import { ActionIcon, Menu, Tooltip } from '@mantine/core';
 import { IconFileExport, IconFileTypeHtml, IconTxt, IconMarkdown } from '@tabler/icons-react';
 import { useLexicalComposerContext } from '@lexical/react/LexicalComposerContext';
 import { exportAsHtml, exportAsPlainText, exportAsMarkdown } from '../utils/exportDocument';
+import { useI18n } from '../../../i18n';
 
 /**
  * ExportPlugin provides a toolbar dropdown for exporting editor content
@@ -14,6 +15,7 @@ import { exportAsHtml, exportAsPlainText, exportAsMarkdown } from '../utils/expo
  */
 export default function ExportPlugin() {
   const [editor] = useLexicalComposerContext();
+  const { t } = useI18n();
 
   const handleExportHtml = useCallback(() => {
     exportAsHtml(editor);
@@ -30,8 +32,8 @@ export default function ExportPlugin() {
   return (
     <Menu position="bottom-start" withinPortal={false}>
       <Menu.Target>
-        <Tooltip label="Export" position="bottom" withArrow>
-          <ActionIcon variant="subtle" size="sm" aria-label="Export" aria-haspopup="menu">
+        <Tooltip label={t('textEditorExport')} position="bottom" withArrow>
+          <ActionIcon variant="subtle" size="sm" aria-label={t('textEditorExport')} aria-haspopup="menu">
             <IconFileExport size={16} />
           </ActionIcon>
         </Tooltip>
@@ -42,19 +44,19 @@ export default function ExportPlugin() {
           leftSection={<IconFileTypeHtml size={14} />}
           onClick={handleExportHtml}
         >
-          Export as HTML
+          {t('textEditorExportHtml')}
         </Menu.Item>
         <Menu.Item
           leftSection={<IconTxt size={14} />}
           onClick={handleExportText}
         >
-          Export as Plain Text
+          {t('textEditorExportText')}
         </Menu.Item>
         <Menu.Item
           leftSection={<IconMarkdown size={14} />}
           onClick={handleExportMarkdown}
         >
-          Export as Markdown
+          {t('textEditorExportMarkdown')}
         </Menu.Item>
       </Menu.Dropdown>
     </Menu>
