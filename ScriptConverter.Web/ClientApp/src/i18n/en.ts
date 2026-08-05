@@ -301,6 +301,13 @@ const en = {
   toolbarBlockquote: 'Blockquote',
   toolbarHorizontalRule: 'Horizontal rule',
   toolbarBlockElements: 'Block elements',
+
+  // Unsaved changes confirmation
+  unsavedChangesTitle: 'Unsaved Changes',
+  unsavedChangesMessage: 'You have unsaved changes. What would you like to do?',
+  unsavedChangesSave: 'Save',
+  unsavedChangesDiscard: 'Continue without saving',
+  unsavedChangesCancel: 'Cancel',
 } as const;
 
 export default en;

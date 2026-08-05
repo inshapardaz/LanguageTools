@@ -302,6 +302,13 @@ const ur: Record<TranslationKeys, string> = {
   toolbarBlockquote: 'بلاک اقتباس',
   toolbarHorizontalRule: 'افقی لکیر',
   toolbarBlockElements: 'بلاک عناصر',
+
+  // Unsaved changes confirmation
+  unsavedChangesTitle: 'غیر محفوظ تبدیلیاں',
+  unsavedChangesMessage: 'آپ کی تبدیلیاں محفوظ نہیں ہیں۔ آپ کیا کرنا چاہیں گے؟',
+  unsavedChangesSave: 'محفوظ کریں',
+  unsavedChangesDiscard: 'بغیر محفوظ کیے جاری رکھیں',
+  unsavedChangesCancel: 'منسوخ',
 };
 
 export default ur;
