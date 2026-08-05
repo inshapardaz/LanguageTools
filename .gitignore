@@ -35,11 +35,11 @@ Thumbs.db
 
 # Node / React
 node_modules/
-ScriptConverter.Web/ClientApp/node_modules/
-ScriptConverter.Web/wwwroot/
+Nawishta.Web/ClientApp/node_modules/
+Nawishta.Web/wwwroot/
 
 # Data files (local dictionary, databases)
-ScriptConverter.Web/Data/
+Nawishta.Web/Data/
 *.db
 *.db-shm
 *.db-wal

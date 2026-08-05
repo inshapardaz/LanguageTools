@@ -6,11 +6,10 @@ A .NET 8 solution for transliterating text between Urdu (Arabic script), Hindi (
 
 | Project | Description |
 |---------|-------------|
-| `ScriptConverter` | Core library — rule-based transliteration engine, character mappings, and dictionary store |
-| `ScriptConverter.NaturalDictionary` | GoldenDict-compatible dictionary import — StarDict and DSL parsers, SQLite storage |
-| `ScriptConverter.Web` | ASP.NET Core web API + React SPA frontend |
-| `ScriptConverter.Cli` | Command-line transliteration tool |
-| `ScriptConverter.Tests` | xUnit test suite |
+| `Nawishta` | Core library — rule-based transliteration engine, character mappings, and dictionary store |
+| `Nawishta.NaturalDictionary` | GoldenDict-compatible dictionary import — StarDict and DSL parsers, SQLite storage |
+| `Nawishta.Web` | ASP.NET Core web API + React SPA frontend |
+| `Nawishta.Tests` | xUnit test suite |
 
 ## Features
 
@@ -56,7 +55,7 @@ Upload any GoldenDict-compatible dictionary source and use it as a lookup dictio
 dotnet build
 
 # Build the frontend
-cd ScriptConverter.Web/ClientApp
+cd Nawishta.Web/ClientApp
 npm install
 npm run build
 ```
@@ -65,37 +64,10 @@ npm run build
 
 ```bash
 # Run the web app (API + SPA)
-dotnet run --project ScriptConverter.Web
+dotnet run --project Nawishta.Web
 ```
 
 The app will be available at `http://localhost:5000` (or the port configured in `launchSettings.json`).
-
-### CLI Usage
-
-```bash
-dotnet run --project ScriptConverter.Cli -- <direction> <text>
-```
-
-**Directions:**
-
-| Flag | Conversion |
-|------|-----------|
-| `r2u` | Roman to Urdu Arabic |
-| `u2r` | Urdu Arabic to Roman |
-| `r2h` | Roman to Hindi Devanagari |
-| `h2r` | Hindi Devanagari to Roman |
-| `u2h` | Urdu Arabic to Hindi Devanagari |
-| `h2u` | Hindi Devanagari to Urdu Arabic |
-
-**Examples:**
-
-```bash
-dotnet run --project ScriptConverter.Cli -- r2u salam
-# Output: سلام
-
-dotnet run --project ScriptConverter.Cli -- u2h پاکستان
-# Output: पाकिस्तान
-```
 
 ## API Reference
 
@@ -136,7 +108,7 @@ dotnet run --project ScriptConverter.Cli -- u2h پاکستان
 
 ## Configuration
 
-Configuration is in `ScriptConverter.Web/appsettings.json`:
+Configuration is in `Nawishta.Web/appsettings.json`:
 
 ```json
 {
@@ -162,23 +134,20 @@ dotnet test
 ## Project Structure
 
 ```
-ScriptConverter/
+Nawishta/
   Converters/        — Script-specific converter implementations
   Mappings/          — Character mapping tables (Urdu-Roman, Hindi-Roman, Urdu-Hindi)
   Dictionary/        — Built-in transliteration dictionary (JSON/SQLite/MySQL storage)
 
-ScriptConverter.NaturalDictionary/
+Nawishta.NaturalDictionary/
   Models/            — Domain models (NaturalDictionaryInfo, Article, BrowseResult)
   Parsers/           — Format parsers (StarDictParser, DslParser)
   Services/          — DictionaryImportService (archive extraction + format detection)
   Storage/           — EF Core entities, DbContext, and store implementation
 
-ScriptConverter.Web/
+Nawishta.Web/
   Program.cs         — API endpoints (minimal APIs)
   ClientApp/src/     — React SPA (Converter, DictionaryManager, NaturalDictionary, DictionaryBrowser)
-
-ScriptConverter.Cli/
-  Program.cs         — CLI entry point
 ```
 
 ## License

@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="Nawishta.NaturalDictionary\Nawishta.NaturalDictionary.csproj" />
+  <Project Path="Nawishta.Tests\Nawishta.Tests.csproj" />
+  <Project Path="Nawishta.Web\Nawishta.Web.csproj" />
+  <Project Path="Nawishta\Nawishta.csproj" />
+</Solution>
