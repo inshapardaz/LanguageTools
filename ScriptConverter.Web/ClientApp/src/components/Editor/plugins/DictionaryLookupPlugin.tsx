@@ -10,12 +10,10 @@ import {
 import {
   Paper,
   Text,
-  Button,
   Group,
   Stack,
   Badge,
   Divider,
-  Anchor,
   Loader,
 } from '@mantine/core';
 
@@ -284,82 +282,6 @@ export default function DictionaryLookupPlugin({
     };
   }, [editor, popup, getSelectedWord]);
 
-  /**
-   * Transliterate the selected word in-place with the chosen script.
-   */
-  const handleTransliterate = useCallback(
-    async (targetScript: string) => {
-      if (!popup) return;
-
-      const sourceWord = popup.selectedWord;
-
-      // Detect source script heuristically
-      let fromScript = 'roman';
-      if (/[\u0600-\u06FF]/.test(sourceWord)) {
-        fromScript = 'urdu';
-      } else if (/[\u0900-\u097F]/.test(sourceWord)) {
-        fromScript = 'hindi';
-      }
-
-      if (fromScript === targetScript) return;
-
-      try {
-        const converted = await dictionaryProvider.convert(
-          sourceWord,
-          fromScript,
-          targetScript,
-        );
-
-        if (!converted || converted === sourceWord) return;
-
-        editor.update(() => {
-          const selection = $getSelection();
-          if (!$isRangeSelection(selection)) return;
-
-          if (selection.isCollapsed()) {
-            // Need to select the word at cursor first
-            const anchor = selection.anchor;
-            if (anchor.type !== 'text') return;
-
-            const node = anchor.getNode();
-            if (!$isTextNode(node)) return;
-
-            const textContent = node.getTextContent();
-            const offset = anchor.offset;
-
-            let wordStart = offset;
-            let wordEnd = offset;
-
-            while (wordStart > 0 && /[\p{L}\p{M}]/u.test(textContent[wordStart - 1])) {
-              wordStart--;
-            }
-            while (wordEnd < textContent.length && /[\p{L}\p{M}]/u.test(textContent[wordEnd])) {
-              wordEnd++;
-            }
-
-            // Replace in text content
-            const before = textContent.slice(0, wordStart);
-            const after = textContent.slice(wordEnd);
-            node.setTextContent(before + converted + after);
-
-            // Move cursor to end of replaced word
-            const newOffset = wordStart + converted.length;
-            selection.anchor.set(node.getKey(), newOffset, 'text');
-            selection.focus.set(node.getKey(), newOffset, 'text');
-          } else {
-            // Range selection: replace selected text
-            selection.insertRawText(converted);
-          }
-        });
-
-        setPopup(null);
-      } catch {
-        // Silently fail on conversion error
-      }
-    },
-    [popup, editor, dictionaryProvider],
-  );
-
   if (loading && !popup) {
     return null;
   }
@@ -442,46 +364,6 @@ export default function DictionaryLookupPlugin({
             </Text>
           </>
         )}
-
-        {/* Actions */}
-        <Divider />
-        <Group gap="xs" wrap="wrap" role="group" aria-label="Transliterate in place">
-          <Button
-            size="xs"
-            variant="light"
-            color="green"
-            onClick={() => handleTransliterate('urdu')}
-            aria-label="Transliterate to Urdu"
-          >
-            → Urdu
-          </Button>
-          <Button
-            size="xs"
-            variant="light"
-            color="orange"
-            onClick={() => handleTransliterate('hindi')}
-            aria-label="Transliterate to Hindi"
-          >
-            → Hindi
-          </Button>
-          <Button
-            size="xs"
-            variant="light"
-            color="blue"
-            onClick={() => handleTransliterate('roman')}
-            aria-label="Transliterate to Roman"
-          >
-            → Roman
-          </Button>
-        </Group>
-
-        <Anchor
-          size="xs"
-          href={`/dictionary?edit=${encodeURIComponent(entry.word)}`}
-          target="_blank"
-        >
-          Edit in Dictionary
-        </Anchor>
       </Stack>
     </Paper>
   );

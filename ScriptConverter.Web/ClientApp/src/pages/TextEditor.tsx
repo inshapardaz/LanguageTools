@@ -170,6 +170,7 @@ export default function TextEditor({ navigationGuardRef, onNavigateAway }: TextE
         key={editorKey}
         showToolbar={true}
         showStatusBar={true}
+        spellCheck={true}
         direction={currentDoc?.direction ?? dir}
         documentFont={currentDoc?.font}
         zoom={currentDoc?.zoom}

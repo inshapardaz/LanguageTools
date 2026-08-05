@@ -24,4 +24,5 @@ export { default as SavePlugin } from './plugins/SavePlugin';
 export { default as SpellCheckPlugin } from './plugins/SpellCheckPlugin';
 export { ImageNode, $createImageNode, $isImageNode } from './nodes/ImageNode';
 export { INSERT_IMAGE_COMMAND } from './plugins/ImagePlugin';
-export { createApiDictionaryProvider } from './providers/ApiDictionaryProvider';
+export { createApiDictionaryProvider, trackSpellCheckReplacement, batchSpellCheck } from './providers/ApiDictionaryProvider';
+export type { SpellCheckBatchResult } from './providers/ApiDictionaryProvider';

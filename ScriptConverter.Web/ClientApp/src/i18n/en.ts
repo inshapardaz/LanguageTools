@@ -325,6 +325,28 @@ const en = {
   imageEditorEditImage: 'Edit image',
   imageEditorCaption: 'Caption',
   imageEditorCaptionPlaceholder: 'Describe the image',
+
+  // Spell Checker
+  spellCheckSuggestions: 'Suggestions',
+  spellCheckNoSuggestions: 'No suggestions',
+  spellCheckReplace: 'Replace',
+  spellCheckReplaceWith: 'Replace with',
+  spellCheckAddToDict: 'Add to dictionary',
+  spellCheckIgnore: 'Ignore',
+  spellCheckIgnoreAll: 'Ignore all',
+  spellCheckReplaceAll: 'Replace all',
+  spellCheckMeaning: 'Meaning',
+  spellCheckNotInDict: 'Not in dictionary',
+  spellCheckCorrect: 'Word is correct',
+  spellCheckPanelTitle: 'Spell Check',
+  spellCheckPanelNoErrors: 'No spelling errors found.',
+  spellCheckPanelChecking: 'Checking spelling...',
+  spellCheckPanelWordLabel: 'Word',
+  spellCheckPanelNext: 'Next',
+  spellCheckPanelPrev: 'Previous',
+  spellCheckPanelDone: 'Done',
+  spellCheckPanelOf: 'of',
+  spellCheckToolbar: 'Spell check',
 } as const;
 
 export default en;

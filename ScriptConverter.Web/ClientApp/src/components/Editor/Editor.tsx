@@ -33,14 +33,40 @@ import ImagePlugin from './plugins/ImagePlugin';
 import SavePlugin from './plugins/SavePlugin';
 import KeyboardShortcutsPlugin from './plugins/KeyboardShortcutsPlugin';
 import SpellCheckPlugin from './plugins/SpellCheckPlugin';
+import { SpellCheckProvider } from './plugins/SpellCheckContext';
+import SpellCheckPopup from './plugins/SpellCheckPopup';
+import SpellCheckPanel from './plugins/SpellCheckPanel';
+import SpellCheckToolbarButton from './plugins/SpellCheckToolbarButton';
 import AutocompletePlugin from './plugins/AutocompletePlugin';
 import AutocorrectPlugin from './plugins/AutocorrectPlugin';
-import DictionaryLookupPlugin from './plugins/DictionaryLookupPlugin';
 import EditorStatusBar from './EditorStatusBar';
 import EditorRefPlugin from './plugins/EditorRefPlugin';
 import { ImageNode } from './nodes/ImageNode';
-import type { EditorProps } from './types';
+import type { EditorProps, DictionaryProvider } from './types';
 import './styles.css';
+
+/**
+ * Conditional wrapper — renders SpellCheckProvider only when spellCheck + dictionaryProvider are available.
+ * Otherwise renders children directly.
+ */
+function SpellCheckProviderWrapper({
+  spellCheck,
+  dictionaryProvider,
+  children,
+}: {
+  spellCheck: boolean;
+  dictionaryProvider?: DictionaryProvider;
+  children: React.ReactNode;
+}) {
+  if (spellCheck && dictionaryProvider) {
+    return (
+      <SpellCheckProvider dictionaryProvider={dictionaryProvider}>
+        {children}
+      </SpellCheckProvider>
+    );
+  }
+  return <>{children}</>;
+}
 
 /**
  * Main rich text editor component built on Lexical.
@@ -113,8 +139,10 @@ export default function Editor({
   );
 
   const handleChange = useCallback(
-    (editorState: EditorState, editor: LexicalEditor) => {
+    (editorState: EditorState, editor: LexicalEditor, tags: Set<string>) => {
       if (!onChange) return;
+      // Ignore spell-check updates — they don't change document content
+      if (tags.has('spell-check')) return;
       editorState.read(() => {
         const html = $generateHtmlFromNodes(editor);
         onChange(html);
@@ -125,12 +153,14 @@ export default function Editor({
 
   return (
     <LexicalComposer initialConfig={initialConfig}>
+      <SpellCheckProviderWrapper spellCheck={spellCheck} dictionaryProvider={dictionaryProvider}>
       <Paper
         withBorder
         style={{
           display: 'flex',
           flexDirection: 'column',
           overflow: 'hidden',
+          position: 'relative',
         }}
       >
         {/* Toolbar */}
@@ -189,6 +219,12 @@ export default function Editor({
                 <ExportPlugin />
                 <Divider orientation="vertical" />
                 <KeyboardShortcutsPlugin />
+                {spellCheck && dictionaryProvider && (
+                  <>
+                    <Divider orientation="vertical" />
+                    <SpellCheckToolbarButton />
+                  </>
+                )}
               </>
             )}
           </Box>
@@ -226,6 +262,9 @@ export default function Editor({
           </Box>
         </Box>
 
+        {/* Spell check panel (sidebar) */}
+        {spellCheck && dictionaryProvider && <SpellCheckPanel direction={activeDirection || direction} />}
+
         {/* Status bar */}
         {showStatusBar && (
           <Box
@@ -254,7 +293,10 @@ export default function Editor({
       {editorRef && <EditorRefPlugin editorRef={editorRef} />}
       {onChange && <OnChangePlugin onChange={handleChange} ignoreSelectionChange />}
       {spellCheck && dictionaryProvider && (
-        <SpellCheckPlugin dictionaryProvider={dictionaryProvider} />
+        <>
+          <SpellCheckPlugin />
+          <SpellCheckPopup />
+        </>
       )}
       {autocomplete && dictionaryProvider && (
         <AutocompletePlugin dictionaryProvider={dictionaryProvider} />
@@ -262,9 +304,7 @@ export default function Editor({
       {autocorrect && dictionaryProvider && (
         <AutocorrectPlugin dictionaryProvider={dictionaryProvider} />
       )}
-      {dictionaryProvider && (
-        <DictionaryLookupPlugin dictionaryProvider={dictionaryProvider} />
-      )}
+      </SpellCheckProviderWrapper>
     </LexicalComposer>
   );
 }

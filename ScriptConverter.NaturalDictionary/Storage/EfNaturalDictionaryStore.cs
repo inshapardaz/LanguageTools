@@ -220,6 +220,23 @@ public sealed class EfNaturalDictionaryStore : INaturalDictionaryStore
     {
         using var db = _contextFactory.CreateDbContext();
         db.Database.EnsureCreated();
+
+        // Ensure the spell_check_replacements table exists (for existing DBs)
+        db.Database.ExecuteSqlRaw(@"
+            CREATE TABLE IF NOT EXISTS spell_check_replacements (
+                Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                SourceWord TEXT NOT NULL,
+                SourceWordNormalised TEXT NOT NULL,
+                Replacement TEXT NOT NULL,
+                Count INTEGER NOT NULL DEFAULT 1,
+                LastUsedAt TEXT NOT NULL
+            )");
+        db.Database.ExecuteSqlRaw(@"
+            CREATE INDEX IF NOT EXISTS IX_spellcheck_source_normalised
+            ON spell_check_replacements (SourceWordNormalised)");
+        db.Database.ExecuteSqlRaw(@"
+            CREATE UNIQUE INDEX IF NOT EXISTS IX_spellcheck_source_replacement
+            ON spell_check_replacements (SourceWordNormalised, Replacement)");
     }
 
     public async Task<NaturalDictionaryArticle?> GetArticleAsync(long articleId, CancellationToken cancellationToken = default)

@@ -326,6 +326,28 @@ const ur: Record<TranslationKeys, string> = {
   imageEditorEditImage: 'تصویر میں ترمیم کریں',
   imageEditorCaption: 'عنوان',
   imageEditorCaptionPlaceholder: 'تصویر کی وضاحت کریں',
+
+  // Spell Checker
+  spellCheckSuggestions: 'تجاویز',
+  spellCheckNoSuggestions: 'کوئی تجویز نہیں',
+  spellCheckReplace: 'تبدیل کریں',
+  spellCheckReplaceWith: 'اس سے تبدیل کریں',
+  spellCheckAddToDict: 'لغت میں شامل کریں',
+  spellCheckIgnore: 'نظرانداز کریں',
+  spellCheckIgnoreAll: 'سب نظرانداز کریں',
+  spellCheckReplaceAll: 'سب تبدیل کریں',
+  spellCheckMeaning: 'معنی',
+  spellCheckNotInDict: 'لغت میں نہیں ہے',
+  spellCheckCorrect: 'لفظ درست ہے',
+  spellCheckPanelTitle: 'املا کی جانچ',
+  spellCheckPanelNoErrors: 'کوئی املا کی غلطی نہیں ملی۔',
+  spellCheckPanelChecking: 'املا جانچ ہو رہی ہے...',
+  spellCheckPanelWordLabel: 'لفظ',
+  spellCheckPanelNext: 'اگلا',
+  spellCheckPanelPrev: 'پچھلا',
+  spellCheckPanelDone: 'مکمل',
+  spellCheckPanelOf: 'از',
+  spellCheckToolbar: 'املا کی جانچ',
 };
 
 export default ur;

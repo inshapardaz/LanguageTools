@@ -16,6 +16,7 @@ public class NaturalDictionaryDbContext : DbContext
 
     public DbSet<DictionaryInfoEntity> Dictionaries { get; set; } = null!;
     public DbSet<ArticleEntity> Articles { get; set; } = null!;
+    public DbSet<SpellCheckReplacementEntity> SpellCheckReplacements { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -62,6 +63,27 @@ public class NaturalDictionaryDbContext : DbContext
             // Composite index for lookup within specific dictionaries
             entity.HasIndex(e => new { e.DictionaryId, e.HeadwordNormalised })
                 .HasDatabaseName("IX_articles_dict_headword");
+        });
+
+        modelBuilder.Entity<SpellCheckReplacementEntity>(entity =>
+        {
+            entity.ToTable("spell_check_replacements");
+            entity.HasKey(e => e.Id);
+
+            entity.Property(e => e.SourceWord).HasMaxLength(500).IsRequired();
+            entity.Property(e => e.SourceWordNormalised).HasMaxLength(500).IsRequired();
+            entity.Property(e => e.Replacement).HasMaxLength(500).IsRequired();
+            entity.Property(e => e.Count).HasDefaultValue(1);
+            entity.Property(e => e.LastUsedAt).IsRequired();
+
+            // Index for fast lookup by normalised source word
+            entity.HasIndex(e => e.SourceWordNormalised)
+                .HasDatabaseName("IX_spellcheck_source_normalised");
+
+            // Unique constraint: one row per source+replacement pair
+            entity.HasIndex(e => new { e.SourceWordNormalised, e.Replacement })
+                .IsUnique()
+                .HasDatabaseName("IX_spellcheck_source_replacement");
         });
     }
 }
