@@ -308,6 +308,23 @@ const en = {
   unsavedChangesSave: 'Save',
   unsavedChangesDiscard: 'Continue without saving',
   unsavedChangesCancel: 'Cancel',
+
+  // Image Editor
+  imageEditorTitle: 'Edit Image',
+  imageEditorRotateLeft: 'Rotate left',
+  imageEditorRotateRight: 'Rotate right',
+  imageEditorCrop: 'Crop',
+  imageEditorResize: 'Resize',
+  imageEditorWidth: 'Width',
+  imageEditorHeight: 'Height',
+  imageEditorLockAspectRatio: 'Lock aspect ratio',
+  imageEditorReset: 'Reset',
+  imageEditorApply: 'Apply',
+  imageEditorCancel: 'Cancel',
+  imageEditorCropInstruction: 'Drag on the image to select crop area',
+  imageEditorEditImage: 'Edit image',
+  imageEditorCaption: 'Caption',
+  imageEditorCaptionPlaceholder: 'Describe the image',
 } as const;
 
 export default en;

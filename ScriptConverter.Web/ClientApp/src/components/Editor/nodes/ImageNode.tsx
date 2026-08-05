@@ -21,6 +21,10 @@ import {
   KEY_BACKSPACE_COMMAND,
   KEY_DELETE_COMMAND,
 } from 'lexical';
+import { ActionIcon, Tooltip } from '@mantine/core';
+import { IconEdit } from '@tabler/icons-react';
+import ImageEditorModal from '../ImageEditorModal';
+import { useI18n } from '../../../i18n';
 
 // ─── Serialized type ───────────────────────────────────────────────────────────
 
@@ -142,6 +146,16 @@ export class ImageNode extends DecoratorNode<JSX.Element> {
     writable.__height = height;
   }
 
+  setSrc(src: string): void {
+    const writable = this.getWritable();
+    writable.__src = src;
+  }
+
+  setAlt(alt: string): void {
+    const writable = this.getWritable();
+    writable.__alt = alt;
+  }
+
   // ─── Decorate (render React component) ─────────────────────────────────────
 
   decorate(): JSX.Element {
@@ -212,11 +226,13 @@ interface ImageComponentProps {
 
 function ImageComponent({ src, alt, width, height, nodeKey }: ImageComponentProps) {
   const [editor] = useLexicalComposerContext();
+  const { t } = useI18n();
   const imageRef = useRef<HTMLImageElement>(null);
   const [isSelected, setSelected, clearSelection] = useLexicalNodeSelection(nodeKey);
   const [isResizing, setIsResizing] = useState(false);
   const [currentWidth, setCurrentWidth] = useState<number | 'inherit'>(width);
   const [currentHeight, setCurrentHeight] = useState<number | 'inherit'>(height);
+  const [isEditorOpen, setIsEditorOpen] = useState(false);
 
   // Keep local state synced with node properties
   useEffect(() => {
@@ -341,6 +357,23 @@ function ImageComponent({ src, alt, width, height, nodeKey }: ImageComponentProp
   const imgWidth = currentWidth === 'inherit' ? undefined : currentWidth;
   const imgHeight = currentHeight === 'inherit' ? undefined : currentHeight;
 
+  // ─── Edit image handler ────────────────────────────────────────────────────
+
+  const handleEditApply = useCallback(
+    (editedSrc: string, newWidth: number, newHeight: number, editedAlt: string) => {
+      editor.update(() => {
+        const node = $getNodeByKey(nodeKey);
+        if ($isImageNode(node)) {
+          node.setSrc(editedSrc);
+          node.setWidthAndHeight(newWidth, newHeight);
+          node.setAlt(editedAlt);
+        }
+      });
+      setIsEditorOpen(false);
+    },
+    [editor, nodeKey],
+  );
+
   return (
     <span
       className={`editor-image-container ${isSelected ? 'editor-image-selected' : ''}`}
@@ -359,8 +392,46 @@ function ImageComponent({ src, alt, width, height, nodeKey }: ImageComponentProp
         }}
         draggable={false}
       />
+      {alt && (
+        <span
+          className="editor-image-caption"
+          style={{
+            display: 'block',
+            textAlign: 'center',
+            fontSize: '0.8rem',
+            color: 'var(--mantine-color-dimmed)',
+            marginTop: 4,
+            fontStyle: 'italic',
+          }}
+        >
+          {alt}
+        </span>
+      )}
       {isSelected && (
         <>
+          {/* Edit button */}
+          <Tooltip label={t('imageEditorEditImage')} position="top">
+            <ActionIcon
+              variant="filled"
+              size="sm"
+              color="blue"
+              style={{
+                position: 'absolute',
+                top: 4,
+                right: 4,
+                zIndex: 20,
+              }}
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsEditorOpen(true);
+              }}
+              aria-label={t('imageEditorEditImage')}
+            >
+              <IconEdit size={14} />
+            </ActionIcon>
+          </Tooltip>
+
+          {/* Resize handles */}
           <span
             className="editor-image-resize-handle editor-image-resize-tl"
             onPointerDown={(e) => handleResizeStartStable(e, 'top-left')}
@@ -391,6 +462,15 @@ function ImageComponent({ src, alt, width, height, nodeKey }: ImageComponentProp
           />
         </>
       )}
+
+      {/* Image editor modal */}
+      <ImageEditorModal
+        opened={isEditorOpen}
+        src={src}
+        alt={alt}
+        onApply={handleEditApply}
+        onCancel={() => setIsEditorOpen(false)}
+      />
     </span>
   );
 }

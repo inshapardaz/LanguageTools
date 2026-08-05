@@ -309,6 +309,23 @@ const ur: Record<TranslationKeys, string> = {
   unsavedChangesSave: 'محفوظ کریں',
   unsavedChangesDiscard: 'بغیر محفوظ کیے جاری رکھیں',
   unsavedChangesCancel: 'منسوخ',
+
+  // Image Editor
+  imageEditorTitle: 'تصویر میں ترمیم',
+  imageEditorRotateLeft: 'بائیں گھمائیں',
+  imageEditorRotateRight: 'دائیں گھمائیں',
+  imageEditorCrop: 'تراشیں',
+  imageEditorResize: 'سائز تبدیل کریں',
+  imageEditorWidth: 'چوڑائی',
+  imageEditorHeight: 'اونچائی',
+  imageEditorLockAspectRatio: 'تناسب مقفل رکھیں',
+  imageEditorReset: 'ری سیٹ',
+  imageEditorApply: 'لاگو کریں',
+  imageEditorCancel: 'منسوخ',
+  imageEditorCropInstruction: 'تراشنے کا علاقہ منتخب کرنے کے لیے تصویر پر گھسیٹیں',
+  imageEditorEditImage: 'تصویر میں ترمیم کریں',
+  imageEditorCaption: 'عنوان',
+  imageEditorCaptionPlaceholder: 'تصویر کی وضاحت کریں',
 };
 
 export default ur;
