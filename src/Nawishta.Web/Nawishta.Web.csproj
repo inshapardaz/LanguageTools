@@ -13,4 +13,8 @@
     <ProjectReference Include="..\Nawishta.NaturalDictionary\Nawishta.NaturalDictionary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.2.3" />
+  </ItemGroup>
+
 </Project>

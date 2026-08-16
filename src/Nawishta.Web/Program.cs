@@ -1,3 +1,4 @@
+using Microsoft.OpenApi;
 using Nawishta;
 using Nawishta.Dictionary;
 using Nawishta.NaturalDictionary;
@@ -56,6 +57,14 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo { Title = "Nawishta API", Version = "v1" });
+});
+
+builder.Services.AddHealthChecks();
+
 Console.WriteLine($"Dictionary provider: {dictionaryOptions.Provider}");
 
 var app = builder.Build();
@@ -64,9 +73,17 @@ var app = builder.Build();
 var store = app.Services.GetRequiredService<IDictionaryStore>();
 Console.WriteLine($"Dictionary loaded with {store.Count} entries.");
 
+app.UseSwagger();
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "Nawishta API v1");
+});
+
 app.UseCors();
 app.UseStaticFiles();
 app.UseRouting();
+
+app.MapHealthChecks("/health");
 
 app.MapConvertEndpoints();
 app.MapDictionaryEndpoints();

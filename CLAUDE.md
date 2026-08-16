@@ -85,6 +85,8 @@ Minimal APIs (not MVC controllers), grouped by feature as `IEndpointRouteBuilder
 
 Request/response DTOs (records and plain classes) live in `Contracts/`, one file per feature area (`ConvertContracts.cs`, `DictionaryContracts.cs`, `NaturalDictionaryContracts.cs`, `SpellCheckContracts.cs`), matching the `Endpoints/` grouping. `Program.cs` itself only wires up DI/configuration and calls the `MapXxxEndpoints()` extensions. Non-`/api` routes fall back to `wwwroot/index.html` for SPA client-side routing. To add an endpoint, extend the relevant `Endpoints/*.cs` file (or add a new one + contracts file for a new feature area) rather than growing `Program.cs`.
 
+Swagger (Swashbuckle) is enabled unconditionally (not gated to `Development`) at `/swagger`, since the app has no distinct `Production` deployment story beyond the Docker image. A real ASP.NET Core health check is mapped at `/health`; the `dockerfile`'s `HEALTHCHECK` polls it.
+
 ### Frontend (`Nawishta.Web/ClientApp`)
 
 - React 18 + TypeScript + Vite. Built output goes to `../wwwroot`, served by the ASP.NET Core app; in dev, Vite runs standalone on `:5173` and proxies `/api` to the backend on `:5000` (see `vite.config.ts`).
