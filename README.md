@@ -2,6 +2,12 @@
 
 A .NET 8 solution for transliterating text between Urdu (Arabic script), Hindi (Devanagari), and Romanised forms — with dictionary-enhanced conversion and GoldenDict-compatible natural dictionary support.
 
+## Build & Deploy Status
+
+[![Docker Image CI](https://github.com/inshapardaz/LanguageTools/actions/workflows/docker-image.yml/badge.svg)](https://github.com/inshapardaz/LanguageTools/actions/workflows/docker-image.yml)
+
+Build, image push, and production deploy (gated behind manual approval) all run as part of this workflow.
+
 ## Projects
 
 | Project | Description |
