@@ -3,6 +3,11 @@ import { Paper, Group, Button, Textarea, SegmentedControl, Stack, Alert, Grid, T
 import { IconArrowsExchange, IconAlertCircle, IconEdit, IconCheck, IconX, IconPlus } from '@tabler/icons-react';
 import { notifications } from '@mantine/notifications';
 import { useI18n, type TranslationKeys } from '../i18n';
+import { useAuth } from '../auth';
+import {
+  addTransliterationEntry, getTransliterationEntry, languageOfScript, transliterate, updateTransliterationEntry,
+  type Script, type TransliteratedWord,
+} from '../api/languageTools';
 
 const DIRECTIONS: { value: string; labelKey: TranslationKeys }[] = [
   { value: 'Roman|UrduArabic', labelKey: 'Roman → Urdu' },
@@ -19,15 +24,11 @@ const SCRIPT_INFO: Record<string, { dir: 'ltr' | 'rtl'; placeholder: string; fon
   HindiDevanagari: { dir: 'ltr', placeholder: 'यहाँ हिंदी टाइप करें...', fontFamily: "'Noto Sans Devanagari', sans-serif" },
 };
 
-interface WordDetail {
-  input: string;
-  output: string;
-  source: 'dictionary' | 'rules' | 'punctuation';
-  dictionaryEntryId?: string;
-}
+type WordDetail = TransliteratedWord;
 
 export default function Converter() {
   const { t } = useI18n();
+  const { canManage } = useAuth();
   const [direction, setDirection] = useState(DIRECTIONS[0].value);
   const [inputText, setInputText] = useState('');
   const [outputText, setOutputText] = useState('');
@@ -37,26 +38,23 @@ export default function Converter() {
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [editValue, setEditValue] = useState('');
 
-  const [from, to] = direction.split('|');
+  const [from, to] = direction.split('|') as [Script, Script];
+
+  // A correction is stored in the dictionary of the non-Roman side, as roman -> native spelling,
+  // so only directions with a Roman side can be corrected.
+  const correctionLanguage = from === 'Roman' ? languageOfScript(to) : to === 'Roman' ? languageOfScript(from) : null;
+  const canCorrect = canManage && !!correctionLanguage;
 
   const convert = useCallback(async () => {
     if (!inputText.trim()) { setOutputText(''); setWordDetails([]); return; }
     setLoading(true);
     setError('');
     try {
-      const res = await fetch('/api/convert', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: inputText, from, to, details: true }),
-      });
-      const data = await res.json();
-      if (!res.ok) { setError(data.error || 'Conversion failed.'); setOutputText(''); setWordDetails([]); }
-      else {
-        setOutputText(data.result);
-        setWordDetails(data.words || []);
-      }
-    } catch {
-      setError(t('converterError'));
+      const data = await transliterate(inputText, from, to, true);
+      setOutputText(data.result);
+      setWordDetails(data.words || []);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : t('converterError'));
       setOutputText('');
       setWordDetails([]);
     } finally {
@@ -87,75 +85,31 @@ export default function Converter() {
   const saveCorrection = async (index: number, forceNew = false) => {
     const word = wordDetails[index];
     const correctedOutput = editValue.trim();
-    if (!correctedOutput || correctedOutput === word.output) { cancelEdit(); return; }
+    if (!correctedOutput || correctedOutput === word.output || !correctionLanguage) { cancelEdit(); return; }
 
-    // Build dictionary entry payload based on direction
-    const entry: Record<string, string | undefined> = {};
-
-    if (from === 'Roman') {
-      entry.roman = word.input.toLowerCase();
-      if (to === 'UrduArabic') entry.urdu = correctedOutput;
-      else if (to === 'HindiDevanagari') entry.hindi = correctedOutput;
-    } else if (to === 'Roman') {
-      entry.roman = correctedOutput.toLowerCase();
-      if (from === 'UrduArabic') entry.urdu = word.input;
-      else if (from === 'HindiDevanagari') entry.hindi = word.input;
-    } else {
-      entry.roman = word.input.toLowerCase();
-      if (to === 'UrduArabic') entry.urdu = correctedOutput;
-      else if (to === 'HindiDevanagari') entry.hindi = correctedOutput;
-    }
+    const roman = (from === 'Roman' ? word.input : correctedOutput).toLowerCase();
+    const native = from === 'Roman' ? correctedOutput : word.input;
 
     try {
-      let res: Response;
-      if (word.dictionaryEntryId && !forceNew) {
-        // Fetch existing entry first to preserve other fields
-        const existing = await fetch(`/api/dictionary/${word.dictionaryEntryId}`).then(r => r.ok ? r.json() : null);
-        if (existing) {
-          // Merge: keep existing fields, override only the target script
-          const merged = {
-            roman: entry.roman || existing.roman,
-            urdu: entry.urdu ?? existing.urdu ?? undefined,
-            hindi: entry.hindi ?? existing.hindi ?? undefined,
-            meaning: existing.meaning ?? undefined,
-            category: existing.category ?? undefined,
-          };
-          res = await fetch(`/api/dictionary/${word.dictionaryEntryId}`, {
-            method: 'PUT',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(merged),
-          });
-        } else {
-          // Entry no longer exists, create new
-          res = await fetch('/api/dictionary', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(entry),
-          });
-        }
+      let saved;
+      const existing = word.entryId && !forceNew
+        ? await getTransliterationEntry(correctionLanguage, word.entryId).catch(() => null)
+        : null;
+      if (existing) {
+        // Keep the entry's meaning and category; only the spelling changes.
+        saved = await updateTransliterationEntry(correctionLanguage, existing.id, { roman, native, meaning: existing.meaning, category: existing.category });
       } else {
-        // Create new entry
-        res = await fetch('/api/dictionary', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(entry),
-        });
+        saved = await addTransliterationEntry(correctionLanguage, { roman, native });
       }
 
-      if (res.ok) {
-        const saved = await res.json();
-        // Update local state
-        const updated = [...wordDetails];
-        updated[index] = { ...updated[index], output: correctedOutput, source: 'dictionary', dictionaryEntryId: saved.id };
-        setWordDetails(updated);
-
-        // Rebuild output text from corrected words
-        const newOutput = updated.map(w => w.output).join(' ');
-        setOutputText(newOutput);
-
-        notifications.show({ message: t('correctionSaved'), color: 'green' });
-      }
-    } catch { /* ignore */ }
+      const updated = [...wordDetails];
+      updated[index] = { ...updated[index], output: correctedOutput, source: 'dictionary', entryId: saved.id };
+      setWordDetails(updated);
+      setOutputText(updated.map(w => w.output).join(' '));
+      notifications.show({ message: t('correctionSaved'), color: 'green' });
+    } catch (e) {
+      notifications.show({ message: e instanceof Error ? e.message : String(e), color: 'red' });
+    }
 
     setEditingIndex(null);
     setEditValue('');
@@ -276,9 +230,9 @@ export default function Converter() {
                       {editingIndex === realIndex ? (
                         <Group gap={4} wrap="nowrap">
                           <Button size="compact-xs" color="green" variant="light" leftSection={<IconCheck size={12} />} onClick={() => saveCorrection(realIndex)}>
-                            {word.dictionaryEntryId ? t('editorUpdate') : t('correctionSave')}
+                            {word.entryId ? t('editorUpdate') : t('correctionSave')}
                           </Button>
-                          {word.dictionaryEntryId && (
+                          {word.entryId && (
                             <Button size="compact-xs" color="blue" variant="light" leftSection={<IconPlus size={12} />} onClick={() => saveCorrection(realIndex, true)}>
                               {t('correctionCreateNew')}
                             </Button>
@@ -287,7 +241,7 @@ export default function Converter() {
                             <IconX size={14} />
                           </ActionIcon>
                         </Group>
-                      ) : (
+                      ) : canCorrect && (
                         <Button size="compact-xs" variant="light" leftSection={<IconEdit size={12} />} onClick={() => startEdit(realIndex)}>
                           {t('correctionEdit')}
                         </Button>

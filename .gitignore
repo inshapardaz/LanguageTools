@@ -36,6 +36,7 @@ Thumbs.db
 # Node / React
 node_modules/
 Nawishta.Web/ClientApp/node_modules/
+src/Nawishta.Web/ClientApp/dist/
 Nawishta.Web/wwwroot/
 
 # Data files (local dictionary, databases)

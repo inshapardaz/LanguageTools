@@ -14,6 +14,7 @@ import {
 } from 'lexical';
 import { useEffect } from 'react';
 import { useI18n } from '../../../i18n';
+import { transliterate, type Script } from '../../../api/languageTools';
 
 // --- Types ---
 
@@ -53,7 +54,7 @@ const DIRECTIONS: TransliterationDirection[] = [
  *
  * - If text is selected, only the selection is transliterated.
  * - If no text is selected, the entire document is transliterated.
- * - Calls `/api/convert` endpoint with POST { text, from, to }.
+ * - Converts through the API's transliteration (see api/languageTools).
  * - Replaces text with the result (with undo support via editor.update()).
  * - Shows a loading state while the API call is in progress.
  */
@@ -103,19 +104,7 @@ export default function TransliteratePlugin() {
       setLoading(true);
 
       try {
-        const res = await fetch('/api/convert', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text: textToConvert, from, to }),
-        });
-
-        if (!res.ok) {
-          console.error('[TransliteratePlugin] API error:', res.status);
-          return;
-        }
-
-        const data = await res.json();
-        const result: string = data.result;
+        const { result } = await transliterate(textToConvert, from as Script, to as Script);
 
         if (!result) return;
 

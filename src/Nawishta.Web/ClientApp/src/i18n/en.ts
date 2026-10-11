@@ -9,6 +9,19 @@ const en = {
   tabConverter: 'Converter',
   tabDictionary: 'Dictionary',
   tabNaturalDictionary: 'Natural Dictionary',
+  tabSpelling: 'Spelling',
+
+  // Account
+  authLogin: 'Log in',
+  authLogout: 'Log out',
+
+  // Spelling dictionary
+  spellingNewWord: 'New word',
+  spellingWordAdded: 'Added "{0}".',
+  spellingDeleteConfirm: 'Delete "{0}"?',
+  spellingUpload: 'Import word list',
+  spellingImported: 'Imported {0} words ({1} skipped).',
+  spellingExport: 'Export',
 
   // Language switcher
   language: 'Language',

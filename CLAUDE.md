@@ -4,7 +4,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project overview
 
-Nawishta ("Script Converter") is a .NET 8 solution for transliterating text between Urdu (Arabic script), Hindi (Devanagari), and Romanised forms, with a dictionary-enhanced conversion engine and GoldenDict-compatible "natural dictionary" import/export/lookup support. It ships as an ASP.NET Core minimal-API backend serving a React SPA frontend.
+Nawishta ("Script Converter") is the front end for the platform's language tools: transliteration between Urdu (Arabic script), Hindi (Devanagari) and Roman, meaning dictionaries (GoldenDict-compatible StarDict/DSL import/export/lookup), spelling dictionaries and a test-bench text editor.
+
+**The backend now lives in the `api` repo** (`/tools/...` and `/dictionaries/...`; see the "Language tools" section of `api/CLAUDE.md`). The React SPA in `src/Nawishta.Web/ClientApp` calls it directly and is shipped as a static nginx container (`dockerfile`, `nginx.conf`, listening on 8080). The .NET projects described below (`Nawishta`, `Nawishta.NaturalDictionary`, `Nawishta.Web`, `Nawishta.Tests`) are no longer built or deployed: they are kept only until their removal, and their code was ported into `api` (`Adapters/Transliteration`, `Adapters/Dictionary.Formats`). Make backend changes in `api`, not here.
+
+### Front end ↔ API
+
+- `src/config.ts` picks the API and main-site URLs from the host (`dictionary.nawishta.co.uk` → `api.nawishta.co.uk`, `dictionary.nawishta.dev` → `api.nawishta.dev`, otherwise `http://localhost:4000`); `VITE_API_URL` / `VITE_MAIN_SITE` override them.
+- `src/api/http.ts` sends every request with credentials (the API's httpOnly `token`/`refreshToken` cookies, set for the whole domain when signing in on the main site) and refreshes the access token once on a 401. `src/api/languageTools.ts` holds every endpoint call and converts API shapes to what the components use (e.g. the API's `wordLinks` → `links`).
+- `src/auth.tsx` (`useAuth()`) loads the current user from `/accounts/user`; Log in sends people to the main site's `/account/login` with a return URL. Edit controls are shown from the API's HATEOAS links (`create`/`update`/`delete`), which already account for roles and dictionary ownership.
+- Pages: Converter (transliteration + saving corrections to the per-language transliteration dictionary), Dictionary (transliteration entries per language), Natural Dictionary (meaning dictionaries), Spelling (per-language word lists), Editor (Lexical test bench using `providers/ApiDictionaryProvider.ts`).
+- `npm run dev` serves on port 4500 (the port `environment/development/docker-compose.yml` publishes), which the API must list in `AppSettings__AllowedOrigins`.
 
 All source lives under `src/`. The solution file is `Nawishta.slnx`.
 

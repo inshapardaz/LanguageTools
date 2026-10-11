@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Modal, TextInput, Button, Group, Stack, Paper, Text, Select, ActionIcon, Divider } from '@mantine/core';
 import { IconPlus, IconTrash } from '@tabler/icons-react';
 import { useI18n } from '../i18n';
+import { addArticle, updateArticle, type Article } from '../api/languageTools';
 
 const LINK_TYPES = [
   { value: 'Synonym', label: 'Synonym' },
@@ -13,9 +14,9 @@ const LINK_TYPES = [
 ];
 
 interface Props {
-  article: any | null;
+  article: Article | null;
   dictionaryId: string;
-  onSave: (saved: any) => void;
+  onSave: (saved: Article) => void;
   onCancel: () => void;
 }
 
@@ -70,11 +71,8 @@ export default function ArticleEditor({ article, dictionaryId, onSave, onCancel 
     const body = { headword: headword.trim(), pronunciation: pronunciation.trim() || null, senses: cleanSenses, links: cleanLinks, rawDefinition: article?.rawDefinition || null, alternates: article?.alternates || null };
     setSaving(true);
     try {
-      const url = isEdit ? `/api/natural-dictionary/articles/${article.id}` : `/api/natural-dictionary/${dictionaryId}/articles`;
-      const res = await fetch(url, { method: isEdit ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
-      if (!res.ok) { const d = await res.json().catch(() => ({})); alert(d.error || 'Save failed.'); return; }
-      onSave(await res.json());
-    } catch { alert('Save failed.'); }
+      onSave(isEdit && article ? await updateArticle(dictionaryId, article.id, body) : await addArticle(dictionaryId, body));
+    } catch (e) { alert(e instanceof Error ? e.message : 'Save failed.'); }
     finally { setSaving(false); }
   };
 
