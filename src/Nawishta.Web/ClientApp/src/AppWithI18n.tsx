@@ -3,6 +3,7 @@ import { MantineProvider, DirectionProvider, createTheme, type MantineColorSchem
 import { Notifications } from '@mantine/notifications';
 import { I18nContext, getStoredLocale, setStoredLocale, getTranslations, t as tFn, type Locale, type TranslationKeys } from './i18n';
 import App from './App';
+import { AuthProvider } from './auth';
 
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
@@ -81,7 +82,9 @@ export default function AppWithI18n() {
         <MantineProvider theme={theme} defaultColorScheme={colorScheme}>
           <Notifications position={dir === 'rtl' ? 'top-left' : 'top-right'} />
           <div dir={dir} style={{ fontFamily: FONT_WITH_URDU, height: '100%' }}>
-            <App colorScheme={colorScheme} onColorSchemeChange={setColorScheme} />
+            <AuthProvider>
+              <App colorScheme={colorScheme} onColorSchemeChange={setColorScheme} />
+            </AuthProvider>
           </div>
         </MantineProvider>
       </DirectionProvider>

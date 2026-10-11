@@ -9,6 +9,19 @@ const ur: Record<TranslationKeys, string> = {
   tabConverter: 'تبدیل کنندہ',
   tabDictionary: 'لغت',
   tabNaturalDictionary: 'قدرتی لغت',
+  tabSpelling: 'املا',
+
+  // Account
+  authLogin: 'لاگ ان',
+  authLogout: 'لاگ آؤٹ',
+
+  // Spelling dictionary
+  spellingNewWord: 'نیا لفظ',
+  spellingWordAdded: '"{0}" شامل کر دیا گیا۔',
+  spellingDeleteConfirm: '"{0}" حذف کریں؟',
+  spellingUpload: 'الفاظ کی فہرست درآمد کریں',
+  spellingImported: '{0} الفاظ درآمد ہوئے ({1} چھوڑ دیے گئے)۔',
+  spellingExport: 'برآمد',
 
   // Language switcher
   language: 'زبان',

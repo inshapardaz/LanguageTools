@@ -7,17 +7,10 @@ import { updateParams } from '../router';
 import { useI18n } from '../i18n';
 import DictionaryBrowser from './DictionaryBrowser';
 import ArticleView from '../components/ArticleView';
-
-interface DictInfo {
-  id: string;
-  name: string;
-  format: string;
-  entryCount: number;
-  sourceLanguage?: string;
-  targetLanguage?: string;
-  originalFileName?: string;
-  importedAt: string;
-}
+import {
+  deleteDictionary, getDictionaries, lookupWord as lookupInDictionaries, suggestHeadwords, uploadDictionary,
+  type Article, type DictionaryInfo,
+} from '../api/languageTools';
 
 interface Props {
   activeDictionaryId: string | null;
@@ -28,20 +21,23 @@ interface Props {
 
 export default function NaturalDictionary({ activeDictionaryId, urlParams, onBrowse, onBackToList }: Props) {
   const { t } = useI18n();
-  const [dictionaries, setDictionaries] = useState<DictInfo[]>([]);
+  const [dictionaries, setDictionaries] = useState<DictionaryInfo[]>([]);
+  const [canCreate, setCanCreate] = useState(false);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
   const [uploadOpen, setUploadOpen] = useState(false);
   const [lookupWord, setLookupWord] = useState('');
-  const [lookupResults, setLookupResults] = useState<any>(null);
+  const [lookupResults, setLookupResults] = useState<{ headword: string; entries: Article[] } | null>(null);
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
   const fetchDictionaries = useCallback(async () => {
     try {
-      const res = await fetch('/api/natural-dictionary');
-      const data = await res.json();
-      setDictionaries(data.dictionaries || []);
-    } catch { /* ignore */ }
+      const page = await getDictionaries();
+      setDictionaries(page.data);
+      setCanCreate(page.canCreate);
+    } catch (e) {
+      notifications.show({ message: e instanceof Error ? e.message : String(e), color: 'red' });
+    }
     finally { setLoading(false); }
   }, []);
 
@@ -51,45 +47,43 @@ export default function NaturalDictionary({ activeDictionaryId, urlParams, onBro
     const file = files[0];
     if (!file) return;
     setUploading(true);
-    const formData = new FormData();
-    formData.append('file', file);
     try {
-      const res = await fetch('/api/natural-dictionary/upload', { method: 'POST', body: formData });
-      const data = await res.json();
-      if (!res.ok) { notifications.show({ message: data.error || 'Upload failed.', color: 'red' }); return; }
-      notifications.show({ message: t('natDictImported_msg', data.dictionary.name, data.dictionary.entryCount.toLocaleString()), color: 'green' });
+      const dictionary = await uploadDictionary(file);
+      notifications.show({ message: t('natDictImported_msg', dictionary.name, dictionary.entryCount.toLocaleString()), color: 'green' });
       setUploadOpen(false);
       fetchDictionaries();
-    } catch { notifications.show({ message: 'Upload failed.', color: 'red' }); }
+    } catch (e) { notifications.show({ message: e instanceof Error ? e.message : 'Upload failed.', color: 'red' }); }
     finally { setUploading(false); }
   };
 
-  const handleDelete = async (id: string, name: string) => {
+  const handleDelete = async (id: number, name: string) => {
     if (!confirm(t('natDictDeleteConfirm', name))) return;
-    const res = await fetch(`/api/natural-dictionary/${id}`, { method: 'DELETE' });
-    if (res.ok) { notifications.show({ message: t('dictDeleted'), color: 'green' }); fetchDictionaries(); }
+    try {
+      await deleteDictionary(id);
+      notifications.show({ message: t('dictDeleted'), color: 'green' });
+      fetchDictionaries();
+    } catch (e) { notifications.show({ message: e instanceof Error ? e.message : String(e), color: 'red' }); }
   };
 
   const handleLookup = async (word?: string) => {
     const w = (word || lookupWord).trim();
     if (!w) return;
-    const res = await fetch(`/api/natural-dictionary/lookup?word=${encodeURIComponent(w)}`);
-    setLookupResults(await res.json());
+    try {
+      setLookupResults({ headword: w, entries: await lookupInDictionaries(w) });
+    } catch (e) { notifications.show({ message: e instanceof Error ? e.message : String(e), color: 'red' }); }
   };
 
   const handleSuggest = async (val: string) => {
     setLookupWord(val);
     if (val.trim().length < 2) { setSuggestions([]); return; }
     try {
-      const res = await fetch(`/api/natural-dictionary/suggest?prefix=${encodeURIComponent(val.trim())}&limit=8`);
-      const data = await res.json();
-      setSuggestions(data.suggestions || []);
+      setSuggestions(await suggestHeadwords(val.trim(), 8));
     } catch { setSuggestions([]); }
   };
 
   // Show browser if a dictionary is selected
   if (activeDictionaryId) {
-    const dict = dictionaries.find(d => d.id === activeDictionaryId);
+    const dict = dictionaries.find(d => String(d.id) === activeDictionaryId);
     return (
       <DictionaryBrowser
         dictionaryId={activeDictionaryId}
@@ -123,9 +117,11 @@ export default function NaturalDictionary({ activeDictionaryId, urlParams, onBro
             style={{ flex: 1 }}
           />
           <Button onClick={() => handleLookup()}>{t('natDictLookup')}</Button>
-          <Button leftSection={<IconUpload size={14} />} variant="light" onClick={() => setUploadOpen(true)}>
-            {t('natDictUpload')}
-          </Button>
+          {canCreate && (
+            <Button leftSection={<IconUpload size={14} />} variant="light" onClick={() => setUploadOpen(true)}>
+              {t('natDictUpload')}
+            </Button>
+          )}
         </Group>
 
         {lookupResults && (
@@ -135,7 +131,7 @@ export default function NaturalDictionary({ activeDictionaryId, urlParams, onBro
               <Button variant="subtle" size="compact-xs" onClick={() => setLookupResults(null)}>{t('natDictClose')}</Button>
             </Group>
             {lookupResults.entries.length === 0 && <Text c="dimmed" size="sm">{t('natDictNoResults')}</Text>}
-            {lookupResults.entries.map((entry: any, i: number) => (
+            {lookupResults.entries.map((entry, i) => (
               <Paper key={i} p="sm" mb="xs" withBorder radius="sm">
                 <Text size="xs" fw={600} c="blue" tt="uppercase" mb={4}>{entry.dictionaryName}</Text>
                 <ArticleView article={entry} />
@@ -160,16 +156,16 @@ export default function NaturalDictionary({ activeDictionaryId, urlParams, onBro
               <Table.Tr key={d.id}>
                 <Table.Td>
                   <Text fw={500}>{d.name}</Text>
-                  {d.originalFileName && <Text size="xs" c="dimmed">{d.originalFileName}</Text>}
+                  {d.description && <Text size="xs" c="dimmed">{d.description}</Text>}
                 </Table.Td>
                 <Table.Td><Badge variant="light" size="sm">{d.format}</Badge></Table.Td>
                 <Table.Td>{d.entryCount.toLocaleString()}</Table.Td>
                 <Table.Td>{[d.sourceLanguage, d.targetLanguage].filter(Boolean).join(' → ') || '—'}</Table.Td>
-                <Table.Td>{new Date(d.importedAt).toLocaleDateString()}</Table.Td>
+                <Table.Td>{new Date(d.dateCreated).toLocaleDateString()}</Table.Td>
                 <Table.Td>
                   <Group gap={4}>
-                    <Button size="compact-xs" variant="light" leftSection={<IconBook size={12} />} onClick={() => onBrowse(d.id)}>{t('natDictBrowse')}</Button>
-                    <Button size="compact-xs" variant="light" color="red" onClick={() => handleDelete(d.id, d.name)}><IconTrash size={12} /></Button>
+                    <Button size="compact-xs" variant="light" leftSection={<IconBook size={12} />} onClick={() => onBrowse(String(d.id))}>{t('natDictBrowse')}</Button>
+                    {d.canEdit && <Button size="compact-xs" variant="light" color="red" onClick={() => handleDelete(d.id, d.name)}><IconTrash size={12} /></Button>}
                   </Group>
                 </Table.Td>
               </Table.Tr>
@@ -184,7 +180,7 @@ export default function NaturalDictionary({ activeDictionaryId, urlParams, onBro
       <Modal opened={uploadOpen} onClose={() => setUploadOpen(false)} title={t('natDictUpload')} size="lg">
         <Stack gap="md">
           <Text size="sm" c="dimmed">{t('natDictUploadDesc')}</Text>
-          <Dropzone onDrop={handleUpload} loading={uploading} accept={['application/zip', 'application/gzip', 'application/x-tar']}>
+          <Dropzone onDrop={handleUpload} loading={uploading} maxSize={300 * 1024 * 1024}>
             <Stack align="center" gap="xs" py="xl">
               <IconUpload size={40} color="gray" />
               <Text size="sm">{t('natDictDropzoneText')}</Text>

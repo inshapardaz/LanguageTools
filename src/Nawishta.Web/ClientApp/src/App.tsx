@@ -1,13 +1,15 @@
-import { AppShell, Group, Tabs, Title, Text, Box, SegmentedControl, ActionIcon, Tooltip, useMantineColorScheme, type MantineColorScheme, Loader, Center } from '@mantine/core';
-import { IconLanguage, IconBook, IconLibrary, IconEdit, IconSun, IconMoon, IconDeviceDesktop } from '@tabler/icons-react';
+import { AppShell, Group, Tabs, Title, Text, Box, SegmentedControl, Tooltip, useMantineColorScheme, type MantineColorScheme, Loader, Center, Button, Menu } from '@mantine/core';
+import { IconLanguage, IconBook, IconLibrary, IconEdit, IconSun, IconMoon, IconDeviceDesktop, IconAbc, IconLogin, IconUser } from '@tabler/icons-react';
 import { lazy, Suspense, useCallback, useRef, useState } from 'react';
 import { useRouter } from './router';
 import { useI18n } from './i18n';
+import { useAuth } from './auth';
 
 // Lazy-loaded page components for bundle splitting
 const Converter = lazy(() => import('./pages/Converter'));
 const DictionaryManager = lazy(() => import('./pages/DictionaryManager'));
 const NaturalDictionary = lazy(() => import('./pages/NaturalDictionary'));
+const SpellingWords = lazy(() => import('./pages/SpellingWords'));
 const TextEditor = lazy(() => import('./pages/TextEditor'));
 
 interface AppProps {
@@ -19,6 +21,7 @@ export default function App({ colorScheme, onColorSchemeChange }: AppProps) {
   const { route, setPage, browseDictionary, backToList } = useRouter();
   const { locale, setLocale, t } = useI18n();
   const { setColorScheme } = useMantineColorScheme();
+  const { user, loading: authLoading, login, logout } = useAuth();
 
   // Navigation guard: TextEditor can register a guard that returns true if navigation should be blocked
   const navigationGuardRef = useRef<((target: string) => boolean) | null>(null);
@@ -43,6 +46,7 @@ export default function App({ colorScheme, onColorSchemeChange }: AppProps) {
 
   const activeTab = route.page === 'natural-dictionary' ? 'natural-dictionary'
     : route.page === 'dictionary' ? 'dictionary'
+    : route.page === 'spelling' ? 'spelling'
     : route.page === 'editor' ? 'editor'
     : 'converter';
 
@@ -79,6 +83,9 @@ export default function App({ colorScheme, onColorSchemeChange }: AppProps) {
                 <Tabs.Tab value="natural-dictionary" leftSection={<IconLibrary size={16} />}>
                   {t('tabNaturalDictionary')}
                 </Tabs.Tab>
+                <Tabs.Tab value="spelling" leftSection={<IconAbc size={16} />}>
+                  {t('tabSpelling')}
+                </Tabs.Tab>
                 <Tabs.Tab value="editor" leftSection={<IconEdit size={16} />}>
                   {t('tabEditor')}
                 </Tabs.Tab>
@@ -107,6 +114,20 @@ export default function App({ colorScheme, onColorSchemeChange }: AppProps) {
                 { value: 'ur', label: 'اردو' },
               ]}
             />
+
+            {/* Account: login happens on the main site, which shares the API's cookies */}
+            {!authLoading && (user ? (
+              <Menu shadow="md" position="bottom-end">
+                <Menu.Target>
+                  <Button size="compact-sm" variant="subtle" leftSection={<IconUser size={14} />}>{user.name}</Button>
+                </Menu.Target>
+                <Menu.Dropdown>
+                  <Menu.Item onClick={() => logout()}>{t('authLogout')}</Menu.Item>
+                </Menu.Dropdown>
+              </Menu>
+            ) : (
+              <Button size="compact-sm" variant="light" leftSection={<IconLogin size={14} />} onClick={login}>{t('authLogin')}</Button>
+            ))}
           </Group>
         </Group>
       </AppShell.Header>
@@ -116,6 +137,7 @@ export default function App({ colorScheme, onColorSchemeChange }: AppProps) {
           <Suspense fallback={<Center py="xl"><Loader size="md" /></Center>}>
             {activeTab === 'converter' && <Converter />}
             {activeTab === 'dictionary' && <DictionaryManager />}
+            {activeTab === 'spelling' && <SpellingWords />}
             {activeTab === 'natural-dictionary' && (
               <NaturalDictionary
                 activeDictionaryId={route.dictionaryId}

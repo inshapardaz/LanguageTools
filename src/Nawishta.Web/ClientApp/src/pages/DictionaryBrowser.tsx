@@ -6,6 +6,7 @@ import ArticleView from '../components/ArticleView';
 import ArticleEditor from '../components/ArticleEditor';
 import MergeDuplicates from '../components/MergeDuplicates';
 import { useI18n } from '../i18n';
+import { deleteArticle, dictionaryExportUrl, getArticles, type Article } from '../api/languageTools';
 
 interface Props {
   dictionaryId: string;
@@ -21,7 +22,9 @@ export default function DictionaryBrowser({ dictionaryId, dictionaryName, urlPar
   const initialQuery = urlParams?.q || '';
   const initialWord = urlParams?.word || null;
 
-  const [articles, setArticles] = useState<any[]>([]);
+  const [articles, setArticles] = useState<Article[]>([]);
+  // The API only offers "create" on a dictionary's articles to people who may change it.
+  const [canEdit, setCanEdit] = useState(false);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState(initialQuery);
   const [activeSearch, setActiveSearch] = useState(initialQuery);
@@ -29,7 +32,7 @@ export default function DictionaryBrowser({ dictionaryId, dictionaryName, urlPar
   const [totalCount, setTotalCount] = useState(0);
   const [totalPages, setTotalPages] = useState(0);
   const [expanded, setExpanded] = useState<string | null>(initialWord);
-  const [editing, setEditing] = useState<any>(null);
+  const [editing, setEditing] = useState<Article | 'new' | null>(null);
   const [showMerge, setShowMerge] = useState(false);
   const pageSize = 50;
 
@@ -44,15 +47,12 @@ export default function DictionaryBrowser({ dictionaryId, dictionaryName, urlPar
   const fetchArticles = useCallback(async (p: number, query: string) => {
     setLoading(true);
     try {
-      const endpoint = query
-        ? `/api/natural-dictionary/${dictionaryId}/search?q=${encodeURIComponent(query)}&page=${p}&pageSize=${pageSize}`
-        : `/api/natural-dictionary/${dictionaryId}/browse?page=${p}&pageSize=${pageSize}`;
-      const res = await fetch(endpoint);
-      const data = await res.json();
-      setArticles(data.articles || []);
-      setTotalCount(data.totalCount || 0);
-      setTotalPages(data.totalPages || 0);
-      setPage(data.page || 1);
+      const result = await getArticles(dictionaryId, query, p, pageSize);
+      setArticles(result.data);
+      setTotalCount(result.totalCount);
+      setTotalPages(result.totalCount > 0 ? result.pageCount : 0);
+      setPage(result.currentPageIndex || 1);
+      setCanEdit(result.canCreate);
     } catch { setArticles([]); }
     finally { setLoading(false); }
   }, [dictionaryId]);
@@ -89,11 +89,11 @@ export default function DictionaryBrowser({ dictionaryId, dictionaryName, urlPar
 
   const handleDelete = async (id: number, headword: string) => {
     if (!confirm(t('browserDeleteConfirm', headword))) return;
-    const res = await fetch(`/api/natural-dictionary/articles/${id}`, { method: 'DELETE' });
-    if (res.ok) {
+    try {
+      await deleteArticle(dictionaryId, id);
       notifications.show({ message: t('browserDeleted', headword), color: 'green' });
       fetchArticles(page, activeSearch);
-    }
+    } catch (e) { notifications.show({ message: e instanceof Error ? e.message : String(e), color: 'red' }); }
   };
 
   const handleSaveComplete = () => {
@@ -117,22 +117,26 @@ export default function DictionaryBrowser({ dictionaryId, dictionaryName, urlPar
             </div>
           </Group>
           <Group gap="xs">
-            <Button size="compact-sm" leftSection={<IconPlus size={14} />} onClick={() => setEditing('new')}>
-              {t('browserAddWord')}
-            </Button>
-            <Button size="compact-sm" variant="light" color="orange" leftSection={<IconGitMerge size={14} />} onClick={() => setShowMerge(true)}>
-              {t('browserMerge')}
-            </Button>
+            {canEdit && (
+              <>
+                <Button size="compact-sm" leftSection={<IconPlus size={14} />} onClick={() => setEditing('new')}>
+                  {t('browserAddWord')}
+                </Button>
+                <Button size="compact-sm" variant="light" color="orange" leftSection={<IconGitMerge size={14} />} onClick={() => setShowMerge(true)}>
+                  {t('browserMerge')}
+                </Button>
+              </>
+            )}
             <Menu shadow="md" width={160}>
               <Menu.Target>
                 <Button size="compact-sm" variant="light" leftSection={<IconDownload size={14} />}>{t('browserExport')}</Button>
               </Menu.Target>
               <Menu.Dropdown>
-                <Menu.Item component="a" href={`/api/natural-dictionary/${dictionaryId}/export?format=stardict`} download>{t('exportStarDict')}</Menu.Item>
-                <Menu.Item component="a" href={`/api/natural-dictionary/${dictionaryId}/export?format=dsl`} download>{t('exportDSL')}</Menu.Item>
-                <Menu.Item component="a" href={`/api/natural-dictionary/${dictionaryId}/export?format=kobo`} download>{t('exportKobo')}</Menu.Item>
-                <Menu.Item component="a" href={`/api/natural-dictionary/${dictionaryId}/export?format=kindle`} download>{t('exportKindle')}</Menu.Item>
-                <Menu.Item component="a" href={`/api/natural-dictionary/${dictionaryId}/export?format=json`} download>{t('exportJSON')}</Menu.Item>
+                <Menu.Item component="a" href={dictionaryExportUrl(dictionaryId, 'starDict')} download>{t('exportStarDict')}</Menu.Item>
+                <Menu.Item component="a" href={dictionaryExportUrl(dictionaryId, 'dsl')} download>{t('exportDSL')}</Menu.Item>
+                <Menu.Item component="a" href={dictionaryExportUrl(dictionaryId, 'kobo')} download>{t('exportKobo')}</Menu.Item>
+                <Menu.Item component="a" href={dictionaryExportUrl(dictionaryId, 'kindle')} download>{t('exportKindle')}</Menu.Item>
+                <Menu.Item component="a" href={dictionaryExportUrl(dictionaryId, 'json')} download>{t('exportJSON')}</Menu.Item>
               </Menu.Dropdown>
             </Menu>
           </Group>
@@ -177,10 +181,12 @@ export default function DictionaryBrowser({ dictionaryId, dictionaryName, urlPar
                 </Accordion.Control>
                 <Accordion.Panel>
                   <ArticleView article={a} />
-                  <Group mt="sm" gap="xs">
-                    <Button size="compact-xs" variant="light" leftSection={<IconEdit size={12} />} onClick={() => setEditing(a)}>{t('browserEdit')}</Button>
-                    <Button size="compact-xs" variant="light" color="red" leftSection={<IconTrash size={12} />} onClick={() => handleDelete(a.id, a.headword)}>{t('browserDelete')}</Button>
-                  </Group>
+                  {a.canEdit && (
+                    <Group mt="sm" gap="xs">
+                      <Button size="compact-xs" variant="light" leftSection={<IconEdit size={12} />} onClick={() => setEditing(a)}>{t('browserEdit')}</Button>
+                      <Button size="compact-xs" variant="light" color="red" leftSection={<IconTrash size={12} />} onClick={() => handleDelete(a.id, a.headword)}>{t('browserDelete')}</Button>
+                    </Group>
+                  )}
                 </Accordion.Panel>
               </Accordion.Item>
             ))}

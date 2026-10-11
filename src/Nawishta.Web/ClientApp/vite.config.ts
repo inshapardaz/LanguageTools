@@ -3,17 +3,13 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  // The app talks to the API directly (see src/config.ts); 4500 is the port development/
+  // docker-compose.yml publishes it on, so local and compose runs share one CORS origin.
   server: {
-    port: 5173,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:5000',
-        changeOrigin: true,
-      },
-    },
+    port: 4500,
   },
   build: {
-    outDir: '../wwwroot',
+    outDir: 'dist',
     emptyOutDir: true,
     rollupOptions: {
       output: {
