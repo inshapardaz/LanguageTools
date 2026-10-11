@@ -15,7 +15,7 @@ export default defineConfig({
       output: {
         manualChunks(id) {
           if (id.includes('node_modules')) {
-            // Lexical (including @lexical/react) — must come before React check
+            // Lexical (pulled in by likhari-react) — must come before React check
             if (id.includes('@lexical/') || id.includes('/lexical/')) {
               return 'vendor-lexical';
             }

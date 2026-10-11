@@ -13,7 +13,7 @@ Nawishta ("Script Converter") is the front end for the platform's language tools
 - `src/config.ts` picks the API and main-site URLs from the host (`dictionary.nawishta.co.uk` → `api.nawishta.co.uk`, `dictionary.nawishta.dev` → `api.nawishta.dev`, otherwise `http://localhost:4000`); `VITE_API_URL` / `VITE_MAIN_SITE` override them.
 - `src/api/http.ts` sends every request with credentials (the API's httpOnly `token`/`refreshToken` cookies, set for the whole domain when signing in on the main site) and refreshes the access token once on a 401. `src/api/languageTools.ts` holds every endpoint call and converts API shapes to what the components use (e.g. the API's `wordLinks` → `links`).
 - `src/auth.tsx` (`useAuth()`) loads the current user from `/accounts/user`; Log in sends people to the main site's `/account/login` with a return URL. Edit controls are shown from the API's HATEOAS links (`create`/`update`/`delete`), which already account for roles and dictionary ownership.
-- Pages: Converter (transliteration + saving corrections to the per-language transliteration dictionary), Dictionary (transliteration entries per language), Natural Dictionary (meaning dictionaries), Spelling (per-language word lists), Editor (Lexical test bench using `providers/ApiDictionaryProvider.ts`).
+- Pages: Converter (transliteration + saving corrections to the per-language transliteration dictionary), Dictionary (transliteration entries per language), Natural Dictionary (meaning dictionaries), Spelling (per-language word lists), Editor (a scratch `@inshapardaz/likhari-react` editor whose spell check, autocorrect/punctuation and completions come from the API through the stores in `pages/editorStores.ts`).
 - `npm run dev` serves on port 4500 (the port `environment/development/docker-compose.yml` publishes), which the API must list in `AppSettings__AllowedOrigins`.
 
 All source lives under `src/`. The solution file is `Nawishta.slnx`.
@@ -99,11 +99,11 @@ Swagger (Swashbuckle) is enabled unconditionally (not gated to `Development`) at
 
 ### Frontend (`Nawishta.Web/ClientApp`)
 
-- React 18 + TypeScript + Vite. Built output goes to `../wwwroot`, served by the ASP.NET Core app; in dev, Vite runs standalone on `:5173` and proxies `/api` to the backend on `:5000` (see `vite.config.ts`).
-- UI is built on **Mantine** (`@mantine/core`, `@mantine/hooks`, `@mantine/dropzone`, `@mantine/notifications`) with `@tabler/icons-react` for icons and `postcss-preset-mantine` for the CSS pipeline. Mantine publishes agent-friendly docs at **https://mantine.dev/llms.txt** (and per-page `.md` variants) — fetch that when working on components, props, or theming instead of guessing at the API.
+- React 19 + TypeScript + Vite. Built output goes to `dist/` and is served by nginx (see `dockerfile`); in dev, Vite runs on `:4500` and the app calls the API directly (see `src/config.ts`). Building needs Node 22 (Mantine 9).
+- UI is built on **Mantine 9** (`@mantine/core`, `@mantine/hooks`, `@mantine/dropzone`, `@mantine/notifications`) with `@tabler/icons-react` for icons and `postcss-preset-mantine` for the CSS pipeline. Mantine publishes agent-friendly docs at **https://mantine.dev/llms.txt** (and per-page `.md` variants) — fetch that when working on components, props, or theming instead of guessing at the API.
 - No router library: `router.ts` implements a minimal hand-rolled router over `window.history`/`popstate` (`useRouter()` hook), driving top-level page selection in `App.tsx` (`converter`, `dictionary`, `natural-dictionary`, `editor`) plus a `natural-dictionary/{id}` deep-link route.
-- Pages (`src/pages/`) are lazy-loaded (`React.lazy`) for bundle splitting; Vite's `manualChunks` in `vite.config.ts` further splits `vendor-mantine`, `vendor-react`, `vendor-lexical`, and `vendor-icons` chunks.
-- `TextEditor` (`pages/TextEditor.tsx` + `components/Editor/`) is a rich-text editor built on **Lexical** (`lexical`, `@lexical/react`, plus code/link/list/rich-text/selection/utils packages), with its own nodes, plugins, themes, and providers under `components/Editor/`. It registers a navigation guard (`navigationGuardRef`) with `App.tsx` so switching tabs while there are unsaved changes is intercepted and confirmed via `UnsavedChangesModal`.
+- Pages (`src/pages/`) are lazy-loaded (`React.lazy`) for bundle splitting; Vite's `manualChunks` in `vite.config.ts` further splits `vendor-mantine`, `vendor-react`, `vendor-lexical` (Lexical comes in through likhari-react), and `vendor-icons` chunks.
+- `TextEditor` (`pages/TextEditor.tsx`) is `@inshapardaz/likhari-react`'s `EditorRoot` (the same editor library-editor uses; it requires React 19 / Mantine 9 as peers). Unsaved work is kept as a browser draft (`navigationGuard="save-draft"`), so `App.tsx` needs no navigation guard.
 - i18n is hand-rolled (`src/i18n/`, `en.ts`/`ur.ts`) via a `useI18n()` hook exposing `locale`/`setLocale`/`t()`, supporting English and Urdu (RTL).
 
 ## Configuration

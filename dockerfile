@@ -1,5 +1,5 @@
 # LanguageTools is a front-end over the API's language tools: build the Vite app, serve it with nginx.
-FROM node:20-alpine AS build
+FROM node:22-alpine AS build
 WORKDIR /app
 COPY src/Nawishta.Web/ClientApp/package.json src/Nawishta.Web/ClientApp/package-lock.json ./
 RUN npm ci --no-audit --no-fund

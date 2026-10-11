@@ -1,6 +1,6 @@
 import { AppShell, Group, Tabs, Title, Text, Box, SegmentedControl, Tooltip, useMantineColorScheme, type MantineColorScheme, Loader, Center, Button, Menu } from '@mantine/core';
 import { IconLanguage, IconBook, IconLibrary, IconEdit, IconSun, IconMoon, IconDeviceDesktop, IconAbc, IconLogin, IconUser } from '@tabler/icons-react';
-import { lazy, Suspense, useCallback, useRef, useState } from 'react';
+import { lazy, Suspense, useCallback } from 'react';
 import { useRouter } from './router';
 import { useI18n } from './i18n';
 import { useAuth } from './auth';
@@ -23,20 +23,8 @@ export default function App({ colorScheme, onColorSchemeChange }: AppProps) {
   const { setColorScheme } = useMantineColorScheme();
   const { user, loading: authLoading, login, logout } = useAuth();
 
-  // Navigation guard: TextEditor can register a guard that returns true if navigation should be blocked
-  const navigationGuardRef = useRef<((target: string) => boolean) | null>(null);
-
-  const handleTabChange = useCallback((v: string | null) => {
-    const target = v || 'converter';
-    // If navigating away from the editor tab, check the guard
-    if (route.page === 'editor' && target !== 'editor') {
-      if (navigationGuardRef.current?.(target)) {
-        // Guard returned true — navigation blocked, TextEditor will show its own modal
-        return;
-      }
-    }
-    setPage(target);
-  }, [route.page, setPage]);
+  // The editor keeps unsaved work as a browser draft, so leaving its tab needs no guard.
+  const handleTabChange = useCallback((v: string | null) => setPage(v || 'converter'), [setPage]);
 
   const handleColorSchemeChange = (scheme: string) => {
     const s = scheme as MantineColorScheme;
@@ -146,12 +134,7 @@ export default function App({ colorScheme, onColorSchemeChange }: AppProps) {
                 onBackToList={backToList}
               />
             )}
-            {activeTab === 'editor' && (
-              <TextEditor
-                navigationGuardRef={navigationGuardRef}
-                onNavigateAway={setPage}
-              />
-            )}
+            {activeTab === 'editor' && <TextEditor />}
           </Suspense>
         </Box>
       </AppShell.Main>
