@@ -1,0 +1,5 @@
+window.__ENV__ = {
+    NODE_ENV: "${NODE_ENV}",
+    API_URL: "${API_URL}",
+    MAIN_SITE: "${MAIN_SITE}"
+};

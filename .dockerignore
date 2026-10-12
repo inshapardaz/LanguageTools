@@ -1,35 +1,10 @@
-**/.git
-**/.vs
-**/.vscode
-**/.idea
-**/bin
-**/obj
-**/TestResults
-**/node_modules
-**/bower_components
-
-# Build artifacts
-*.suo
-*.user
-*.log
-*.Cache
-
-# Test & coverage
-*[C]coverage*
-**/coverage.json
-
-# Documentation
-docs/
+.git
+.github
+node_modules
+npm-debug.log
+dist
+playwright-report
+test-results
+tests
+.editorconfig
 *.md
-!README.md
-
-# IDE
-*.ncrunchproject
-*.jfm
-*.dbmdl
-
-# Environment-specific
-**/local.setting.json
-**/appsettings.Production.json
-**/appsettings.Production.smartasp.json
-**/*.lock.json

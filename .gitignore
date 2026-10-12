@@ -1,53 +1,32 @@
-# .NET
-bin/
-obj/
-*.user
-*.suo
-*.userosscache
-*.sln.docstates
-*.dll
-*.exe
-*.pdb
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# NuGet
-*.nupkg
-**/packages/
+# dependencies
+/node_modules
+npm-debug.log*
 
-# Build results
-[Dd]ebug/
-[Rr]elease/
-x64/
-x86/
-build/
-bld/
+# testing
+/coverage
+/test-results
+/playwright-report/
+/blob-report/
+/playwright/.cache/
 
-# IDE
-.vs/
-.vscode/
-.idea/
-*.swp
-*.swo
-*~
+# production
+/build
+/dist
 
-# macOS
-.DS_Store
-Thumbs.db
-
-# Node / React
-node_modules/
-Nawishta.Web/ClientApp/node_modules/
-src/Nawishta.Web/ClientApp/dist/
-Nawishta.Web/wwwroot/
-
-# Data files (local dictionary, databases)
-Nawishta.Web/Data/
+# local data from the retired .NET backend (dictionaries, databases)
 *.db
 *.db-shm
 *.db-wal
 
-# Logs
-*.log
-
-# Environment
-.env
-.env.*
+# misc
+.vscode
+.vs
+.idea
+.DS_Store
+Thumbs.db
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
