@@ -6,6 +6,7 @@ The language tools front end for [nawishta.co.uk](https://nawishta.co.uk), serve
 - **Dictionary** — the per-language (Urdu, Hindi) transliteration dictionary: romanised spellings that should convert to a known native spelling.
 - **Natural Dictionary** — meaning dictionaries: upload GoldenDict-compatible StarDict or DSL dictionaries, look words up across them, browse and edit articles, merge numbered duplicates, export to StarDict, DSL, JSON, Kobo or Kindle.
 - **Spelling** — the per-language word lists the spell checker uses, with import (text or Hunspell `.dic`) and export.
+- **Corrections** — the per-language autocorrect and punctuation lists the editors apply, with usage counts and JSON import/export.
 - **Editor** — a scratch editor ([likhari](https://github.com/inshapardaz/likhari)) using the spelling lists and autocorrect/punctuation lists.
 
 All data and logic live in the [api](https://github.com/inshapardaz/api) (`/tools` and `/dictionaries` endpoints); this repo is only the React app.

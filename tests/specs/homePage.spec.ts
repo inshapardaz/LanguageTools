@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import HomePage from '../pageObjects/homePage';
 
-const TOOLS = ['Converter', 'Dictionary', 'Natural Dictionary', 'Spelling', 'Editor'];
+const TOOLS = ['Converter', 'Dictionary', 'Natural Dictionary', 'Spelling', 'Corrections', 'Editor'];
 
 // Runs against the Vite dev server with no API behind it, so it covers what renders without data.
 test.describe('When user visits homepage', () => {
@@ -37,6 +37,15 @@ test.describe('When user visits homepage', () => {
     }
 
     expect(errors).toEqual([]);
+  });
+
+  // library-editor's Tools menu links straight to a list.
+  test('opens the correction list named in the link', async ({ page }) => {
+    await page.goto('/corrections?profile=punctuation&language=hi');
+
+    await expect(new HomePage(page).tab('Corrections')).toHaveAttribute('aria-selected', 'true');
+    await expect(page.getByRole('radio', { name: 'Punctuation' })).toBeChecked();
+    await expect(page.getByRole('radio', { name: 'Hindi' })).toBeChecked();
   });
 
   test('loads the editor', async ({ page }) => {

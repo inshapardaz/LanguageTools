@@ -31,7 +31,8 @@ src/                     the app (React 19 + TypeScript)
   api/languageTools.ts   every API call, typed; converts API shapes to what components use
   auth.tsx               current user (useAuth), login/logout via the main site
   pages/                 Converter, DictionaryManager (transliteration entries), NaturalDictionary
-                         (+ DictionaryBrowser), SpellingWords, TextEditor (+ editorStores.ts)
+                         (+ DictionaryBrowser), SpellingWords, Corrections (autocorrect/punctuation
+                         lists), TextEditor (+ editorStores.ts)
   components/            ArticleView, ArticleEditor, MergeDuplicates
   i18n/                  en.ts / ur.ts, useI18n()
   router.ts              tiny history-based router (no router library)
@@ -48,6 +49,7 @@ dockerfile               node build -> nginx
 
 - **API access.** All requests go through `src/api/http.ts` with `credentials: 'include'`: the API authenticates with the httpOnly `token`/`refreshToken` cookies it sets on the shared parent domain when the user signs in on the main site. On a 401 the access token is refreshed once (shared between concurrent requests) and the request retried. `src/api/languageTools.ts` is the only place that knows URLs and response shapes; it maps them to the shapes the components were written against (e.g. the API's `wordLinks` → `links` with PascalCase link types, alternates array ↔ JSON string).
 - **Auth and permissions.** `useAuth()` loads the user from `/accounts/user`; Log in sends people to the main site's `/account/login` with a return URL. Edit controls are driven by the API's HATEOAS links (`create`/`update`/`delete`), which already account for roles (Admin, DictionaryWriter, editors) and dictionary ownership — don't re-implement permission rules here.
+- **Corrections** (`pages/Corrections.tsx`, `/corrections?profile=autocorrect|punctuation&language=…`) manages the autocorrect and punctuation lists that library-editor and the Editor tab apply. It moved here from library-editor, whose Tools menu now links to this page with `profile` and `language` in the URL — keep those parameters working. Any editor may add/edit/delete (per the API's links); bulk JSON import is offered to Admins/DictionaryWriters only.
 - **Transliteration dictionary** is per language (`ur`, `hi`): roman → native spelling. The Converter saves word corrections into the dictionary of the non-Roman side.
 - **Editor tab** (`pages/TextEditor.tsx`) is `@inshapardaz/likhari-react`'s `EditorRoot` (the editor library-editor uses), with stores in `pages/editorStores.ts` that load the API's autocorrect/punctuation lists and spelling word lists. Unsaved work is kept as a browser draft (`navigationGuard="save-draft"`), so the app needs no navigation guard. likhari-react requires React 19 and Mantine 9 as peers.
 - **Vite resolve conditions.** likhari-react exports a `development` condition pointing at TypeScript source that isn't published; `vite.config.ts` pins `resolve.conditions` so the dev server uses the published build. Without it the Editor tab fails to load in `npm start` (the production build is unaffected) — the "loads the editor" Playwright test guards this.
