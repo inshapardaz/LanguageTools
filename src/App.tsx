@@ -1,5 +1,5 @@
 import { AppShell, Group, Tabs, Title, Text, Box, SegmentedControl, Tooltip, useMantineColorScheme, type MantineColorScheme, Loader, Center, Button, Menu } from '@mantine/core';
-import { IconLanguage, IconBook, IconLibrary, IconEdit, IconSun, IconMoon, IconDeviceDesktop, IconAbc, IconLogin, IconUser } from '@tabler/icons-react';
+import { IconLanguage, IconBook, IconLibrary, IconEdit, IconSun, IconMoon, IconDeviceDesktop, IconAbc, IconLogin, IconUser, IconTextSpellcheck } from '@tabler/icons-react';
 import { lazy, Suspense, useCallback } from 'react';
 import { useRouter } from './router';
 import { useI18n } from './i18n';
@@ -10,6 +10,7 @@ const Converter = lazy(() => import('./pages/Converter'));
 const DictionaryManager = lazy(() => import('./pages/DictionaryManager'));
 const NaturalDictionary = lazy(() => import('./pages/NaturalDictionary'));
 const SpellingWords = lazy(() => import('./pages/SpellingWords'));
+const Corrections = lazy(() => import('./pages/Corrections'));
 const TextEditor = lazy(() => import('./pages/TextEditor'));
 
 interface AppProps {
@@ -35,6 +36,7 @@ export default function App({ colorScheme, onColorSchemeChange }: AppProps) {
   const activeTab = route.page === 'natural-dictionary' ? 'natural-dictionary'
     : route.page === 'dictionary' ? 'dictionary'
     : route.page === 'spelling' ? 'spelling'
+    : route.page === 'corrections' ? 'corrections'
     : route.page === 'editor' ? 'editor'
     : 'converter';
 
@@ -73,6 +75,9 @@ export default function App({ colorScheme, onColorSchemeChange }: AppProps) {
                 </Tabs.Tab>
                 <Tabs.Tab value="spelling" leftSection={<IconAbc size={16} />}>
                   {t('tabSpelling')}
+                </Tabs.Tab>
+                <Tabs.Tab value="corrections" leftSection={<IconTextSpellcheck size={16} />}>
+                  {t('tabCorrections')}
                 </Tabs.Tab>
                 <Tabs.Tab value="editor" leftSection={<IconEdit size={16} />}>
                   {t('tabEditor')}
@@ -126,6 +131,7 @@ export default function App({ colorScheme, onColorSchemeChange }: AppProps) {
             {activeTab === 'converter' && <Converter />}
             {activeTab === 'dictionary' && <DictionaryManager />}
             {activeTab === 'spelling' && <SpellingWords />}
+            {activeTab === 'corrections' && <Corrections urlParams={route.params} />}
             {activeTab === 'natural-dictionary' && (
               <NaturalDictionary
                 activeDictionaryId={route.dictionaryId}

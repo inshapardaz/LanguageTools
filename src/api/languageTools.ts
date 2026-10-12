@@ -142,6 +142,54 @@ export function uploadSpellingWords(language: string, file: File): Promise<Impor
 
 export const spellingWordsExportUrl = (language: string) => apiUrl(`/tools/${language}/words/export`);
 
+// ---- Autocorrect and punctuation lists -----------------------------------------------------------
+
+// The two correction lists each language has: autocorrect (common misspellings) and punctuation fixes.
+export type CorrectionProfile = 'autocorrect' | 'punctuation';
+
+export interface Correction {
+  id: number;
+  language: string;
+  profile: CorrectionProfile;
+  incorrectText: string;
+  correctText: string;
+  completeWord: boolean;
+  usage: number;
+  canEdit: boolean;
+  canDelete: boolean;
+}
+
+type CorrectionView = Omit<Correction, 'canEdit' | 'canDelete'> & WithLinks;
+const toCorrection = (v: CorrectionView): Correction => ({ ...v, canEdit: hasLink(v, 'update'), canDelete: hasLink(v, 'delete') });
+
+export type CorrectionInput = Pick<Correction, 'incorrectText' | 'correctText' | 'completeWord'>;
+
+export async function getCorrections(
+  language: string, profile: CorrectionProfile, query: string, pageNumber: number, pageSize: number, sortBy: 'incorrectText' | 'usage',
+) {
+  const page = await http.get<PageView<CorrectionView>>(`/tools/${language}/corrections/${profile}${qs({ query, pageNumber, pageSize, sortBy })}`);
+  return { ...page, data: page.data.map(toCorrection), canCreate: hasLink(page, 'create') };
+}
+
+export const addCorrection = async (language: string, profile: CorrectionProfile, correction: CorrectionInput) =>
+  toCorrection(await http.post<CorrectionView>(`/tools/${language}/corrections/${profile}`, correction));
+
+export const updateCorrection = async (language: string, profile: CorrectionProfile, id: number, correction: CorrectionInput) =>
+  toCorrection(await http.put<CorrectionView>(`/tools/${language}/corrections/${profile}/${id}`, correction));
+
+export const deleteCorrection = (language: string, profile: CorrectionProfile, id: number) =>
+  http.delete(`/tools/${language}/corrections/${profile}/${id}`);
+
+// Replaces or adds corrections from a JSON file in the export format ([{ incorrectText, correctText, completeWord }]).
+export async function importCorrections(language: string, profile: CorrectionProfile, file: File): Promise<ImportResult> {
+  const entries = JSON.parse(await file.text()) as CorrectionInput[];
+  if (!Array.isArray(entries)) throw new Error('The file must contain a JSON array of corrections.');
+  return http.post(`/tools/${language}/corrections/${profile}/bulk`, entries);
+}
+
+export const correctionsExportUrl = (language: string, profile: CorrectionProfile) =>
+  apiUrl(`/tools/${language}/corrections/${profile}/export`);
+
 // ---- Meaning dictionaries -----------------------------------------------------------------------
 
 export interface DictionaryInfo {

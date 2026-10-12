@@ -8,6 +8,26 @@ const en = {
   tabDictionary: 'Dictionary',
   tabNaturalDictionary: 'Natural Dictionary',
   tabSpelling: 'Spelling',
+  tabCorrections: 'Corrections',
+
+  // Autocorrect and punctuation lists
+  correctionsAutocorrect: 'Autocorrect',
+  correctionsPunctuation: 'Punctuation',
+  correctionsCount: 'corrections',
+  correctionsImport: 'Import list',
+  correctionsSortText: 'Sort by text',
+  correctionsSortUsage: 'Most used first',
+  correctionsAdd: 'Add correction',
+  correctionsEdit: 'Edit correction',
+  correctionsIncorrect: 'Incorrect',
+  correctionsCorrect: 'Correct',
+  correctionsCompleteWord: 'Whole word',
+  correctionsCompleteWordHint: 'Only replace whole words',
+  correctionsUsage: 'Used',
+  correctionsSaved: 'Correction saved.',
+  correctionsSameText: 'The correct text must differ from the incorrect text.',
+  correctionsDeleteConfirm: 'Delete the correction for "{0}"?',
+  correctionsImported: 'Imported: {0} added, {1} updated, {2} skipped.',
 
   // Account
   authLogin: 'Log in',

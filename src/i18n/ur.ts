@@ -10,6 +10,26 @@ const ur: Record<TranslationKeys, string> = {
   tabDictionary: 'لغت',
   tabNaturalDictionary: 'قدرتی لغت',
   tabSpelling: 'املا',
+  tabCorrections: 'تصحیحات',
+
+  // Autocorrect and punctuation lists
+  correctionsAutocorrect: 'خودکار تصحیح',
+  correctionsPunctuation: 'رموزِ اوقاف',
+  correctionsCount: 'تصحیحات',
+  correctionsImport: 'فہرست درآمد کریں',
+  correctionsSortText: 'متن کے لحاظ سے',
+  correctionsSortUsage: 'زیادہ استعمال پہلے',
+  correctionsAdd: 'تصحیح شامل کریں',
+  correctionsEdit: 'تصحیح میں ترمیم',
+  correctionsIncorrect: 'غلط',
+  correctionsCorrect: 'درست',
+  correctionsCompleteWord: 'مکمل لفظ',
+  correctionsCompleteWordHint: 'صرف مکمل الفاظ تبدیل کریں',
+  correctionsUsage: 'استعمال',
+  correctionsSaved: 'تصحیح محفوظ ہو گئی۔',
+  correctionsSameText: 'درست متن غلط متن سے مختلف ہونا چاہیے۔',
+  correctionsDeleteConfirm: '"{0}" کی تصحیح حذف کریں؟',
+  correctionsImported: 'درآمد: {0} شامل، {1} تبدیل، {2} چھوڑ دیے گئے۔',
 
   // Account
   authLogin: 'لاگ ان',
