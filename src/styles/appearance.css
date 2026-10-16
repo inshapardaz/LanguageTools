@@ -1,0 +1,143 @@
+/* Typeface: Open Sans for Latin text (self-hosted through fontsource). Arabic/Urdu text falls through to
+   'Urdu UI' (see index.html). */
+@import '@fontsource-variable/open-sans';
+
+/* ---------------------------------------------------------------------------------------------
+   Themes. <html data-nw-theme="nawishta|white|black"> (set in AppWithI18n.tsx) picks one; Nawishta also
+   follows the light/dark colour mode, the plain themes pin it. Components use only the semantic
+   variables below:
+     --paper / --paper-deep / --paper-card   page, banded and card surfaces
+     --ink / --ink-soft                      text
+     --nw-line                               hairline borders
+     --nw-chrome-*                           header + footer bar (bg, text, muted text, highlight, rule)
+     --nw-hero-*                             the library home hero band
+     --nw-cta-*                              the hero's primary call-to-action
+     --nw-accent-ink                         active tab / "view all" link colour
+     --nw-mono-*                             the page header's monogram badge
+     --nw-reader-dark                        the reader's dark page
+   --------------------------------------------------------------------------------------------- */
+
+/* Nawishta: the paper/spine/gold design. */
+:root,
+:root[data-nw-theme='nawishta'] {
+    --ink: #241f17;
+    --ink-soft: #5a5140;
+    --paper: #f3ead8;
+    --paper-deep: #e9ddc2;
+    --paper-card: #fbf6ea;
+    --spine: #163831;
+    --spine-light: #1f4a40;
+    --spine-dark: #0f2621;
+    --gold: #b8863a;
+    --gold-soft: #e4c990;
+    --oxblood: #7c2c29;
+    --nw-line: rgba(36, 31, 23, .14);
+
+    --nw-chrome-bg: var(--spine);
+    --nw-chrome-footer-bg: var(--spine-dark);
+    --nw-chrome-fg: #fbf6ea;
+    --nw-chrome-fg-soft: #e9ddc2;
+    --nw-chrome-highlight: var(--gold-soft);
+    --nw-chrome-rule: var(--gold);
+    --nw-hero-bg: radial-gradient(1200px 500px at 15% -10%, rgba(184, 134, 58, .35), transparent 60%),
+        linear-gradient(155deg, var(--spine) 0%, var(--spine-dark) 78%);
+    --nw-hero-fg: #fbf6ea;
+    --nw-hero-fg-soft: #e9ddc2;
+    --nw-hero-highlight: var(--gold-soft);
+    --nw-cta-bg: var(--gold);
+    --nw-cta-bg-hover: var(--gold-soft);
+    --nw-cta-fg: var(--spine-dark);
+    --nw-accent-ink: var(--oxblood);
+    --nw-mono-bg: var(--spine);
+    --nw-mono-fg: var(--gold-soft);
+    --nw-reader-dark: var(--spine-dark);
+
+    --page-background: var(--paper);
+    --page-background-dark: var(--spine-dark);
+}
+
+:root[data-nw-theme='nawishta'][data-mantine-color-scheme='dark'] {
+    --ink: #ede6d4;
+    --ink-soft: #c9bea3;
+    --paper: #1b2420;
+    --paper-deep: #202b26;
+    --paper-card: #22302b;
+    --nw-line: rgba(237, 230, 212, .12);
+    --nw-accent-ink: var(--gold-soft);
+}
+
+/* White: basic and plain. */
+:root[data-nw-theme='white'] {
+    --ink: #212529;
+    --ink-soft: #495057;
+    --paper: #ffffff;
+    --paper-deep: #f1f3f5;
+    --paper-card: #ffffff;
+    --nw-line: #dee2e6;
+
+    --nw-chrome-bg: #ffffff;
+    --nw-chrome-footer-bg: #f8f9fa;
+    --nw-chrome-fg: #212529;
+    --nw-chrome-fg-soft: #495057;
+    --nw-chrome-highlight: #1c7ed6;
+    --nw-chrome-rule: #dee2e6;
+    --nw-hero-bg: #f1f3f5;
+    --nw-hero-fg: #212529;
+    --nw-hero-fg-soft: #495057;
+    --nw-hero-highlight: #1c7ed6;
+    --nw-cta-bg: #1c7ed6;
+    --nw-cta-bg-hover: #1971c2;
+    --nw-cta-fg: #ffffff;
+    --nw-accent-ink: #1c7ed6;
+    --nw-mono-bg: #f1f3f5;
+    --nw-mono-fg: #1c7ed6;
+    --nw-reader-dark: #212529;
+
+    --page-background: #ffffff;
+    --page-background-dark: #ffffff;
+}
+
+/* Black: basic and plain. */
+:root[data-nw-theme='black'] {
+    --ink: #f1f3f5;
+    --ink-soft: #ced4da;
+    --paper: #000000;
+    --paper-deep: #121212;
+    --paper-card: #0b0b0b;
+    --nw-line: #2b2b2b;
+
+    --nw-chrome-bg: #000000;
+    --nw-chrome-footer-bg: #000000;
+    --nw-chrome-fg: #f1f3f5;
+    --nw-chrome-fg-soft: #adb5bd;
+    --nw-chrome-highlight: #74c0fc;
+    --nw-chrome-rule: #2b2b2b;
+    --nw-hero-bg: #121212;
+    --nw-hero-fg: #f1f3f5;
+    --nw-hero-fg-soft: #adb5bd;
+    --nw-hero-highlight: #74c0fc;
+    --nw-cta-bg: #74c0fc;
+    --nw-cta-bg-hover: #a5d8ff;
+    --nw-cta-fg: #000000;
+    --nw-accent-ink: #74c0fc;
+    --nw-mono-bg: #1c1c1c;
+    --nw-mono-fg: #74c0fc;
+    --nw-reader-dark: #000000;
+
+    --page-background: #000000;
+    --page-background-dark: #000000;
+}
+
+/* Point Mantine's own surfaces at the theme so inputs, modals and the page match it. */
+:root[data-nw-theme] {
+    --mantine-color-body: var(--paper);
+    --mantine-color-text: var(--ink);
+    --mantine-color-dimmed: var(--ink-soft);
+    --mantine-color-default: var(--paper-card);
+    --mantine-color-default-border: var(--nw-line);
+}
+
+body {
+    background-color: var(--paper);
+    color: var(--ink);
+}

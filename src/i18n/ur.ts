@@ -32,6 +32,15 @@ const ur: Record<TranslationKeys, string> = {
   correctionsImported: 'درآمد: {0} شامل، {1} تبدیل، {2} چھوڑ دیے گئے۔',
 
   // Account
+  appearanceTitle: 'ظاہری شکل',
+  appearanceTheme: 'انداز',
+  themeNawishta: 'نوشتہ',
+  themeWhite: 'سفید',
+  themeBlack: 'سیاہ',
+  colorModeTitle: 'رنگ کا انداز',
+  colorModeLight: 'روشن',
+  colorModeDark: 'تاریک',
+  colorModeSystem: 'سسٹم',
   authLogin: 'لاگ ان',
   authLogout: 'لاگ آؤٹ',
 

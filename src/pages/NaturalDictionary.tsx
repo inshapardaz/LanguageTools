@@ -133,7 +133,7 @@ export default function NaturalDictionary({ activeDictionaryId, urlParams, onBro
             {lookupResults.entries.length === 0 && <Text c="dimmed" size="sm">{t('natDictNoResults')}</Text>}
             {lookupResults.entries.map((entry, i) => (
               <Paper key={i} p="sm" mb="xs" withBorder radius="sm">
-                <Text size="xs" fw={600} c="blue" tt="uppercase" mb={4}>{entry.dictionaryName}</Text>
+                <Text size="xs" fw={600} c="accent" tt="uppercase" mb={4}>{entry.dictionaryName}</Text>
                 <ArticleView article={entry} />
               </Paper>
             ))}
