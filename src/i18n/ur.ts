@@ -32,6 +32,12 @@ const ur: Record<TranslationKeys, string> = {
   correctionsImported: 'درآمد: {0} شامل، {1} تبدیل، {2} چھوڑ دیے گئے۔',
 
   // Account
+  appsTitle: 'نوشتہ ایپس',
+  appsLogo: 'نوشتہ کا صفحۂ اول',
+  appsHome: 'صفحۂ اول',
+  appsLibraries: 'کتب خانے',
+  appsEditor: 'کتب خانہ ایڈیٹر',
+  appsDictionary: 'لغت اور اوزار',
   appearanceTitle: 'ظاہری شکل',
   appearanceTheme: 'انداز',
   themeNawishta: 'نوشتہ',

@@ -30,6 +30,12 @@ const en = {
   correctionsImported: 'Imported: {0} added, {1} updated, {2} skipped.',
 
   // Account
+  appsTitle: 'Nawishta apps',
+  appsLogo: 'Nawishta home',
+  appsHome: 'Home',
+  appsLibraries: 'Libraries',
+  appsEditor: 'Library editor',
+  appsDictionary: 'Dictionary and tools',
   appearanceTitle: 'Appearance',
   appearanceTheme: 'Theme',
   themeNawishta: 'Nawishta',
