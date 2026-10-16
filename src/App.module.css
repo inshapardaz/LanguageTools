@@ -3,6 +3,10 @@
   --tab-padding: 0 var(--mantine-spacing-xs);
 }
 
+.logoLink {
+  display: flex;
+}
+
 .logo {
   height: rem(34px);
   width: auto;
@@ -61,5 +65,12 @@
 
   @mixin hover {
     background-color: rgba(128, 128, 128, 0.18);
+  }
+}
+
+/* Below the xl breakpoint the tab icons give way so all six tabs fit beside the controls */
+@media (max-width: 88em) {
+  .header :global(.mantine-Tabs-tabSection) {
+    display: none;
   }
 }

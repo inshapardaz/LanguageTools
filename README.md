@@ -43,6 +43,8 @@ docker run -p 4500:80 -e API_URL=http://localhost:4000 -e MAIN_SITE=http://local
 
 `API_URL` and `MAIN_SITE` default to production. They are written into `/env-config.js` when the container starts, so one image runs in every environment.
 
+The header logo links to the main site (`MAIN_SITE`) and its app switcher lists the other Nawishta apps. Their addresses are configurable the same way: `LIBRARIES_URL`, `LIBRARY_EDITOR_URL` and `DICTIONARY_URL` (this app) default to `https://libraries.nawishta.co.uk`, `https://editor.nawishta.co.uk` and `https://dictionary.nawishta.co.uk`. For `npm start`, set `VITE_MAIN_SITE`, `VITE_LIBRARIES_URL`, `VITE_LIBRARY_EDITOR_URL` and `VITE_DICTIONARY_URL` in `.env.local`.
+
 ## License
 
 See the repository for licensing details.
