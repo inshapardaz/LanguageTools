@@ -1,0 +1,65 @@
+.header {
+  /* the bar's colours are set through AppShell's styles prop (see App.tsx) */
+  --tab-padding: 0 var(--mantine-spacing-xs);
+}
+
+.logo {
+  height: rem(34px);
+  width: auto;
+  display: block;
+}
+
+.title {
+  color: var(--nw-chrome-fg);
+  white-space: nowrap;
+}
+
+.subtitle {
+  color: var(--nw-chrome-fg-soft);
+}
+
+/* Tabs, buttons and toggles sit directly on the header bar, so they take the bar's colours */
+.header :global(.mantine-Tabs-tab) {
+  padding-inline: var(--mantine-spacing-xs);
+  color: var(--nw-chrome-fg-soft);
+
+  @mixin hover {
+    background-color: transparent;
+    color: var(--nw-chrome-highlight);
+  }
+
+  &[data-active] {
+    color: var(--nw-chrome-highlight);
+    border-color: var(--nw-chrome-highlight);
+  }
+}
+
+.header :global(.mantine-ActionIcon-root),
+.header :global(.mantine-Button-root[data-variant='subtle']),
+.header :global(.mantine-Button-root[data-variant='light']) {
+  --ai-color: var(--nw-chrome-fg);
+  --button-color: var(--nw-chrome-fg);
+  color: var(--nw-chrome-fg);
+}
+
+.header :global(.mantine-SegmentedControl-root) {
+  background-color: rgba(128, 128, 128, 0.18);
+}
+
+.header :global(.mantine-SegmentedControl-label) {
+  color: var(--nw-chrome-fg-soft);
+
+  &[data-active] {
+    color: var(--ink);
+  }
+}
+
+/* The "Log in" button: outlined on the bar rather than a tinted fill */
+.header :global(.mantine-Button-root[data-variant='light']) {
+  background-color: transparent;
+  border: rem(1px) solid var(--nw-chrome-fg-soft);
+
+  @mixin hover {
+    background-color: rgba(128, 128, 128, 0.18);
+  }
+}

@@ -30,6 +30,15 @@ const en = {
   correctionsImported: 'Imported: {0} added, {1} updated, {2} skipped.',
 
   // Account
+  appearanceTitle: 'Appearance',
+  appearanceTheme: 'Theme',
+  themeNawishta: 'Nawishta',
+  themeWhite: 'White',
+  themeBlack: 'Black',
+  colorModeTitle: 'Color mode',
+  colorModeLight: 'Light',
+  colorModeDark: 'Dark',
+  colorModeSystem: 'System',
   authLogin: 'Log in',
   authLogout: 'Log out',
 

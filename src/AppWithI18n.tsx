@@ -1,13 +1,15 @@
-import { useState, useMemo, useCallback } from 'react';
-import { MantineProvider, DirectionProvider, createTheme, type MantineColorScheme } from '@mantine/core';
+import { useState, useMemo, useCallback, useEffect } from 'react';
+import { MantineProvider, DirectionProvider, type MantineColorScheme, type MantineThemeOverride } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import { I18nContext, getStoredLocale, setStoredLocale, getTranslations, t as tFn, type Locale, type TranslationKeys } from './i18n';
 import App from './App';
 import { AuthProvider } from './auth';
+import { createAppTheme, forcedColorScheme, getStoredTheme, setStoredTheme, type ThemeName } from './theme';
 
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
 import '@mantine/dropzone/styles.css';
+import './styles/appearance.css';
 
 const COLOR_SCHEME_KEY = 'app-color-scheme';
 
@@ -25,17 +27,17 @@ function setStoredColorScheme(scheme: MantineColorScheme) {
 
 const SYSTEM_FONT = "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif";
 // 'Urdu UI' is defined with unicode-range in index.html — it only activates for Arabic/Urdu codepoints
-const FONT_WITH_URDU = `'Urdu UI', ${SYSTEM_FONT}`;
+const FONT_WITH_URDU = `'Urdu UI', 'Open Sans Variable', 'Open Sans', ${SYSTEM_FONT}`;
 
 // Theme for English/default (LTR)
-const themeEn = createTheme({
+const baseEn: MantineThemeOverride = {
   fontFamily: FONT_WITH_URDU,
   fontFamilyMonospace: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace',
   headings: { fontFamily: FONT_WITH_URDU },
-});
+};
 
 // Theme for Urdu (RTL) — same font stack, unicode-range handles the rest
-const themeUr = createTheme({
+const baseUr: MantineThemeOverride = {
   fontFamily: FONT_WITH_URDU,
   fontFamilyMonospace: `'Urdu UI', ui-monospace, monospace`,
   headings: { fontFamily: FONT_WITH_URDU },
@@ -53,10 +55,11 @@ const themeUr = createTheme({
     lg: '1.9',
     xl: '2.0',
   },
-});
+};
 
 export default function AppWithI18n() {
   const [locale, setLocaleState] = useState<Locale>(getStoredLocale);
+  const [themeName, setThemeNameState] = useState<ThemeName>(getStoredTheme);
   const [colorScheme, setColorSchemeState] = useState<MantineColorScheme>(getStoredColorScheme);
 
   const setLocale = useCallback((newLocale: Locale) => {
@@ -69,8 +72,18 @@ export default function AppWithI18n() {
     setStoredColorScheme(scheme);
   }, []);
 
+  const setThemeName = useCallback((name: ThemeName) => {
+    setThemeNameState(name);
+    setStoredTheme(name);
+  }, []);
+
+  // The palette (see styles/appearance.css) is an attribute on <html>
+  useEffect(() => {
+    document.documentElement.setAttribute('data-nw-theme', themeName);
+  }, [themeName]);
+
   const dir: 'ltr' | 'rtl' = locale === 'ur' ? 'rtl' : 'ltr';
-  const theme = locale === 'ur' ? themeUr : themeEn;
+  const theme = useMemo(() => createAppTheme(themeName, locale === 'ur' ? baseUr : baseEn), [themeName, locale]);
   const tr = useMemo(() => getTranslations(locale), [locale]);
   const t = useCallback((key: TranslationKeys, ...args: (string | number)[]) => tFn(tr, key, ...args), [tr]);
 
@@ -79,11 +92,11 @@ export default function AppWithI18n() {
   return (
     <I18nContext.Provider value={i18nValue}>
       <DirectionProvider initialDirection={dir} detectDirection={false}>
-        <MantineProvider theme={theme} defaultColorScheme={colorScheme}>
+        <MantineProvider theme={theme} defaultColorScheme={colorScheme} forceColorScheme={forcedColorScheme(themeName)}>
           <Notifications position={dir === 'rtl' ? 'top-left' : 'top-right'} />
           <div dir={dir} style={{ fontFamily: FONT_WITH_URDU, height: '100%' }}>
             <AuthProvider>
-              <App colorScheme={colorScheme} onColorSchemeChange={setColorScheme} />
+              <App colorScheme={colorScheme} onColorSchemeChange={setColorScheme} theme={themeName} onThemeChange={setThemeName} />
             </AuthProvider>
           </div>
         </MantineProvider>

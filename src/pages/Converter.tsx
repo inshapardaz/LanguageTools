@@ -233,7 +233,7 @@ export default function Converter() {
                             {word.entryId ? t('editorUpdate') : t('correctionSave')}
                           </Button>
                           {word.entryId && (
-                            <Button size="compact-xs" color="blue" variant="light" leftSection={<IconPlus size={12} />} onClick={() => saveCorrection(realIndex, true)}>
+                            <Button size="compact-xs" color="accent" variant="light" leftSection={<IconPlus size={12} />} onClick={() => saveCorrection(realIndex, true)}>
                               {t('correctionCreateNew')}
                             </Button>
                           )}

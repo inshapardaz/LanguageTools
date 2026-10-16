@@ -4,6 +4,10 @@ import { lazy, Suspense, useCallback } from 'react';
 import { useRouter } from './router';
 import { useI18n } from './i18n';
 import { useAuth } from './auth';
+import ThemeMenu from './components/ThemeMenu';
+import { type ThemeName } from './theme';
+import logo from './assets/logo.png';
+import classes from './App.module.css';
 
 // Lazy-loaded page components for bundle splitting
 const Converter = lazy(() => import('./pages/Converter'));
@@ -16,9 +20,11 @@ const TextEditor = lazy(() => import('./pages/TextEditor'));
 interface AppProps {
   colorScheme: MantineColorScheme;
   onColorSchemeChange: (scheme: MantineColorScheme) => void;
+  theme: ThemeName;
+  onThemeChange: (theme: ThemeName) => void;
 }
 
-export default function App({ colorScheme, onColorSchemeChange }: AppProps) {
+export default function App({ colorScheme, onColorSchemeChange, theme, onThemeChange }: AppProps) {
   const { route, setPage, browseDictionary, backToList } = useRouter();
   const { locale, setLocale, t } = useI18n();
   const { setColorScheme } = useMantineColorScheme();
@@ -46,22 +52,27 @@ export default function App({ colorScheme, onColorSchemeChange }: AppProps) {
       padding="md"
       styles={{
         main: { display: 'flex', flexDirection: 'column', minHeight: '100vh' },
-        header: { fontFamily: 'var(--mantine-font-family)' },
+        header: {
+          fontFamily: 'var(--mantine-font-family)',
+          backgroundColor: 'var(--nw-chrome-bg)',
+          borderBottom: '3px solid var(--nw-chrome-rule)',
+        },
       }}
     >
-      <AppShell.Header px="md">
-        <Group h="100%" justify="space-between">
-          <Group gap="xs">
-            <Title order={3} size="h4" ff="heading">{t('appTitle')}</Title>
-            <Text c="dimmed" size="xs" visibleFrom="sm" ff="text">{t('appSubtitle')}</Text>
+      <AppShell.Header px="md" className={classes.header}>
+        <Group h="100%" justify="space-between" wrap="nowrap">
+          <Group gap="xs" wrap="nowrap">
+            <img src={logo} alt="" className={classes.logo} />
+            <Title order={3} size="h4" ff="heading" className={classes.title}>{t('appTitle')}</Title>
+            <Text size="xs" visibleFrom="xl" ff="text" className={classes.subtitle}>{t('appSubtitle')}</Text>
           </Group>
 
-          <Group gap="md">
+          <Group gap="md" wrap="nowrap" style={{ minWidth: 0 }}>
             <Tabs
               value={activeTab}
               onChange={handleTabChange}
               variant="default"
-              styles={{ root: { alignSelf: 'stretch', display: 'flex' }, list: { borderBottom: 'none' } }}
+              styles={{ root: { alignSelf: 'stretch', display: 'flex', minWidth: 0, overflowX: 'auto' }, list: { borderBottom: 'none', flexWrap: 'nowrap' } }}
             >
               <Tabs.List h="100%">
                 <Tabs.Tab value="converter" leftSection={<IconLanguage size={16} />}>
@@ -85,9 +96,13 @@ export default function App({ colorScheme, onColorSchemeChange }: AppProps) {
               </Tabs.List>
             </Tabs>
 
-            {/* Color scheme toggle */}
+            {/* Theme: Nawishta, plain white or plain black */}
+            <ThemeMenu theme={theme} onThemeChange={onThemeChange} />
+
+            {/* Color scheme toggle (Nawishta theme only: the plain themes fix the scheme) */}
             <SegmentedControl
               size="xs"
+              disabled={theme !== 'nawishta'}
               value={colorScheme}
               onChange={handleColorSchemeChange}
               data={[

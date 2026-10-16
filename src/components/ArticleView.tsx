@@ -49,7 +49,7 @@ export default function ArticleView({ article }: { article: ArticleData }) {
           <div key={si}>
             {sense.partOfSpeech && (
               <Group gap="xs" mb={4}>
-                <Badge variant="light" color="blue" size="sm">{sense.partOfSpeech}</Badge>
+                <Badge variant="light" color="accent" size="sm">{sense.partOfSpeech}</Badge>
                 {sense.grammar && <Text size="xs" c="dimmed">({sense.grammar})</Text>}
               </Group>
             )}
@@ -77,7 +77,7 @@ export default function ArticleView({ article }: { article: ArticleData }) {
       )}
 
       {hasLinks && (
-        <Paper p="xs" bg="gray.0" radius="sm" mt="xs">
+        <Paper p="xs" bg="var(--paper-deep)" radius="sm" mt="xs">
           {Object.entries(
             links!.reduce<Record<string, string[]>>((acc, l) => {
               const type = getLinkTypeName(l.linkType);
