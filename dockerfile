@@ -24,7 +24,10 @@ RUN chmod +x /docker-entrypoint.d/40-env-config.sh
 # Other environments (e.g. dev) must override these on the container.
 ENV NODE_ENV=production \
     API_URL=https://api.nawishta.co.uk \
-    MAIN_SITE=https://www.nawishta.co.uk
+    MAIN_SITE=https://www.nawishta.co.uk \
+    LIBRARIES_URL=https://libraries.nawishta.co.uk \
+    LIBRARY_EDITOR_URL=https://editor.nawishta.co.uk \
+    DICTIONARY_URL=https://dictionary.nawishta.co.uk
 
 EXPOSE 80 8080
 

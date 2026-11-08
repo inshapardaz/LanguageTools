@@ -45,6 +45,25 @@ describe('config', () => {
     expect(config.MAIN_SITE).toBe('http://localhost:4200');
   });
 
+  it('resolves the links to the other apps like the rest', async () => {
+    let config = await import('./config');
+    expect(config.LIBRARIES_URL).toBe('http://localhost:4400');
+    expect(config.LIBRARY_EDITOR_URL).toBe('http://localhost:4300');
+    expect(config.DICTIONARY_URL).toBe('http://localhost:4500');
+
+    vi.resetModules();
+    window.__ENV__ = {
+      LIBRARIES_URL: 'https://libraries.example.com',
+      LIBRARY_EDITOR_URL: 'https://editor.example.com',
+      DICTIONARY_URL: 'https://dictionary.example.com',
+    };
+    vi.stubEnv('VITE_LIBRARIES_URL', 'http://build-time-libraries');
+    config = await import('./config');
+    expect(config.LIBRARIES_URL).toBe('https://libraries.example.com');
+    expect(config.LIBRARY_EDITOR_URL).toBe('https://editor.example.com');
+    expect(config.DICTIONARY_URL).toBe('https://dictionary.example.com');
+  });
+
   it('builds main-site account links that return to the current page', async () => {
     window.__ENV__ = { MAIN_SITE: 'https://www.example.com' };
     window.location.href = 'https://dictionary.example.com/spelling?x=1&y=2';

@@ -5,6 +5,8 @@ import { useRouter } from './router';
 import { useI18n } from './i18n';
 import { useAuth } from './auth';
 import ThemeMenu from './components/ThemeMenu';
+import AppSwitcher from './components/AppSwitcher';
+import { MAIN_SITE } from './config';
 import { type ThemeName } from './theme';
 import logo from './assets/logo.png';
 import classes from './App.module.css';
@@ -61,9 +63,12 @@ export default function App({ colorScheme, onColorSchemeChange, theme, onThemeCh
     >
       <AppShell.Header px="md" className={classes.header}>
         <Group h="100%" justify="space-between" wrap="nowrap">
-          <Group gap="xs" wrap="nowrap">
-            <img src={logo} alt="" className={classes.logo} />
-            <Title order={3} size="h4" ff="heading" className={classes.title}>{t('appTitle')}</Title>
+          <Group gap="xs" wrap="nowrap" style={{ flexShrink: 0 }}>
+            {/* The logo goes to the Nawishta home page */}
+            <a href={MAIN_SITE} aria-label={t('appsLogo')} title={t('appsLogo')} className={classes.logoLink}>
+              <img src={logo} alt="" className={classes.logo} />
+            </a>
+            <Title order={3} size="h4" ff="heading" className={classes.title} style={{ whiteSpace: 'nowrap' }}>{t('appTitle')}</Title>
             <Text size="xs" visibleFrom="xl" ff="text" className={classes.subtitle}>{t('appSubtitle')}</Text>
           </Group>
 
@@ -95,6 +100,9 @@ export default function App({ colorScheme, onColorSchemeChange, theme, onThemeCh
                 </Tabs.Tab>
               </Tabs.List>
             </Tabs>
+
+            {/* Other Nawishta apps */}
+            <AppSwitcher />
 
             {/* Theme: Nawishta, plain white or plain black */}
             <ThemeMenu theme={theme} onThemeChange={onThemeChange} />

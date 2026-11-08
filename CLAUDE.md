@@ -61,8 +61,8 @@ dockerfile               node build -> nginx
 
 Resolved at runtime so one image runs anywhere (same scheme as library-ui). Precedence:
 
-1. `window.__ENV__` from `/env-config.js` — in the container, `config/docker/40-env-config.sh` writes it at start-up from the `API_URL`, `MAIN_SITE` and `NODE_ENV` environment variables (the `dockerfile` defaults them to production);
-2. `VITE_API_URL` / `VITE_MAIN_SITE` / `VITE_NODE_ENV` from `.env.local` (see `.env.example`) for `npm start`;
+1. `window.__ENV__` from `/env-config.js` — in the container, `config/docker/40-env-config.sh` writes it at start-up from the `API_URL`, `MAIN_SITE` and `NODE_ENV` environment variables, plus the links to the other apps (`LIBRARIES_URL`, `LIBRARY_EDITOR_URL`, `DICTIONARY_URL`; used by the header logo, which goes to `MAIN_SITE`, and the app switcher) (the `dockerfile` defaults them to production);
+2. `VITE_API_URL` / `VITE_MAIN_SITE` / `VITE_NODE_ENV` (and `VITE_LIBRARIES_URL` / `VITE_LIBRARY_EDITOR_URL` / `VITE_DICTIONARY_URL`) from `.env.local` (see `.env.example`) for `npm start`;
 3. `http://localhost:4000` / `http://localhost:4200` / `local`.
 
 The API must allow this app's origin in `AppSettings__AllowedOrigins` (the dev server is `http://localhost:4500`).
