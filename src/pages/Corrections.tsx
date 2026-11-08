@@ -21,7 +21,7 @@ const LANGUAGES = {
   en: { dir: 'ltr' as const, fontFamily: 'inherit' },
 };
 type Language = keyof typeof LANGUAGES;
-type SortBy = 'incorrectText' | 'usage';
+type SortBy = 'incorrectText' | 'usage' | 'newest';
 const PAGE_SIZE = 50;
 const emptyForm: CorrectionInput = { incorrectText: '', correctText: '', completeWord: true };
 
@@ -145,7 +145,11 @@ export default function Corrections({ urlParams }: Props) {
             w={180}
             value={sortBy}
             onChange={(v) => setSortBy((v as SortBy) ?? 'incorrectText')}
-            data={[{ value: 'incorrectText', label: t('correctionsSortText') }, { value: 'usage', label: t('correctionsSortUsage') }]}
+            data={[
+              { value: 'incorrectText', label: t('correctionsSortText') },
+              { value: 'usage', label: t('correctionsSortUsage') },
+              { value: 'newest', label: t('correctionsSortNewest') },
+            ]}
             allowDeselect={false}
           />
           {canCreate && <Button leftSection={<IconPlus size={14} />} onClick={openAdd}>{t('correctionsAdd')}</Button>}

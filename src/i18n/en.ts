@@ -17,6 +17,7 @@ const en = {
   correctionsImport: 'Import list',
   correctionsSortText: 'Sort by text',
   correctionsSortUsage: 'Most used first',
+  correctionsSortNewest: 'Newest first',
   correctionsAdd: 'Add correction',
   correctionsEdit: 'Edit correction',
   correctionsIncorrect: 'Incorrect',

@@ -19,6 +19,7 @@ const ur: Record<TranslationKeys, string> = {
   correctionsImport: 'فہرست درآمد کریں',
   correctionsSortText: 'متن کے لحاظ سے',
   correctionsSortUsage: 'زیادہ استعمال پہلے',
+  correctionsSortNewest: 'تازہ ترین پہلے',
   correctionsAdd: 'تصحیح شامل کریں',
   correctionsEdit: 'تصحیح میں ترمیم',
   correctionsIncorrect: 'غلط',
