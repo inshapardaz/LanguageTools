@@ -21,7 +21,8 @@ const LANGUAGES = {
   en: { dir: 'ltr' as const, fontFamily: 'inherit' },
 };
 type Language = keyof typeof LANGUAGES;
-type SortBy = 'incorrectText' | 'usage';
+type SortBy = 'incorrectText' | 'usage' | 'newest';
+type CompleteWordFilter = 'all' | 'whole' | 'partial';
 const PAGE_SIZE = 50;
 const emptyForm: CorrectionInput = { incorrectText: '', correctText: '', completeWord: true };
 
@@ -35,6 +36,7 @@ export default function Corrections({ urlParams }: Props) {
   const [profile, setProfile] = useState<CorrectionProfile>(urlParams.profile === 'punctuation' ? 'punctuation' : 'autocorrect');
   const [language, setLanguage] = useState<Language>(urlParams.language in LANGUAGES ? urlParams.language as Language : 'ur');
   const [sortBy, setSortBy] = useState<SortBy>('incorrectText');
+  const [completeWordFilter, setCompleteWordFilter] = useState<CompleteWordFilter>('all');
   const [corrections, setCorrections] = useState<Correction[]>([]);
   const [total, setTotal] = useState(0);
   const [pageCount, setPageCount] = useState(1);
@@ -51,7 +53,8 @@ export default function Corrections({ urlParams }: Props) {
 
   const fetchCorrections = useCallback(async (p: number) => {
     try {
-      const result = await getCorrections(language, profile, search, p, PAGE_SIZE, sortBy);
+      const completeWord = completeWordFilter === 'all' ? undefined : completeWordFilter === 'whole';
+      const result = await getCorrections(language, profile, search, p, PAGE_SIZE, sortBy, completeWord);
       setCorrections(result.data);
       setTotal(result.totalCount);
       setPageCount(result.pageCount);
@@ -61,13 +64,13 @@ export default function Corrections({ urlParams }: Props) {
       setCorrections([]);
       fail(e);
     }
-  }, [language, profile, search, sortBy]);
+  }, [language, profile, search, sortBy, completeWordFilter]);
 
   // Keep the list and language in the URL, so links from library-editor open the right list.
   useEffect(() => {
     updateParams({ profile, language });
     fetchCorrections(1);
-  }, [profile, language, sortBy]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [profile, language, sortBy, completeWordFilter]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const openAdd = () => { setForm(emptyForm); setEditing('new'); };
   const openEdit = (c: Correction) => { setForm({ incorrectText: c.incorrectText, correctText: c.correctText, completeWord: c.completeWord }); setEditing(c); };
@@ -145,7 +148,22 @@ export default function Corrections({ urlParams }: Props) {
             w={180}
             value={sortBy}
             onChange={(v) => setSortBy((v as SortBy) ?? 'incorrectText')}
-            data={[{ value: 'incorrectText', label: t('correctionsSortText') }, { value: 'usage', label: t('correctionsSortUsage') }]}
+            data={[
+              { value: 'incorrectText', label: t('correctionsSortText') },
+              { value: 'usage', label: t('correctionsSortUsage') },
+              { value: 'newest', label: t('correctionsSortNewest') },
+            ]}
+            allowDeselect={false}
+          />
+          <Select
+            w={180}
+            value={completeWordFilter}
+            onChange={(v) => setCompleteWordFilter((v as CompleteWordFilter) ?? 'all')}
+            data={[
+              { value: 'all', label: t('correctionsFilterAll') },
+              { value: 'whole', label: t('correctionsFilterWholeWord') },
+              { value: 'partial', label: t('correctionsFilterPartial') },
+            ]}
             allowDeselect={false}
           />
           {canCreate && <Button leftSection={<IconPlus size={14} />} onClick={openAdd}>{t('correctionsAdd')}</Button>}
