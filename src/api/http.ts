@@ -61,7 +61,7 @@ export const http = {
 };
 
 // Query string from the defined, non-empty values.
-export function qs(params: Record<string, string | number | undefined | null>): string {
+export function qs(params: Record<string, string | number | boolean | undefined | null>): string {
   const entries = Object.entries(params).filter(([, v]) => v !== undefined && v !== null && v !== '');
   return entries.length ? '?' + entries.map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(String(v))}`).join('&') : '';
 }

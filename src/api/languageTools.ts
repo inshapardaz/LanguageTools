@@ -165,9 +165,10 @@ const toCorrection = (v: CorrectionView): Correction => ({ ...v, canEdit: hasLin
 export type CorrectionInput = Pick<Correction, 'incorrectText' | 'correctText' | 'completeWord'>;
 
 export async function getCorrections(
-  language: string, profile: CorrectionProfile, query: string, pageNumber: number, pageSize: number, sortBy: 'incorrectText' | 'usage' | 'newest',
+  language: string, profile: CorrectionProfile, query: string, pageNumber: number, pageSize: number,
+  sortBy: 'incorrectText' | 'usage' | 'newest', completeWord?: boolean,
 ) {
-  const page = await http.get<PageView<CorrectionView>>(`/tools/${language}/corrections/${profile}${qs({ query, pageNumber, pageSize, sortBy })}`);
+  const page = await http.get<PageView<CorrectionView>>(`/tools/${language}/corrections/${profile}${qs({ query, pageNumber, pageSize, sortBy, completeWord })}`);
   return { ...page, data: page.data.map(toCorrection), canCreate: hasLink(page, 'create') };
 }
 
